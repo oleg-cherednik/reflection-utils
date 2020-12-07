@@ -1,35 +1,40 @@
 package ru.olegcherednik.utils.reflection;
 
-import java.util.Arrays;
+import org.testng.annotations.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * @author Oleg Cherednik
  * @since 06.12.2020
  */
-//@Test
+@Test
 public class EnumUtilsTest {
 
-    public static void main(String... args) throws Throwable {
-        Arrays.stream(Car.values())
-              .map(Enum::name)
-              .forEach(System.out::println);
+    public void shouldAddConstantsToEnumWhenAddConstant() throws Throwable {
+        assertThat(CarBrand.class.getEnumConstants()).extracting(Enum::name).containsExactly(CarBrand.BMW.name(), CarBrand.MERCEDES.name());
+        assertThat(CarBrand.values()).extracting(Enum::name).containsExactly(CarBrand.BMW.name(), CarBrand.MERCEDES.name());
 
-        System.out.println();
+        for (CarBrand brand : CarBrand.values())
+            assertThat(CarBrand.valueOf(brand.name())).isNotNull();
 
-        EnumUtils.addValue(Car.class, "AUDI");
-        EnumUtils.addValue(Car.class, "VOLKSWAGEN");
+        final String audi = "AUDI";
+        final String volkswagen = "VOLKSWAGEN";
 
-        Car[] a = Car.class.getEnumConstants();
-        Car[] b = Car.values();
-        Car c = Car.valueOf("AUDI");
+        EnumUtils.addConstant(CarBrand.class, audi);
+        EnumUtils.addConstant(CarBrand.class, volkswagen);
 
+        assertThat(CarBrand.class.getEnumConstants()).extracting(Enum::name)
+                                                     .containsExactly(CarBrand.BMW.name(), CarBrand.MERCEDES.name(), audi, volkswagen);
+        assertThat(CarBrand.values()).extracting(Enum::name)
+                                     .containsExactly(CarBrand.BMW.name(), CarBrand.MERCEDES.name(), audi, volkswagen);
 
-        Arrays.stream(Car.values())
-              .map(Enum::name)
-              .forEach(System.out::println);
+        for (CarBrand brand : CarBrand.values())
+            assertThatCode(() -> CarBrand.valueOf(brand.name())).doesNotThrowAnyException();
     }
 
-    enum Car {
+    enum CarBrand {
         BMW,
         MERCEDES
     }
