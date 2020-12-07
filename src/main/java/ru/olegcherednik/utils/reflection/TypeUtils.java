@@ -27,7 +27,7 @@ public class TypeUtils {
         return def;
     }
 
-    public static String getObjectName(Member obj) {
+    public static String getName(Member obj) {
         return obj.getName();
     }
 

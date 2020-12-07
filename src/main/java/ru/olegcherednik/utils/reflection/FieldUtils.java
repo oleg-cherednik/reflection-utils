@@ -19,7 +19,11 @@ public class FieldUtils {
     }
 
     public static void setFieldValue(Object obj, String name, Object value) throws Exception {
-        Invoke.invokeConsumer(getField(obj.getClass(), name), field -> setFieldValueImpl(field, obj, value));
+        setFieldValue(getField(obj.getClass(), name), name, field -> setFieldValueImpl(field, obj, value));
+    }
+
+    public static void setFieldValue(Object obj, String name, Invoke.Consumer<Field> setValueTask) throws Exception {
+        Invoke.invokeConsumer(getField(obj.getClass(), name), setValueTask);
     }
 
     public static <T> T getStaticFieldValue(Class<?> cls, String name) throws Exception {
@@ -27,7 +31,11 @@ public class FieldUtils {
     }
 
     public static void setStaticFieldValue(Class<?> cls, String name, Object value) throws Exception {
-        Invoke.invokeConsumer(getField(cls, name), field -> setFieldValueImpl(field, null, value));
+        setStaticFieldValue(cls, name, field -> setFieldValueImpl(field, null, value));
+    }
+
+    public static void setStaticFieldValue(Class<?> cls, String name, Invoke.Consumer<Field> setValueTask) throws Exception {
+        Invoke.invokeConsumer(getField(cls, name), setValueTask);
     }
 
     private static Field getField(Class<?> cls, String name) throws NoSuchFieldException {
@@ -44,7 +52,7 @@ public class FieldUtils {
         return Optional.ofNullable(field).orElseThrow(NoSuchElementException::new);
     }
 
-    private static void setFieldValueImpl(Field field, Object obj, Object value) throws IllegalAccessException {
+    public static void setFieldValueImpl(Field field, Object obj, Object value) throws IllegalAccessException {
         if (TypeUtils.isInteger(field.getType()))
             field.setInt(obj, (Integer)value);
         else if (TypeUtils.isBoolean(field.getType()))
