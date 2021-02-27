@@ -64,11 +64,11 @@ public final class Invoke {
 
     public interface Consumer<T> {
 
+        Consumer<?> NULL = (Consumer<Object>)obj -> { };
+
         void accept(T t) throws Exception;
 
     }
-
-    public static final Consumer<?> NULL_CONSUMER = (Consumer<Object>)obj -> { };
 
     private Invoke() { }
 

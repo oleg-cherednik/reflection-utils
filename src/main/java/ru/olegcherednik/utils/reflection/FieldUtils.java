@@ -14,8 +14,8 @@ public final class FieldUtils {
         return Invoke.invokeFunction(field, f -> (T)field.get(obj));
     }
 
-    public static <T> T getFieldValue(Object obj, String name) throws Exception {
-        return Invoke.invokeFunction(getField(obj.getClass(), name), field -> (T)field.get(obj));
+    public static <T> T getFieldValue(Object obj, String fieldName) throws Exception {
+        return Invoke.invokeFunction(getField(obj.getClass(), fieldName), field -> (T)field.get(obj));
     }
 
     public static void setFieldValue(Object obj, String name, Object value) throws Exception {
@@ -38,12 +38,12 @@ public final class FieldUtils {
         Invoke.invokeConsumer(getField(cls, name), setValueTask);
     }
 
-    private static Field getField(Class<?> cls, String name) throws NoSuchFieldException {
+    private static Field getField(Class<?> cls, String fieldName) throws NoSuchFieldException {
         Field field = null;
 
         while (field == null && cls != null) {
             try {
-                field = cls.getDeclaredField(name);
+                field = cls.getDeclaredField(fieldName);
             } catch(NoSuchFieldException ignored) {
                 cls = cls.getSuperclass();
             }

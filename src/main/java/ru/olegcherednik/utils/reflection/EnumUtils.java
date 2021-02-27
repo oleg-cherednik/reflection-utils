@@ -12,7 +12,7 @@ import java.lang.reflect.Constructor;
 public final class EnumUtils {
 
     public static <T extends Enum<?>> void addConstant(Class<T> cls, String name) throws Throwable {
-        addConstant(cls, name, (Invoke.Consumer<T>)Invoke.NULL_CONSUMER);
+        addConstant(cls, name, (Invoke.Consumer<T>)Invoke.Consumer.NULL);
     }
 
     @SuppressWarnings("UseOfSunClasses")

@@ -4,7 +4,7 @@ package ru.olegcherednik.utils.reflection.data;
  * @author Oleg Cherednik
  * @since 27.02.2021
  */
-public class Data {
+public class Data extends BaseData {
 
     private final String name;
     private final int age;
