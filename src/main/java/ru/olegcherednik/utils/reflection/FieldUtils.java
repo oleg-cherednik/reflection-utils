@@ -34,16 +34,28 @@ public final class FieldUtils {
         Invoke.invokeConsumer(getField(obj.getClass(), fieldName), field -> setFieldValueImpl(field, obj, value));
     }
 
+    public static void setFieldValue(Object obj, Field field, Invoke.Consumer<Field> setValueTask) throws Exception {
+        Invoke.invokeConsumer(field, setValueTask);
+    }
+
     public static void setFieldValue(Object obj, String fieldName, Invoke.Consumer<Field> setValueTask) throws Exception {
         Invoke.invokeConsumer(getField(obj.getClass(), fieldName), setValueTask);
+    }
+
+    public static void setStaticFieldValue(Field field, Object value) throws Exception {
+        Invoke.invokeConsumer(field, f -> setFieldValueImpl(f, null, value));
     }
 
     public static void setStaticFieldValue(Class<?> cls, String fieldName, Object value) throws Exception {
         setStaticFieldValue(cls, fieldName, field -> setFieldValueImpl(field, null, value));
     }
 
-    public static void setStaticFieldValue(Class<?> cls, String name, Invoke.Consumer<Field> setValueTask) throws Exception {
-        Invoke.invokeConsumer(getField(cls, name), setValueTask);
+    public static void setStaticFieldValue(Field field, Invoke.Consumer<Field> setValueTask) throws Exception {
+        Invoke.invokeConsumer(field, setValueTask);
+    }
+
+    public static void setStaticFieldValue(Class<?> cls, String fieldName, Invoke.Consumer<Field> setValueTask) throws Exception {
+        Invoke.invokeConsumer(getField(cls, fieldName), setValueTask);
     }
 
     private static Field getField(Class<?> cls, String fieldName) throws NoSuchFieldException {
