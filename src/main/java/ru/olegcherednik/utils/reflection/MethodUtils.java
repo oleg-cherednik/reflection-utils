@@ -8,7 +8,7 @@ import java.util.Optional;
  * @author Oleg Cherednik
  * @since 06.12.2020
  */
-public class MethodUtils {
+public final class MethodUtils {
 
     public static <T> T invokeMethod(Object obj, Method method) throws Exception {
         return Invoke.invokeFunction(method, m -> (T)m.invoke(obj));
@@ -86,7 +86,6 @@ public class MethodUtils {
         return method == null ? def : method.getReturnType();
     }
 
-    private MethodUtils() {
-    }
+    private MethodUtils() { }
 
 }

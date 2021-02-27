@@ -9,7 +9,7 @@ import java.lang.reflect.Constructor;
  * @author Oleg Cherednik
  * @since 06.12.2020
  */
-public class EnumUtils {
+public final class EnumUtils {
 
     public static <T extends Enum<?>> void addConstant(Class<T> cls, String name) throws Throwable {
         addConstant(cls, name, (Invoke.Consumer<T>)Invoke.NULL_CONSUMER);
@@ -47,7 +47,6 @@ public class EnumUtils {
         Invoke.invokeConsumer(Class.class.getDeclaredField(name), field -> field.set(cls, value));
     }
 
-    private EnumUtils() {
-    }
+    private EnumUtils() { }
 
 }

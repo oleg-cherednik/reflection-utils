@@ -8,7 +8,7 @@ import java.util.Optional;
  * @author Oleg Cherednik
  * @since 06.12.2020
  */
-public class FieldUtils {
+public final class FieldUtils {
 
     public static <T> T getFieldValue(Object obj, Field field) throws Exception {
         return Invoke.invokeFunction(field, f -> (T)field.get(obj));
@@ -19,7 +19,7 @@ public class FieldUtils {
     }
 
     public static void setFieldValue(Object obj, String name, Object value) throws Exception {
-        setFieldValue(getField(obj.getClass(), name), name, field -> setFieldValueImpl(field, obj, value));
+        Invoke.invokeConsumer(getField(obj.getClass(), name), field -> setFieldValueImpl(field, obj, value));
     }
 
     public static void setFieldValue(Object obj, String name, Invoke.Consumer<Field> setValueTask) throws Exception {
@@ -73,7 +73,6 @@ public class FieldUtils {
             field.set(obj, value);
     }
 
-
     public static Class<?> getType(Field field) {
         return field.getType();
     }
@@ -82,7 +81,6 @@ public class FieldUtils {
         return field == null ? def : field.getType();
     }
 
-    private FieldUtils() {
-    }
+    private FieldUtils() { }
 
 }

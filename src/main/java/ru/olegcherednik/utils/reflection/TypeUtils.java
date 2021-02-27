@@ -9,21 +9,21 @@ import java.lang.reflect.Method;
  * @author Oleg Cherednik
  * @since 06.12.2020
  */
-public class TypeUtils {
+public final class TypeUtils {
 
-    public static Class<?> getType(AccessibleObject obj) {
-        if (obj instanceof Field)
-            return FieldUtils.getType((Field)obj);
-        if (obj instanceof Method)
-            return MethodUtils.getReturnType((Method)obj);
-        throw new IllegalArgumentException("Unknown 'obj' class: " + obj.getClass());
+    public static Class<?> getType(AccessibleObject accessibleObject) {
+        if (accessibleObject instanceof Field)
+            return FieldUtils.getType((Field)accessibleObject);
+        if (accessibleObject instanceof Method)
+            return MethodUtils.getReturnType((Method)accessibleObject);
+        throw new IllegalArgumentException("Unknown 'accessibleObject' class: " + accessibleObject.getClass());
     }
 
-    public static Class<?> getType(AccessibleObject obj, Class<?> def) {
-        if (obj instanceof Field)
-            return FieldUtils.getType((Field)obj, def);
-        if (obj instanceof Method)
-            return MethodUtils.getReturnType((Method)obj, def);
+    public static Class<?> getType(AccessibleObject accessibleObject, Class<?> def) {
+        if (accessibleObject instanceof Field)
+            return FieldUtils.getType((Field)accessibleObject, def);
+        if (accessibleObject instanceof Method)
+            return MethodUtils.getReturnType((Method)accessibleObject, def);
         return def;
     }
 
@@ -157,7 +157,6 @@ public class TypeUtils {
         throw new IllegalArgumentException("Cannot recognize 'type': " + type);
     }
 
-    private TypeUtils() {
-    }
+    private TypeUtils() { }
 
 }

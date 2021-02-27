@@ -10,11 +10,7 @@ import java.lang.reflect.Modifier;
  * @author Oleg Cherednik
  * @since 06.12.2020
  */
-public class Invoke {
-
-    public static <T> T invokeConstructor(Class<T> cls) throws Exception {
-        return invokeFunction(cls.getDeclaredConstructor(), constructor -> constructor.newInstance(cls));
-    }
+public final class Invoke {
 
     public static <T extends AccessibleObject & Member> void invokeConsumer(T accessibleObject, Consumer<T> task) throws Exception {
         invokeFunction(accessibleObject, (Function<T, Void>)func -> {
@@ -28,7 +24,10 @@ public class Invoke {
 
         try {
             accessibleObject.setAccessible(true);
-            return invokeWithModifiers(accessibleObject, task);
+
+            if (accessibleObject instanceof Field)
+                return invokeWithModifiers(accessibleObject, task);
+            return task.apply(accessibleObject);
         } finally {
             accessibleObject.setAccessible(accessible);
         }
@@ -50,36 +49,27 @@ public class Invoke {
     }
 
     public static <R> R invoke(Object obj, AccessibleObject accessibleObject) throws Exception {
-        if (obj instanceof Field)
+        if (accessibleObject instanceof Field)
             return FieldUtils.getFieldValue(obj, (Field)accessibleObject);
-        if (obj instanceof Method)
+        if (accessibleObject instanceof Method)
             return MethodUtils.invokeMethod(obj, (Method)accessibleObject);
-        throw new IllegalArgumentException("Unknown 'obj' class: " + obj.getClass());
-    }
-
-    public static Class<?> getType(AccessibleObject obj) {
-        if (obj instanceof Field)
-            return FieldUtils.getType((Field)obj);
-        if (obj instanceof Method)
-            return MethodUtils.getReturnType((Method)obj);
-        throw new IllegalArgumentException("Unknown 'obj' class: " + obj.getClass());
+        throw new IllegalArgumentException("Unknown 'accessibleObject' class: " + accessibleObject.getClass());
     }
 
     public interface Function<T, R> {
 
         R apply(T t) throws Exception;
+
     }
 
     public interface Consumer<T> {
 
         void accept(T t) throws Exception;
+
     }
 
-    public static final Consumer<?> NULL_CONSUMER = (Consumer<Object>)obj -> {
+    public static final Consumer<?> NULL_CONSUMER = (Consumer<Object>)obj -> { };
 
-    };
-
-    private Invoke() {
-    }
+    private Invoke() { }
 
 }
