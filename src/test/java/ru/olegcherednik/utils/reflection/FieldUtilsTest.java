@@ -56,4 +56,38 @@ public class FieldUtilsTest {
         assertThat(FieldUtils.getType(null, Number.class)).isSameAs(Number.class);
     }
 
+    public void shouldRetrieveStaticFieldValueWhenGetStaticFieldValueByField() throws Exception {
+        Field field = Data.class.getDeclaredField("AUTO");
+        String actual = FieldUtils.getStaticFieldValue(field);
+        assertThat(actual).isEqualTo("ferrari");
+    }
+
+    public void shouldRetrieveStaticFieldValueWhenGetStaticFieldValueByFieldName() throws Exception {
+        String actual = FieldUtils.getStaticFieldValue(Data.class, "AUTO");
+        assertThat(actual).isEqualTo("ferrari");
+    }
+
+    public void shouldRetrieveStaticFieldValueWhenGetStaticFieldValueFromBaseClassByFieldName() throws Exception {
+        Data data = Data.create();
+        String actual = FieldUtils.getFieldValue(data, "MONITOR");
+        assertThat(actual).isEqualTo("dell");
+    }
+
+    public void shouldSetFieldValueWhenSetFieldValueByField() throws Exception {
+        Data data = Data.create();
+        assertThat(data.getName()).isNotEqualTo("moskow");
+
+        Field field = data.getClass().getDeclaredField("name");
+        FieldUtils.setFieldValue(data, field, "moskow");
+        assertThat(data.getName()).isEqualTo("moskow");
+    }
+
+    public void shouldSetFieldValueWhenSetFieldValueByFieldName() throws Exception {
+        Data data = Data.create();
+        assertThat(data.getName()).isNotEqualTo("moskow");
+
+        FieldUtils.setFieldValue(data, "name", "moskow");
+        assertThat(data.getName()).isEqualTo("moskow");
+    }
+
 }

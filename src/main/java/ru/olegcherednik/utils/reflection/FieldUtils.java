@@ -18,20 +18,28 @@ public final class FieldUtils {
         return Invoke.invokeFunction(getField(obj.getClass(), fieldName), field -> (T)field.get(obj));
     }
 
-    public static void setFieldValue(Object obj, String name, Object value) throws Exception {
-        Invoke.invokeConsumer(getField(obj.getClass(), name), field -> setFieldValueImpl(field, obj, value));
+    public static <T> T getStaticFieldValue(Field field) throws Exception {
+        return Invoke.invokeFunction(field, f -> (T)f.get(field.getDeclaringClass()));
     }
 
-    public static void setFieldValue(Object obj, String name, Invoke.Consumer<Field> setValueTask) throws Exception {
-        Invoke.invokeConsumer(getField(obj.getClass(), name), setValueTask);
+    public static <T> T getStaticFieldValue(Class<?> cls, String fieldName) throws Exception {
+        return Invoke.invokeFunction(getField(cls, fieldName), field -> (T)field.get(cls));
     }
 
-    public static <T> T getStaticFieldValue(Class<?> cls, String name) throws Exception {
-        return Invoke.invokeFunction(getField(cls, name), field -> (T)field.get(cls));
+    public static void setFieldValue(Object obj, Field field, Object value) throws Exception {
+        Invoke.invokeConsumer(field, f -> setFieldValueImpl(f, obj, value));
     }
 
-    public static void setStaticFieldValue(Class<?> cls, String name, Object value) throws Exception {
-        setStaticFieldValue(cls, name, field -> setFieldValueImpl(field, null, value));
+    public static void setFieldValue(Object obj, String fieldName, Object value) throws Exception {
+        Invoke.invokeConsumer(getField(obj.getClass(), fieldName), field -> setFieldValueImpl(field, obj, value));
+    }
+
+    public static void setFieldValue(Object obj, String fieldName, Invoke.Consumer<Field> setValueTask) throws Exception {
+        Invoke.invokeConsumer(getField(obj.getClass(), fieldName), setValueTask);
+    }
+
+    public static void setStaticFieldValue(Class<?> cls, String fieldName, Object value) throws Exception {
+        setStaticFieldValue(cls, fieldName, field -> setFieldValueImpl(field, null, value));
     }
 
     public static void setStaticFieldValue(Class<?> cls, String name, Invoke.Consumer<Field> setValueTask) throws Exception {

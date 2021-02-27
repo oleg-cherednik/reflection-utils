@@ -6,6 +6,8 @@ package ru.olegcherednik.utils.reflection.data;
  */
 public class Data extends BaseData {
 
+    private static final String AUTO = "ferrari";
+
     private final String name;
     private final int age;
     private final boolean marker;
@@ -42,6 +44,18 @@ public class Data extends BaseData {
         this.name = name;
         this.age = age;
         this.marker = marker;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public boolean isMarker() {
+        return marker;
     }
 
     private String getCity() {

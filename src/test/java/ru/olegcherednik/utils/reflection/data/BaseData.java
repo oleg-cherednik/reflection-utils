@@ -6,6 +6,8 @@ package ru.olegcherednik.utils.reflection.data;
  */
 abstract class BaseData {
 
+    private static final String MONITOR = "dell";
+
     private final String baseName = "pizza";
 
 }
