@@ -72,23 +72,23 @@ public final class FieldUtils {
         return Optional.ofNullable(field).orElseThrow(NoSuchElementException::new);
     }
 
-    public static void setFieldValueImpl(Field field, Object obj, Object value) throws IllegalAccessException {
-        if (TypeUtils.isInteger(field.getType()))
-            field.setInt(obj, (Integer)value);
-        else if (TypeUtils.isBoolean(field.getType()))
-            field.setBoolean(obj, (Boolean)value);
-        else if (TypeUtils.isByte(field.getType()))
-            field.setByte(obj, (Byte)value);
-        else if (TypeUtils.isChar(field.getType()))
-            field.setChar(obj, (Character)value);
-        else if (TypeUtils.isDouble(field.getType()))
-            field.setDouble(obj, (Double)value);
-        else if (TypeUtils.isLong(field.getType()))
-            field.setLong(obj, (Long)value);
-        else if (TypeUtils.isShort(field.getType()))
-            field.setShort(obj, (Short)value);
-        else if (TypeUtils.isFloat(field.getType()))
-            field.setFloat(obj, (Float)value);
+    private static void setFieldValueImpl(Field field, Object obj, Object value) throws IllegalAccessException {
+        if (field.getType().isAssignableFrom(int.class))
+            field.setInt(obj, ((Number)value).intValue());
+        else if (field.getType().isAssignableFrom(boolean.class))
+            field.setBoolean(obj, (boolean)value);
+        else if (field.getType().isAssignableFrom(byte.class))
+            field.setByte(obj, ((Number)value).byteValue());
+        else if (field.getType().isAssignableFrom(char.class))
+            field.setChar(obj, (char)value);
+        else if (field.getType().isAssignableFrom(double.class))
+            field.setDouble(obj, ((Number)value).doubleValue());
+        else if (field.getType().isAssignableFrom(long.class))
+            field.setLong(obj, ((Number)value).longValue());
+        else if (field.getType().isAssignableFrom(short.class))
+            field.setShort(obj, ((Number)value).shortValue());
+        else if (field.getType().isAssignableFrom(float.class))
+            field.setFloat(obj, ((Number)value).floatValue());
         else
             field.set(obj, value);
     }
