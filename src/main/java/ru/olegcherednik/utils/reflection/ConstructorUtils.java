@@ -53,6 +53,7 @@ public final class ConstructorUtils {
         return invokeConstructor((Class<T>)Class.forName(className), type1, value1, type2, value2, type3, value3);
     }
 
+    @SuppressWarnings("MethodCanBeVariableArityMethod")
     public static <T> T invokeConstructor(String className, Class<?>[] types, Object[] values) throws Exception {
         return invokeConstructor((Class<T>)Class.forName(className), types, values);
     }
