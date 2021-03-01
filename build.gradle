@@ -12,10 +12,7 @@ plugins {
     id 'java'
     id 'application'
     id 'jacoco'
-//    id 'io.franzbecker.gradle-lombok' version '1.14'
     id 'io.codearte.nexus-staging' version '0.11.0'
-//    id 'com.gradle.build-scan' version '3.5'
-//    id "com.github.hierynomus.license" version "0.15.0"
 }
 
 apply plugin: 'com.bmuschko.nexus'
@@ -63,28 +60,17 @@ test {
     useTestNG()
 }
 
-//buildScan {
-//    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
-//    termsOfServiceAgree = 'yes'
-//}
-
-//license {
-//    header = file('license_header.txt')
-//    include "**/*.java"
-//    exclude "**/*Test.java"
-//}
-
 modifyPom {
     project {
-        name 'zip4jvm'
-        description 'Zip files support for JDK application'
-        url 'https://github.com/oleg-cherednik/zip4jvm'
-        inceptionYear '2019'
+        name 'reflection-utils'
+        description 'Set of utilities for JVM to make work with reflection much more easy.'
+        url 'https://github.com/oleg-cherednik/reflection-utils'
+        inceptionYear '2021'
 
         scm {
-            url 'https://github.com/oleg-cherednik/zip4jvm'
-            connection 'scm:https://github.com/oleg-cherednik/zip4jvm.git'
-            developerConnection 'scm:git@github.com:oleg-cherednik/zip4jvm.git'
+            url 'https://github.com/oleg-cherednik/reflection-utils'
+            connection 'scm:https://github.com/oleg-cherednik/reflection-utils.git'
+            developerConnection 'scm:git@github.com:oleg-cherednik/reflection-utils.git'
         }
 
         licenses {

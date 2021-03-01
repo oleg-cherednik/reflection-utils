@@ -53,7 +53,7 @@ public class FieldUtilsTest {
         assertThat(FieldUtils.getType(field, Number.class)).isSameAs(String.class);
     }
 
-    public void shouldRetrieveDefaultTypeWhenGetTypeForNotExistedFieldWithDefaultValue() throws NoSuchFieldException {
+    public void shouldRetrieveDefaultTypeWhenGetTypeForNotExistedFieldWithDefaultValue() {
         assertThat(FieldUtils.getType(null, Number.class)).isSameAs(Number.class);
     }
 
@@ -295,6 +295,11 @@ public class FieldUtilsTest {
 
         FieldUtils.setFieldValue(data, "valFloatWrapper", (Object)null);
         assertThat(data.getValFloatWrapper()).isNull();
+    }
+
+    public void shouldThrowNoSuchElementExceptionWhenGetNotExistedStaticFieldByFieldName() throws Exception {
+        assertThatThrownBy(() -> FieldUtils.getStaticFieldValue(Data.class, "unknownName"))
+                .isExactlyInstanceOf(NoSuchElementException.class);
     }
 
 }

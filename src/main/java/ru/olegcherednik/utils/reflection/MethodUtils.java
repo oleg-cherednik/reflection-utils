@@ -10,66 +10,75 @@ import java.util.Optional;
  */
 public final class MethodUtils {
 
-    public static <T> T invokeMethod(Object obj, Method method) throws Exception {
-        return Invoke.invokeFunction(method, m -> (T)m.invoke(obj));
+    public static <T> T invokeMethod(Object obj, String methodName) throws Exception {
+        return invokeMethod(obj, methodName, (Class<?>[])null, null);
     }
 
-    public static <T> T invokeMethod(Object obj, String name) throws Exception {
-        return invokeMethod(obj, name, null);
+    public static <T> T invokeMethod(Object obj, String methodName, Class<?> type, Object value) throws Exception {
+        return invokeMethod(obj, methodName, new Class<?>[] { type }, new Object[] { value });
     }
 
-    public static <T> T invokeMethod(Object obj, String name, Class<?> type, Object value) throws Exception {
-        return invokeMethod(obj, name, new Class<?>[] { type }, value);
-    }
-
-    public static <T> T invokeMethod(Object obj, String name,
+    public static <T> T invokeMethod(Object obj, String methodName,
             Class<?> type1, Object value1,
             Class<?> type2, Object value2) throws Exception {
-        return invokeMethod(obj, name, new Class<?>[] { type1, type2 }, value1, value2);
+        return invokeMethod(obj, methodName, new Class<?>[] { type1, type2 }, new Object[] { value1, value2 });
     }
 
-    public static <T> T invokeMethod(Object obj, String name,
+    public static <T> T invokeMethod(Object obj, String methodName,
             Class<?> type1, Object value1,
             Class<?> type2, Object value2,
             Class<?> type3, Object value3) throws Exception {
-        return invokeMethod(obj, name, new Class<?>[] { type1, type2, type3 }, value1, value2, value3);
+        return invokeMethod(obj, methodName, new Class<?>[] { type1, type2, type3 }, new Object[] { value1, value2, value3 });
     }
 
-    public static <T> T invokeStaticMethod(Class<?> cls, String name) throws Exception {
-        return invokeStaticMethod(cls, name, null);
+    public static <T> T invokeMethod(Object obj, Method method, Object... values) throws Exception {
+        return Invoke.invokeFunction(method, m -> (T)m.invoke(obj, values));
     }
 
-    public static <T> T invokeStaticMethod(Class<?> cls, String name, Class<?> type, Object value) throws Exception {
-        return invokeStaticMethod(cls, name, new Class<?>[] { type }, value);
+    @SuppressWarnings("MethodCanBeVariableArityMethod")
+    public static <T> T invokeMethod(Object obj, String methodName, Class<?>[] types, Object[] values) throws Exception {
+        return invokeMethod(obj, getMethod(obj.getClass(), methodName, types), values);
     }
 
-    public static <T> T invokeStaticMethod(Class<?> cls, String name,
+    // --------------
+
+
+    public static <T> T invokeStaticMethod(Class<?> cls, String methodName) throws Exception {
+        return invokeStaticMethod(cls, methodName, (Class<?>[])null, null);
+    }
+
+    public static <T> T invokeStaticMethod(Class<?> cls, String methodName, Class<?> type, Object value) throws Exception {
+        return invokeStaticMethod(cls, methodName, new Class<?>[] { type }, new Object[] { value });
+    }
+
+    public static <T> T invokeStaticMethod(Class<?> cls, String methodName,
             Class<?> type1, Object value1,
             Class<?> type2, Object value2) throws Exception {
-        return invokeStaticMethod(cls, name, new Class<?>[] { type1, type2 }, value1, value2);
+        return invokeStaticMethod(cls, methodName, new Class<?>[] { type1, type2 }, new Object[] { value1, value2 });
     }
 
-    public static <T> T invokeStaticMethod(Class<?> cls, String name,
+    public static <T> T invokeStaticMethod(Class<?> cls, String methodName,
             Class<?> type1, Object value1,
             Class<?> type2, Object value2,
             Class<?> type3, Object value3) throws Exception {
-        return invokeStaticMethod(cls, name, new Class<?>[] { type1, type2, type3 }, value1, value2, value3);
+        return invokeStaticMethod(cls, methodName, new Class<?>[] { type1, type2, type3 }, new Object[] { value1, value2, value3 });
     }
 
-    public static <T> T invokeMethod(Object obj, String name, Class<?>[] types, Object... values) throws Exception {
-        return Invoke.invokeFunction(getMethod(obj.getClass(), name, types), method -> (T)method.invoke(obj, values));
+    public static <T> T invokeStaticMethod(Method method, Object... values) throws Exception {
+        return Invoke.invokeFunction(method, m -> (T)m.invoke(null, values));
     }
 
-    public static <T> T invokeStaticMethod(Class<?> cls, String name, Class<?>[] types, Object... values) throws Exception {
-        return Invoke.invokeFunction(getMethod(cls, name, types), method -> (T)method.invoke(null, values));
+    @SuppressWarnings("MethodCanBeVariableArityMethod")
+    public static <T> T invokeStaticMethod(Class<?> cls, String methodName, Class<?>[] types, Object[] values) throws Exception {
+        return invokeStaticMethod(getMethod(cls, methodName, types), values);
     }
 
-    private static Method getMethod(Class<?> cls, String name, Class<?>... types) throws NoSuchMethodException {
+    private static Method getMethod(Class<?> cls, String methodName, Class<?>... types) throws NoSuchMethodException {
         Method method = null;
 
         while (method == null && cls != null) {
             try {
-                method = cls.getDeclaredMethod(name, types);
+                method = cls.getDeclaredMethod(methodName, types);
             } catch(NoSuchMethodException ignored) {
                 cls = cls.getSuperclass();
             }
@@ -86,6 +95,7 @@ public final class MethodUtils {
         return method == null ? def : method.getReturnType();
     }
 
-    private MethodUtils() { }
+    private MethodUtils() {
+    }
 
 }

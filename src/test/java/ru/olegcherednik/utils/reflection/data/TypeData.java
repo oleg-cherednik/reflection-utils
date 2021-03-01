@@ -4,6 +4,7 @@ package ru.olegcherednik.utils.reflection.data;
  * @author Oleg Cherednik
  * @since 28.02.2021
  */
+@SuppressWarnings("unused")
 public class TypeData {
 
     private int valInt;

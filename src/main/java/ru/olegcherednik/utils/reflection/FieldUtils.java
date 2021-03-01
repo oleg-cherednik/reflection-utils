@@ -15,7 +15,7 @@ public final class FieldUtils {
     }
 
     public static <T> T getFieldValue(Object obj, String fieldName) throws Exception {
-        return Invoke.invokeFunction(getField(obj.getClass(), fieldName), field -> (T)field.get(obj));
+        return getFieldValue(obj, getField(obj.getClass(), fieldName));
     }
 
     public static <T> T getStaticFieldValue(Field field) throws Exception {
@@ -23,7 +23,7 @@ public final class FieldUtils {
     }
 
     public static <T> T getStaticFieldValue(Class<?> cls, String fieldName) throws Exception {
-        return Invoke.invokeFunction(getField(cls, fieldName), field -> (T)field.get(cls));
+        return getStaticFieldValue(getField(cls, fieldName));
     }
 
     public static void setFieldValue(Object obj, Field field, Object value) throws Exception {
@@ -31,7 +31,7 @@ public final class FieldUtils {
     }
 
     public static void setFieldValue(Object obj, String fieldName, Object value) throws Exception {
-        Invoke.invokeConsumer(getField(obj.getClass(), fieldName), field -> setFieldValueImpl(field, obj, value));
+        setFieldValue(obj, getField(obj.getClass(), fieldName), value);
     }
 
     public static void setFieldValue(Object obj, Field field, Invoke.Consumer<Field> setValueTask) throws Exception {
@@ -39,7 +39,7 @@ public final class FieldUtils {
     }
 
     public static void setFieldValue(Object obj, String fieldName, Invoke.Consumer<Field> setValueTask) throws Exception {
-        Invoke.invokeConsumer(getField(obj.getClass(), fieldName), setValueTask);
+        setFieldValue(obj, getField(obj.getClass(), fieldName), setValueTask);
     }
 
     public static void setStaticFieldValue(Field field, Object value) throws Exception {
@@ -47,7 +47,7 @@ public final class FieldUtils {
     }
 
     public static void setStaticFieldValue(Class<?> cls, String fieldName, Object value) throws Exception {
-        setStaticFieldValue(cls, fieldName, field -> setFieldValueImpl(field, null, value));
+        setStaticFieldValue(getField(cls, fieldName), value);
     }
 
     public static void setStaticFieldValue(Field field, Invoke.Consumer<Field> setValueTask) throws Exception {
@@ -55,7 +55,7 @@ public final class FieldUtils {
     }
 
     public static void setStaticFieldValue(Class<?> cls, String fieldName, Invoke.Consumer<Field> setValueTask) throws Exception {
-        Invoke.invokeConsumer(getField(cls, fieldName), setValueTask);
+        setStaticFieldValue(getField(cls, fieldName), setValueTask);
     }
 
     private static Field getField(Class<?> cls, String fieldName) throws NoSuchFieldException {
