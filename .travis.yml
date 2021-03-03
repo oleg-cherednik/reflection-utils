@@ -5,7 +5,7 @@ dist: trusty
 jdk: openjdk8
 
 env:
-  - CODACY_API_BASE_URL=397f61e3dd1144ee83792f936c7de80c
+  - CODACY_PROJECT_TOKEN=397f61e3dd1144ee83792f936c7de80c
 
 before_script:
   - bash <(curl -Ls https://coverage.codacy.com/get.sh) download
