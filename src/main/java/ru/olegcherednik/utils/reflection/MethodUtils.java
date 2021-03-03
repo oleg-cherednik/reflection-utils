@@ -40,9 +40,6 @@ public final class MethodUtils {
         return invokeMethod(obj, getMethod(obj.getClass(), methodName, types), values);
     }
 
-    // --------------
-
-
     public static <T> T invokeStaticMethod(Class<?> cls, String methodName) throws Exception {
         return invokeStaticMethod(cls, methodName, (Class<?>[])null, null);
     }
