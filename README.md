@@ -1,0 +1,40 @@
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/ru.oleg-cherednik.utils.reflection/reflection-utils/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ru.oleg-cherednik.utils.reflection/reflection-utils)
+[![javadoc](https://javadoc.io/badge2/ru.oleg-cherednik.utils.reflection/reflection-utils/javadoc.svg)](https://javadoc.io/doc/ru.oleg-cherednik.utils.reflection/reflection-utils)
+[![java1.8](https://badgen.net/badge/java/1.8/blue)](https://badgen.net/)
+[![travis-ci](https://travis-ci.com/oleg-cherednik/JacksonUtils.svg?branch=dev)](https://travis-ci.com/oleg-cherednik/JacksonUtils)
+[![circle-ci](https://circleci.com/gh/oleg-cherednik/JacksonUtils/tree/dev.svg?style=shield)](https://app.circleci.com/pipelines/github/oleg-cherednik/JacksonUtils)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt)
+[![codecov](https://codecov.io/gh/oleg-cherednik/JacksonUtils/branch/dev/graph/badge.svg?token=W8t2rKNOh5)](https://codecov.io/gh/oleg-cherednik/JacksonUtils)
+[![Known Vulnerabilities](https://snyk.io//test/github/oleg-cherednik/JacksonUtils/badge.svg?targetFile=build.gradle)](https://snyk.io//test/github/oleg-cherednik/JacksonUtils?targetFile=build.gradle)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/a2abf7ff8b1b4e82ad2cd0d039aea353)](https://www.codacy.com/gh/oleg-cherednik/JacksonUtils/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=oleg-cherednik/JacksonUtils&amp;utm_campaign=Badge_Grade)
+     
+# Reflection Utils
+> Set of utilities for JVM to make work with reflection much more easy
+
+## Features
+
+## Gradle
+
+```groovy
+compile 'ru.oleg-cherednik.utils.reflection:reflection-utils:1.0'
+```
+
+## Maven
+
+```xml
+<dependency>
+    <groupId>ru.oleg-cherednik.utils.reflection</groupId>
+    <artifactId>reflection-utils</artifactId>
+    <version>1.0</version>
+</dependency>
+```                                                    
+
+## Usage 
+
+##### Links
+
+*   Home page: https://github.com/oleg-cherednik/reflection-utils
+
+*   Maven:
+    *   **central:** https://mvnrepository.com/artifact/ru.oleg-cherednik.utils/jackson-utils
+    *   **download:** https://repo1.maven.org/maven2/ru/oleg-cherednik/utils/jackson-utils/

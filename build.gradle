@@ -22,7 +22,7 @@ repositories {
     mavenCentral()
 }
 
-group 'ru.oleg-cherednik.reflection-utils'
+group 'ru.oleg-cherednik.utils.reflection'
 version '1.0'
 
 sourceCompatibility = '1.8'
