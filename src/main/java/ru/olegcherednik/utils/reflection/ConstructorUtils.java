@@ -7,29 +7,29 @@ package ru.olegcherednik.utils.reflection;
 public final class ConstructorUtils {
 
     public static <T> T invokeConstructor(Class<T> cls) throws Exception {
-        return Invoke.invokeFunction(cls.getDeclaredConstructor(), constructor -> constructor.newInstance());
+        return InvokeUtils.invokeFunction(cls.getDeclaredConstructor(), constructor -> constructor.newInstance());
     }
 
     public static <T> T invokeConstructor(Class<T> cls, Class<?> type, Object value) throws Exception {
-        return Invoke.invokeFunction(cls.getDeclaredConstructor(type), constructor -> constructor.newInstance(value));
+        return InvokeUtils.invokeFunction(cls.getDeclaredConstructor(type), constructor -> constructor.newInstance(value));
     }
 
     public static <T> T invokeConstructor(Class<T> cls,
             Class<?> type1, Object value1,
             Class<?> type2, Object value2) throws Exception {
-        return Invoke.invokeFunction(cls.getDeclaredConstructor(type1, type2), constructor -> constructor.newInstance(value1, value2));
+        return InvokeUtils.invokeFunction(cls.getDeclaredConstructor(type1, type2), constructor -> constructor.newInstance(value1, value2));
     }
 
     public static <T> T invokeConstructor(Class<T> cls,
             Class<?> type1, Object value1,
             Class<?> type2, Object value2,
             Class<?> type3, Object value3) throws Exception {
-        return Invoke.invokeFunction(cls.getDeclaredConstructor(type1, type2, type3), constructor -> constructor.newInstance(value1, value2, value3));
+        return InvokeUtils.invokeFunction(cls.getDeclaredConstructor(type1, type2, type3), constructor -> constructor.newInstance(value1, value2, value3));
     }
 
     @SuppressWarnings("MethodCanBeVariableArityMethod")
     public static <T> T invokeConstructor(Class<T> cls, Class<?>[] types, Object[] values) throws Exception {
-        return Invoke.invokeFunction(cls.getDeclaredConstructor(types), constructor -> constructor.newInstance(values));
+        return InvokeUtils.invokeFunction(cls.getDeclaredConstructor(types), constructor -> constructor.newInstance(values));
     }
 
     public static <T> T invokeConstructor(String className) throws Exception {

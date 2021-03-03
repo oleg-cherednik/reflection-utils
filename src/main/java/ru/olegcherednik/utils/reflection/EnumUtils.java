@@ -12,11 +12,11 @@ import java.lang.reflect.Constructor;
 public final class EnumUtils {
 
     public static <T extends Enum<?>> void addConstant(Class<T> cls, String name) throws Throwable {
-        addConstant(cls, name, (Invoke.Consumer<T>)Invoke.Consumer.NULL);
+        addConstant(cls, name, (InvokeUtils.Consumer<T>)InvokeUtils.Consumer.NULL);
     }
 
     @SuppressWarnings("UseOfSunClasses")
-    public static <T extends Enum<?>> void addConstant(Class<T> cls, String name, Invoke.Consumer<T> setExtraFieldTask) throws Throwable {
+    public static <T extends Enum<?>> void addConstant(Class<T> cls, String name, InvokeUtils.Consumer<T> setExtraFieldTask) throws Throwable {
         Constructor<?> constructor = Unsafe.class.getDeclaredConstructor();
         constructor.setAccessible(true);
         Unsafe unsafe = (Unsafe)constructor.newInstance();
@@ -40,11 +40,11 @@ public final class EnumUtils {
     }
 
     public static <T extends Enum<?>> void setFieldValue(T obj, String name, Object value) throws Exception {
-        Invoke.invokeConsumer(Enum.class.getDeclaredField(name), field -> field.set(obj, value));
+        InvokeUtils.invokeConsumer(Enum.class.getDeclaredField(name), field -> field.set(obj, value));
     }
 
     private static <T extends Enum<?>> void setField(Class<T> cls, String name, Object value) throws Exception {
-        Invoke.invokeConsumer(Class.class.getDeclaredField(name), field -> field.set(cls, value));
+        InvokeUtils.invokeConsumer(Class.class.getDeclaredField(name), field -> field.set(cls, value));
     }
 
     private EnumUtils() { }

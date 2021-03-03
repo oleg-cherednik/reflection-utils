@@ -11,7 +11,7 @@ import java.util.Optional;
 public final class FieldUtils {
 
     public static <T> T getFieldValue(Object obj, Field field) throws Exception {
-        return Invoke.invokeFunction(field, f -> (T)field.get(obj));
+        return InvokeUtils.invokeFunction(field, f -> (T)field.get(obj));
     }
 
     public static <T> T getFieldValue(Object obj, String fieldName) throws Exception {
@@ -19,7 +19,7 @@ public final class FieldUtils {
     }
 
     public static <T> T getStaticFieldValue(Field field) throws Exception {
-        return Invoke.invokeFunction(field, f -> (T)f.get(field.getDeclaringClass()));
+        return InvokeUtils.invokeFunction(field, f -> (T)f.get(field.getDeclaringClass()));
     }
 
     public static <T> T getStaticFieldValue(Class<?> cls, String fieldName) throws Exception {
@@ -27,45 +27,46 @@ public final class FieldUtils {
     }
 
     public static void setFieldValue(Object obj, Field field, Object value) throws Exception {
-        Invoke.invokeConsumer(field, f -> setFieldValueImpl(f, obj, value));
+        InvokeUtils.invokeConsumer(field, f -> setFieldValueImpl(f, obj, value));
     }
 
     public static void setFieldValue(Object obj, String fieldName, Object value) throws Exception {
         setFieldValue(obj, getField(obj.getClass(), fieldName), value);
     }
 
-    public static void setFieldValue(Object obj, Field field, Invoke.Consumer<Field> setValueTask) throws Exception {
-        Invoke.invokeConsumer(field, setValueTask);
+    public static void setFieldValue(Object obj, Field field, InvokeUtils.Consumer<Field> setValueTask) throws Exception {
+        InvokeUtils.invokeConsumer(field, setValueTask);
     }
 
-    public static void setFieldValue(Object obj, String fieldName, Invoke.Consumer<Field> setValueTask) throws Exception {
+    public static void setFieldValue(Object obj, String fieldName, InvokeUtils.Consumer<Field> setValueTask) throws Exception {
         setFieldValue(obj, getField(obj.getClass(), fieldName), setValueTask);
     }
 
     public static void setStaticFieldValue(Field field, Object value) throws Exception {
-        Invoke.invokeConsumer(field, f -> setFieldValueImpl(f, null, value));
+        InvokeUtils.invokeConsumer(field, f -> setFieldValueImpl(f, null, value));
     }
 
     public static void setStaticFieldValue(Class<?> cls, String fieldName, Object value) throws Exception {
         setStaticFieldValue(getField(cls, fieldName), value);
     }
 
-    public static void setStaticFieldValue(Field field, Invoke.Consumer<Field> setValueTask) throws Exception {
-        Invoke.invokeConsumer(field, setValueTask);
+    public static void setStaticFieldValue(Field field, InvokeUtils.Consumer<Field> setValueTask) throws Exception {
+        InvokeUtils.invokeConsumer(field, setValueTask);
     }
 
-    public static void setStaticFieldValue(Class<?> cls, String fieldName, Invoke.Consumer<Field> setValueTask) throws Exception {
+    public static void setStaticFieldValue(Class<?> cls, String fieldName, InvokeUtils.Consumer<Field> setValueTask) throws Exception {
         setStaticFieldValue(getField(cls, fieldName), setValueTask);
     }
 
     private static Field getField(Class<?> cls, String fieldName) throws NoSuchFieldException {
         Field field = null;
+        Class<?> clazz = cls;
 
-        while (field == null && cls != null) {
+        while (field == null && clazz != null) {
             try {
-                field = cls.getDeclaredField(fieldName);
+                field = clazz.getDeclaredField(fieldName);
             } catch(NoSuchFieldException ignored) {
-                cls = cls.getSuperclass();
+                clazz = clazz.getSuperclass();
             }
         }
 

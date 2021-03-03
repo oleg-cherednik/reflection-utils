@@ -10,7 +10,7 @@ import java.lang.reflect.Modifier;
  * @author Oleg Cherednik
  * @since 06.12.2020
  */
-public final class Invoke {
+public final class InvokeUtils {
 
     public static <T extends AccessibleObject & Member> void invokeConsumer(T accessibleObject, Consumer<T> task) throws Exception {
         invokeFunction(accessibleObject, (Function<T, Void>)func -> {
@@ -70,6 +70,6 @@ public final class Invoke {
 
     }
 
-    private Invoke() { }
+    private InvokeUtils() { }
 
 }

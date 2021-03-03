@@ -15,19 +15,19 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * @since 27.02.2021
  */
 @Test
-public class InvokeTest {
+public class InvokeUtilsTest {
 
     public void shouldRetrieveFieldValueWhenInvokeFunctionOnField() throws Exception {
         Data data = Data.create();
         Field field = data.getClass().getDeclaredField("name");
-        String name = Invoke.invokeFunction(field, f -> (String)f.get(data));
+        String name = InvokeUtils.invokeFunction(field, f -> (String)f.get(data));
         assertThat(name).isEqualTo("oleg.cherednik");
     }
 
     public void shouldRetrieveMethodReturnValueWhenInvokeFunctionOnMethod() throws Exception {
         Data data = Data.create();
         Method method = data.getClass().getDeclaredMethod("getCity");
-        String city = Invoke.invokeFunction(method, m -> (String)m.invoke(data));
+        String city = InvokeUtils.invokeFunction(method, m -> (String)m.invoke(data));
         assertThat(city).isEqualTo("Saint-Petersburg");
     }
 
@@ -35,7 +35,7 @@ public class InvokeTest {
         Data data = Data.create();
         Method method = data.getClass().getDeclaredMethod("getCity");
 
-        assertThatThrownBy(() -> Invoke.invokeFunction(method, m -> {
+        assertThatThrownBy(() -> InvokeUtils.invokeFunction(method, m -> {
             throw new NoSuchMethodException("xxx");
         })).isExactlyInstanceOf(NoSuchMethodException.class).hasMessage("xxx");
     }
@@ -46,7 +46,7 @@ public class InvokeTest {
         boolean expectedAccessible = field.isAccessible();
         int expectedModifiers = field.getModifiers();
 
-        Invoke.invokeFunction(field, f -> (String)f.get(data));
+        InvokeUtils.invokeFunction(field, f -> (String)f.get(data));
         assertThat(field.isAccessible()).isEqualTo(expectedAccessible);
         assertThat(field.getModifiers()).isEqualTo(expectedModifiers);
     }
@@ -57,7 +57,7 @@ public class InvokeTest {
         boolean expectedAccessible = method.isAccessible();
         int expectedModifiers = method.getModifiers();
 
-        Invoke.invokeFunction(method, m -> (String)m.invoke(data));
+        InvokeUtils.invokeFunction(method, m -> (String)m.invoke(data));
         assertThat(method.isAccessible()).isEqualTo(expectedAccessible);
         assertThat(method.getModifiers()).isEqualTo(expectedModifiers);
     }
@@ -66,7 +66,7 @@ public class InvokeTest {
         Data data = Data.create();
         Field field = data.getClass().getDeclaredField("name");
 
-        String actual = Invoke.invoke(data, field);
+        String actual = InvokeUtils.invoke(data, field);
         assertThat(actual).isEqualTo("oleg.cherednik");
     }
 
@@ -74,7 +74,7 @@ public class InvokeTest {
         Data data = Data.create();
         Method method = data.getClass().getDeclaredMethod("getCity");
 
-        String actual = Invoke.invoke(data, method);
+        String actual = InvokeUtils.invoke(data, method);
         assertThat(actual).isEqualTo("Saint-Petersburg");
     }
 
@@ -82,7 +82,7 @@ public class InvokeTest {
         Data data = Data.create();
         Constructor<?> constructor = data.getClass().getDeclaredConstructor();
 
-        assertThatThrownBy(() -> Invoke.invoke(data, constructor))
+        assertThatThrownBy(() -> InvokeUtils.invoke(data, constructor))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Unknown 'accessibleObject' class: class java.lang.reflect.Constructor");
     }

@@ -32,7 +32,7 @@ public final class MethodUtils {
     }
 
     public static <T> T invokeMethod(Object obj, Method method, Object... values) throws Exception {
-        return Invoke.invokeFunction(method, m -> (T)m.invoke(obj, values));
+        return InvokeUtils.invokeFunction(method, m -> (T)m.invoke(obj, values));
     }
 
     @SuppressWarnings("MethodCanBeVariableArityMethod")
@@ -65,7 +65,7 @@ public final class MethodUtils {
     }
 
     public static <T> T invokeStaticMethod(Method method, Object... values) throws Exception {
-        return Invoke.invokeFunction(method, m -> (T)m.invoke(null, values));
+        return InvokeUtils.invokeFunction(method, m -> (T)m.invoke(null, values));
     }
 
     @SuppressWarnings("MethodCanBeVariableArityMethod")
@@ -75,12 +75,13 @@ public final class MethodUtils {
 
     private static Method getMethod(Class<?> cls, String methodName, Class<?>... types) throws NoSuchMethodException {
         Method method = null;
+        Class<?> clazz = cls;
 
-        while (method == null && cls != null) {
+        while (method == null && clazz != null) {
             try {
-                method = cls.getDeclaredMethod(methodName, types);
+                method = clazz.getDeclaredMethod(methodName, types);
             } catch(NoSuchMethodException ignored) {
-                cls = cls.getSuperclass();
+                clazz = clazz.getSuperclass();
             }
         }
 

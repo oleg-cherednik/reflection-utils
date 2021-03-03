@@ -13,7 +13,6 @@
 
 ## Features
 
-
 ## Gradle
 
 ```groovy
@@ -32,7 +31,7 @@ compile 'ru.oleg-cherednik.utils.reflection:reflection-utils:1.0'
 
 ## Usage 
 
-##### Links
+### Links
 
 *   Home page: https://github.com/oleg-cherednik/reflection-utils
 
