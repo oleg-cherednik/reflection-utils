@@ -83,6 +83,12 @@ public class MethodUtilsTest {
         assertThat(actual).isEqualTo(3);
     }
 
+    public void shouldThrowIllegalArgumentExceptionWhenTypeLengthNotMatchValuesLength() throws Exception {
+        assertThatThrownBy(() -> MethodUtils.invokeMethod(Data.create(), "sub",
+                new Class<?>[] { int.class, int.class, int.class },
+                new Object[] { 8, 3 })).isExactlyInstanceOf(IllegalArgumentException.class);
+    }
+
     public void shouldRetrieveReturnValueWhenInvokeMethodByNameFromBaseClass() throws Exception {
         Data data = Data.create();
         String actual = MethodUtils.invokeMethod(data, "getSeason");
