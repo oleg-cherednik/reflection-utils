@@ -1,64 +1,205 @@
 package ru.olegcherednik.utils.reflection;
 
 import java.lang.reflect.Field;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.Objects;
 
 /**
+ * Utils for working with fields using reflection.
+ *
  * @author Oleg Cherednik
  * @since 06.12.2020
  */
 public final class FieldUtils {
 
+    /**
+     * Get value of the given non static {@code field} of the given {@code obj}.
+     *
+     * @param obj   not {@literal null} object
+     * @param field not {@literal null} field
+     * @param <T>   type of the field
+     * @return value of the field
+     * @throws Exception in case if any problem; check exception type for details
+     */
     public static <T> T getFieldValue(Object obj, Field field) throws Exception {
+        Objects.requireNonNull(obj, "'obj' should not be null");
+        Objects.requireNonNull(field, "'field' should not be null");
         return InvokeUtils.invokeFunction(field, f -> (T)field.get(obj));
     }
 
+    /**
+     * Get value of the field with given non static {@code fieldName} of the given {@code obj}.<br>
+     * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
+     *
+     * @param obj       not {@literal null} object
+     * @param fieldName not {@literal null} field name
+     * @param <T>       type of the field
+     * @return value of the field
+     * @throws Exception in case if any problem; check exception type for details
+     */
     public static <T> T getFieldValue(Object obj, String fieldName) throws Exception {
+        Objects.requireNonNull(obj, "'obj' should not be null");
+        Objects.requireNonNull(fieldName, "'fieldName' should not be null");
         return getFieldValue(obj, getField(obj.getClass(), fieldName));
     }
 
+    /**
+     * Get value of the given static {@literal field}. {@link Field#getDeclaringClass()} is used to get field's class.
+     *
+     * @param field not {@literal null} field
+     * @param <T>   type of the field
+     * @return value of the static field
+     * @throws Exception in case if any problem; check exception type for details
+     */
     public static <T> T getStaticFieldValue(Field field) throws Exception {
+        Objects.requireNonNull(field, "'field' should not be null");
         return InvokeUtils.invokeFunction(field, f -> (T)f.get(field.getDeclaringClass()));
     }
 
+    /**
+     * Get value of the static field with given {@code fieldName} of the given {@code cls}.<br>
+     * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
+     *
+     * @param cls       not {@literal null} class object
+     * @param fieldName not {@literal null} field name
+     * @param <T>       type of the field
+     * @return value of the static field
+     * @throws Exception in case if any problem; check exception type for details
+     */
     public static <T> T getStaticFieldValue(Class<?> cls, String fieldName) throws Exception {
+        Objects.requireNonNull(cls, "'cls' should not be null");
+        Objects.requireNonNull(fieldName, "'fieldName' should not be null");
         return getStaticFieldValue(getField(cls, fieldName));
     }
 
+    /**
+     * Set given {@code value} of the non static {@code field} for the given {@code obj}.
+     *
+     * @param obj   not {@literal null} object
+     * @param field not {@literal null} field
+     * @param value new value of the field
+     * @throws Exception in case if any problem; check exception type for details
+     */
     public static void setFieldValue(Object obj, Field field, Object value) throws Exception {
+        Objects.requireNonNull(obj, "'obj' should not be null");
+        Objects.requireNonNull(field, "'field' should not be null");
         InvokeUtils.invokeConsumer(field, f -> setFieldValueImpl(f, obj, value));
     }
 
+    /**
+     * Set given {@code value} of the non static field with given {@code fieldName} for the given {@code obj}.<br>
+     * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
+     *
+     * @param obj       not {@literal null} object
+     * @param fieldName not {@literal null} field name
+     * @param value     new value of the field
+     * @throws Exception in case if any problem; check exception type for details
+     */
     public static void setFieldValue(Object obj, String fieldName, Object value) throws Exception {
+        Objects.requireNonNull(obj, "'obj' should not be null");
+        Objects.requireNonNull(fieldName, "'fieldName' should not be null");
         setFieldValue(obj, getField(obj.getClass(), fieldName), value);
     }
 
+    /**
+     * Call given {@link InvokeUtils.Consumer} for the not static field {@code field} for the give {@code obj}.
+     *
+     * @param obj          not {@literal null} object
+     * @param field        not {@literal null} field
+     * @param setValueTask not {@literal null} consumer is called for the field
+     * @throws Exception in case if any problem; check exception type for details
+     */
     public static void setFieldValue(Object obj, Field field, InvokeUtils.Consumer<Field> setValueTask) throws Exception {
+        Objects.requireNonNull(obj, "'obj' should not be null");
+        Objects.requireNonNull(field, "'field' should not be null");
+        Objects.requireNonNull(setValueTask, "'setValueTask' should not be null");
         InvokeUtils.invokeConsumer(field, setValueTask);
     }
 
+    /**
+     * Call given {@link InvokeUtils.Consumer} for the not static field with given {@code fieldName} for the given {@code obj}.<br>
+     * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
+     *
+     * @param obj          not {@literal null} object
+     * @param fieldName    not {@literal null} field name
+     * @param setValueTask not {@literal null} consumer is called for the field
+     * @throws Exception in case if any problem; check exception type for details
+     */
     public static void setFieldValue(Object obj, String fieldName, InvokeUtils.Consumer<Field> setValueTask) throws Exception {
+        Objects.requireNonNull(obj, "'obj' should not be null");
+        Objects.requireNonNull(fieldName, "'fieldName' should not be null");
+        Objects.requireNonNull(setValueTask, "'setValueTask' should not be null");
         setFieldValue(obj, getField(obj.getClass(), fieldName), setValueTask);
     }
 
+    /**
+     * Set given {@code value} for the given static {@code field}.
+     *
+     * @param field not {@literal null} field
+     * @param value new value of the field
+     * @throws Exception in case if any problem; check exception type for details
+     */
     public static void setStaticFieldValue(Field field, Object value) throws Exception {
+        Objects.requireNonNull(field, "'field' should not be null");
         InvokeUtils.invokeConsumer(field, f -> setFieldValueImpl(f, null, value));
     }
 
+    /**
+     * Set given {@code value} for the static field with given {@code fieldName} for the given {@code obj}.<br>
+     * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
+     *
+     * @param cls       not {@literal null} class object
+     * @param fieldName not {@literal null} field name
+     * @param value     new value of the field
+     * @throws Exception in case if any problem; check exception type for details
+     */
     public static void setStaticFieldValue(Class<?> cls, String fieldName, Object value) throws Exception {
+        Objects.requireNonNull(cls, "'cls' should not be null");
+        Objects.requireNonNull(fieldName, "'fieldName' should not be null");
         setStaticFieldValue(getField(cls, fieldName), value);
     }
 
+    /**
+     * Call given {@link InvokeUtils.Consumer} for the static field {@code field}.
+     *
+     * @param field        not {@literal null} field
+     * @param setValueTask not {@literal null} consumer is called for the field
+     * @throws Exception in case if any problem; check exception type for details
+     */
     public static void setStaticFieldValue(Field field, InvokeUtils.Consumer<Field> setValueTask) throws Exception {
+        Objects.requireNonNull(field, "'field' should not be null");
+        Objects.requireNonNull(setValueTask, "'setValueTask' should not be null");
         InvokeUtils.invokeConsumer(field, setValueTask);
     }
 
+    /**
+     * Call given {@link InvokeUtils.Consumer} for the static field with given {@code fieldName} for the given {@code cls}.<br>
+     * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
+     *
+     * @param cls          not {@literal null} class object
+     * @param fieldName    not {@literal null} field name
+     * @param setValueTask not {@literal null} consumer is called for the field
+     * @throws Exception in case if any problem; check exception type for details
+     */
     public static void setStaticFieldValue(Class<?> cls, String fieldName, InvokeUtils.Consumer<Field> setValueTask) throws Exception {
+        Objects.requireNonNull(cls, "'cls' should not be null");
+        Objects.requireNonNull(fieldName, "'fieldName' should not be null");
+        Objects.requireNonNull(setValueTask, "'setValueTask' should not be null");
         setStaticFieldValue(getField(cls, fieldName), setValueTask);
     }
 
+    /**
+     * Retrieve filed with given {@code fieldName} for the given {@code cls}. If field was not found in the given class, then parent class will be
+     * used to find the field and etc.
+     *
+     * @param cls       not {@literal null} class object
+     * @param fieldName not {@literal null} field name
+     * @return not {@literal null} filed
+     * @throws NoSuchFieldException in case of filed was not found
+     */
     private static Field getField(Class<?> cls, String fieldName) throws NoSuchFieldException {
+        Objects.requireNonNull(cls, "'cls' should not be null");
+        Objects.requireNonNull(fieldName, "'fieldName' should not be null");
+
         Field field = null;
         Class<?> clazz = cls;
 
@@ -70,10 +211,24 @@ public final class FieldUtils {
             }
         }
 
-        return Optional.ofNullable(field).orElseThrow(NoSuchElementException::new);
+        if (field == null)
+            throw new NoSuchFieldException("Field '" + fieldName + "' was not found in '" + cls + "' and it's parents");
+
+        return field;
     }
 
+    /**
+     * Set given {@code value} for the {@code field}. If {@code obj} is {@literal null}, then {@code field} is static; otherwise it is not static and
+     * {@code obj} instance is used to set the field's value.
+     *
+     * @param field not {@literal null} field
+     * @param obj   {@literal null} for static field or not {@literal null} for not static field
+     * @param value new value of the field
+     * @throws IllegalAccessException in case of value cannot be set to the field
+     */
     private static void setFieldValueImpl(Field field, Object obj, Object value) throws IllegalAccessException {
+        Objects.requireNonNull(field, "'field' should not be null");
+
         if (field.getType().isAssignableFrom(int.class))
             field.setInt(obj, ((Number)value).intValue());
         else if (field.getType().isAssignableFrom(boolean.class))
@@ -94,10 +249,24 @@ public final class FieldUtils {
             field.set(obj, value);
     }
 
+    /**
+     * Retrieve value's {@link Class} of the given {@code field}.
+     *
+     * @param field field
+     * @return {@link Class} object
+     */
     public static Class<?> getType(Field field) {
         return field.getType();
     }
 
+    /**
+     * Retrieve value's {@link Class} of the given {@code field} if the field is not {@literal null} or {@code def}
+     * otherwise.
+     *
+     * @param field field
+     * @param def   default {@link Class}
+     * @return {@link Class} object
+     */
     public static Class<?> getType(Field field, Class<?> def) {
         return field == null ? def : field.getType();
     }

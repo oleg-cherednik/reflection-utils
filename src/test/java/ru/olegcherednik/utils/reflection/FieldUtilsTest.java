@@ -5,7 +5,6 @@ import ru.olegcherednik.utils.reflection.data.Data;
 import ru.olegcherednik.utils.reflection.data.TypeData;
 
 import java.lang.reflect.Field;
-import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -36,9 +35,9 @@ public class FieldUtilsTest {
         assertThat(actual).isEqualTo("pizza");
     }
 
-    public void shouldThrowNoSuchElementExceptionWhenGetNotExistedFieldByFieldName() throws Exception {
+    public void shouldThrowNoSuchFieldExceptionWhenGetNotExistedFieldByFieldName() throws NoSuchFieldException {
         assertThatThrownBy(() -> FieldUtils.getFieldValue(Data.create(), "unknownName"))
-                .isExactlyInstanceOf(NoSuchElementException.class);
+                .isExactlyInstanceOf(NoSuchFieldException.class);
     }
 
     public void shouldRetrieveFieldTypeWhenGetType() throws NoSuchFieldException {
@@ -297,9 +296,9 @@ public class FieldUtilsTest {
         assertThat(data.getValFloatWrapper()).isNull();
     }
 
-    public void shouldThrowNoSuchElementExceptionWhenGetNotExistedStaticFieldByFieldName() throws Exception {
+    public void shouldThrowNoSuchFieldExceptionWhenGetNotExistedStaticFieldByFieldName() throws NoSuchFieldException {
         assertThatThrownBy(() -> FieldUtils.getStaticFieldValue(Data.class, "unknownName"))
-                .isExactlyInstanceOf(NoSuchElementException.class);
+                .isExactlyInstanceOf(NoSuchFieldException.class);
     }
 
 }
