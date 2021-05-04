@@ -35,7 +35,7 @@ public class FieldUtilsTest {
         assertThat(actual).isEqualTo("pizza");
     }
 
-    public void shouldThrowNoSuchFieldExceptionWhenGetNotExistedFieldByFieldName() throws NoSuchFieldException {
+    public void shouldThrowNoSuchElementExceptionWhenGetNotExistedFieldByFieldName() throws NoSuchFieldException {
         assertThatThrownBy(() -> FieldUtils.getFieldValue(Data.create(), "unknownName"))
                 .isExactlyInstanceOf(NoSuchFieldException.class);
     }
@@ -296,7 +296,7 @@ public class FieldUtilsTest {
         assertThat(data.getValFloatWrapper()).isNull();
     }
 
-    public void shouldThrowNoSuchFieldExceptionWhenGetNotExistedStaticFieldByFieldName() throws NoSuchFieldException {
+    public void shouldThrowNoSuchElementExceptionWhenGetNotExistedStaticFieldByFieldName() throws NoSuchFieldException {
         assertThatThrownBy(() -> FieldUtils.getStaticFieldValue(Data.class, "unknownName"))
                 .isExactlyInstanceOf(NoSuchFieldException.class);
     }

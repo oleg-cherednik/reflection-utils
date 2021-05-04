@@ -18,7 +18,7 @@ public final class FieldUtils {
      * @param field not {@literal null} field
      * @param <T>   type of the field
      * @return value of the field
-     * @throws Exception in case if any problem; check exception type for details
+     * @throws Exception in case if any problem; check type for details
      */
     public static <T> T getFieldValue(Object obj, Field field) throws Exception {
         Objects.requireNonNull(obj, "'obj' should not be null");
@@ -212,7 +212,7 @@ public final class FieldUtils {
         }
 
         if (field == null)
-            throw new NoSuchFieldException("Field '" + fieldName + "' was not found in '" + cls + "' and it's parents");
+            throw new NoSuchFieldException("Field '" + fieldName + "' was not found in class '" + cls + "' and it's parents");
 
         return field;
     }

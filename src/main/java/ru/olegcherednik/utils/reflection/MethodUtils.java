@@ -5,6 +5,8 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
+ * Utils for working with methods using reflection.
+ *
  * @author Oleg Cherednik
  * @since 06.12.2020
  */

@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Oleg Cherednik
@@ -32,6 +33,11 @@ public class EnumUtilsTest {
 
         for (CarBrand brand : CarBrand.values())
             assertThatCode(() -> CarBrand.valueOf(brand.name())).doesNotThrowAnyException();
+    }
+
+    public void shouldThrowIllegalArgumentExceptionWhenConstantWithGivenNameExists() throws Throwable {
+        assertThatThrownBy(() -> EnumUtils.addConstant(CarBrand.class, CarBrand.BMW.name()))
+                .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     enum CarBrand {
