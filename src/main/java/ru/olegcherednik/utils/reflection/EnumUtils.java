@@ -16,7 +16,7 @@ import java.util.Objects;
 public final class EnumUtils {
 
     /**
-     * Add new constant with given {@code constantName} of the given enum {@code cls}.
+     * Add new constant with given {@code constantName} to the given enum {@code cls}.
      *
      * @param cls          not {@literal null} enum class object
      * @param constantName not {@literal null} enum's constant name
@@ -30,7 +30,7 @@ public final class EnumUtils {
     }
 
     /**
-     * Add new constant with given {@code constantName} of the given enum {@code cls} and call given {@code setExtraFieldTask} consumer to set
+     * Add new constant with given {@code constantName} to the given enum {@code cls} and call given {@code setExtraFieldTask} consumer to set
      * additional properties for the new created enum's constant before it will be added to the enum.
      *
      * @param cls               not {@literal null} enum class object
