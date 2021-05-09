@@ -5,7 +5,6 @@ import sun.misc.Unsafe;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * Utils for working with enums using reflection.
@@ -25,8 +24,8 @@ public final class EnumUtils {
      * @throws NullPointerException in case of any of required parameters is {@literal null}
      */
     public static <T extends Enum<?>> void addConstant(Class<T> cls, String constantName) throws Exception {
-        Objects.requireNonNull(cls, "'cls' should not be null");
-        Objects.requireNonNull(constantName, "'constantName' should not be null");
+        ValidationUtils.requireClsNonNull(cls);
+        ValidationUtils.requireConstantNameNonNull(constantName);
 
         addConstant(cls, constantName, (InvokeUtils.Consumer<T>)InvokeUtils.Consumer.NULL);
     }
@@ -45,9 +44,9 @@ public final class EnumUtils {
     @SuppressWarnings("UseOfSunClasses")
     public static <T extends Enum<?>> void addConstant(Class<T> cls, String constantName, InvokeUtils.Consumer<T> setExtraFieldTask)
             throws Exception {
-        Objects.requireNonNull(cls, "'cls' should not be null");
-        Objects.requireNonNull(constantName, "'constantName' should not be null");
-        Objects.requireNonNull(setExtraFieldTask, "'setExtraFieldTask' should not be null");
+        ValidationUtils.requireClsNonNull(cls);
+        ValidationUtils.requireConstantNameNonNull(constantName);
+        ValidationUtils.requireSetExtraFieldTaskNonNull(setExtraFieldTask);
 
         requireConstantNotExist(cls, constantName);
 
@@ -74,15 +73,15 @@ public final class EnumUtils {
     }
 
     private static <T extends Enum<?>> void setFieldValue(T obj, String fieldName, Object value) throws Exception {
-        Objects.requireNonNull(obj, "'obj' should not be null");
-        Objects.requireNonNull(fieldName, "'fieldName' should not be null");
+        ValidationUtils.requireObjNonNull(obj);
+        ValidationUtils.requireFieldNameNonNull(fieldName);
 
         InvokeUtils.invokeConsumer(Enum.class.getDeclaredField(fieldName), field -> field.set(obj, value));
     }
 
     private static <T extends Enum<?>> void setField(Class<T> cls, String fieldName, Object value) throws Exception {
-        Objects.requireNonNull(cls, "'cls' should not be null");
-        Objects.requireNonNull(fieldName, "'fieldName' should not be null");
+        ValidationUtils.requireClsNonNull(cls);
+        ValidationUtils.requireFieldNameNonNull(fieldName);
 
         InvokeUtils.invokeConsumer(Class.class.getDeclaredField(fieldName), field -> field.set(cls, value));
     }
@@ -97,8 +96,8 @@ public final class EnumUtils {
      * @throws NullPointerException     in case of any of required parameters is {@literal null}
      */
     private static <T extends Enum<?>> void requireConstantNotExist(Class<T> cls, String constantName) {
-        Objects.requireNonNull(cls, "'cls' should not be null");
-        Objects.requireNonNull(constantName, "'constantName' should not be null");
+        ValidationUtils.requireClsNonNull(cls);
+        ValidationUtils.requireConstantNameNonNull(constantName);
 
         if (Arrays.stream(cls.getEnumConstants()).anyMatch(value -> value.name().equals(constantName)))
             throw new IllegalArgumentException("Enum '" + cls + "' already has constant with name '" + constantName + '\'');

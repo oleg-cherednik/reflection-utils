@@ -3,7 +3,6 @@ package ru.olegcherednik.utils.reflection;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
 /**
  * Utils for working with methods using reflection.
@@ -24,8 +23,8 @@ public final class MethodUtils {
      * @throws Exception in case if any problem; check type for details
      */
     public static <T> T invokeMethod(Object obj, String methodName) throws Exception {
-        Objects.requireNonNull(obj, "'obj' should not be null");
-        Objects.requireNonNull(methodName, "'methodName' should not be null");
+        ValidationUtils.requireObjNonNull(obj);
+        ValidationUtils.requireMethodNameNonNull(methodName);
 
         return invokeMethod(obj, methodName, (Class<?>[])null, null);
     }
@@ -44,9 +43,9 @@ public final class MethodUtils {
      * @throws Exception in case if any problem; check type for details
      */
     public static <T> T invokeMethod(Object obj, String methodName, Class<?> type, Object value) throws Exception {
-        Objects.requireNonNull(obj, "'obj' should not be null");
-        Objects.requireNonNull(methodName, "'methodName' should not be null");
-        Objects.requireNonNull(type, "'type' should not be null");
+        ValidationUtils.requireObjNonNull(obj);
+        ValidationUtils.requireMethodNameNonNull(methodName);
+        ValidationUtils.requireTypeNonNull(type);
 
         return invokeMethod(obj, methodName, new Class<?>[] { type }, new Object[] { value });
     }
@@ -69,10 +68,9 @@ public final class MethodUtils {
     public static <T> T invokeMethod(Object obj, String methodName,
             Class<?> type1, Object value1,
             Class<?> type2, Object value2) throws Exception {
-        Objects.requireNonNull(obj, "'obj' should not be null");
-        Objects.requireNonNull(methodName, "'methodName' should not be null");
-        Objects.requireNonNull(type1, "'type1' should not be null");
-        Objects.requireNonNull(type2, "'type2' should not be null");
+        ValidationUtils.requireObjNonNull(obj);
+        ValidationUtils.requireMethodNameNonNull(methodName);
+        ValidationUtils.requireTypeNonNull(type1, type2);
 
         return invokeMethod(obj, methodName, new Class<?>[] { type1, type2 }, new Object[] { value1, value2 });
     }
@@ -99,11 +97,9 @@ public final class MethodUtils {
             Class<?> type1, Object value1,
             Class<?> type2, Object value2,
             Class<?> type3, Object value3) throws Exception {
-        Objects.requireNonNull(obj, "'obj' should not be null");
-        Objects.requireNonNull(methodName, "'methodName' should not be null");
-        Objects.requireNonNull(type1, "'type1' should not be null");
-        Objects.requireNonNull(type2, "'type2' should not be null");
-        Objects.requireNonNull(type2, "'type3' should not be null");
+        ValidationUtils.requireObjNonNull(obj);
+        ValidationUtils.requireMethodNameNonNull(methodName);
+        ValidationUtils.requireTypeNonNull(type1, type2, type3);
 
         return invokeMethod(obj, methodName, new Class<?>[] { type1, type2, type3 }, new Object[] { value1, value2, value3 });
     }
@@ -119,8 +115,8 @@ public final class MethodUtils {
      * @throws Exception in case if any problem; check type for details
      */
     public static <T> T invokeMethod(Object obj, Method method, Object... values) throws Exception {
-        Objects.requireNonNull(obj, "'obj' should not be null");
-        Objects.requireNonNull(method, "'method' should not be null");
+        ValidationUtils.requireObjNonNull(obj);
+        ValidationUtils.requireMethodNonNull(method);
 
         return InvokeUtils.invokeFunction(method, m -> (T)m.invoke(obj, values));
     }
@@ -140,38 +136,12 @@ public final class MethodUtils {
      */
     @SuppressWarnings("MethodCanBeVariableArityMethod")
     public static <T> T invokeMethod(Object obj, String methodName, Class<?>[] types, Object[] values) throws Exception {
-        requireLengthMatch(types, values);
-        requireValuesNotNull(types);
+        ValidationUtils.requireObjNonNull(obj);
+        ValidationUtils.requireMethodNameNonNull(methodName);
+        ValidationUtils.requireLengthMatch(types, values);
+        ValidationUtils.requireValuesNotNull(types);
 
         return invokeMethod(obj, getMethod(obj.getClass(), methodName, types), values);
-    }
-
-    /**
-     * Checks that given arrays {@code types} and {@code values} have the same length
-     *
-     * @param types  types of the parameters
-     * @param values values of the parameters
-     * @throws IllegalArgumentException in case of given arrays have not the same length
-     */
-    @SuppressWarnings("MethodCanBeVariableArityMethod")
-    private static void requireLengthMatch(Class<?>[] types, Object[] values) {
-        int typesLength = types == null ? 0 : types.length;
-        int valuesLength = values == null ? 0 : values.length;
-
-        if (typesLength != valuesLength)
-            throw new IllegalArgumentException("Length of 'types' and 'value' should be equal");
-    }
-
-    /**
-     * Checks that given array {@code types} has not {@literal null} values if it is not {@literal null} itself.
-     *
-     * @param types types of the parameters
-     * @throws NullPointerException in case of given {@code types} has {@literal null} values
-     */
-    private static void requireValuesNotNull(Class<?>... types) {
-        if (types != null)
-            for (int i = 0; i < types.length; i++)
-                Objects.requireNonNull(types[i], "'type[" + i + "]' should not be null");
     }
 
     /**
@@ -185,8 +155,8 @@ public final class MethodUtils {
      * @throws Exception in case if any problem; check type for details
      */
     public static <T> T invokeStaticMethod(Class<?> cls, String methodName) throws Exception {
-        Objects.requireNonNull(cls, "'cls' should not be null");
-        Objects.requireNonNull(methodName, "'methodName' should not be null");
+        ValidationUtils.requireClsNonNull(cls);
+        ValidationUtils.requireMethodNameNonNull(methodName);
 
         return invokeStaticMethod(cls, methodName, (Class<?>[])null, null);
     }
@@ -205,9 +175,9 @@ public final class MethodUtils {
      * @throws Exception in case if any problem; check type for details
      */
     public static <T> T invokeStaticMethod(Class<?> cls, String methodName, Class<?> type, Object value) throws Exception {
-        Objects.requireNonNull(cls, "'cls' should not be null");
-        Objects.requireNonNull(methodName, "'methodName' should not be null");
-        Objects.requireNonNull(type, "'type' should not be null");
+        ValidationUtils.requireClsNonNull(cls);
+        ValidationUtils.requireMethodNameNonNull(methodName);
+        ValidationUtils.requireTypeNonNull(type);
 
         return invokeStaticMethod(cls, methodName, new Class<?>[] { type }, new Object[] { value });
     }
@@ -230,10 +200,9 @@ public final class MethodUtils {
     public static <T> T invokeStaticMethod(Class<?> cls, String methodName,
             Class<?> type1, Object value1,
             Class<?> type2, Object value2) throws Exception {
-        Objects.requireNonNull(cls, "'cls' should not be null");
-        Objects.requireNonNull(methodName, "'methodName' should not be null");
-        Objects.requireNonNull(type1, "'type1' should not be null");
-        Objects.requireNonNull(type2, "'type2' should not be null");
+        ValidationUtils.requireClsNonNull(cls);
+        ValidationUtils.requireMethodNameNonNull(methodName);
+        ValidationUtils.requireTypeNonNull(type1, type2);
 
         return invokeStaticMethod(cls, methodName, new Class<?>[] { type1, type2 }, new Object[] { value1, value2 });
     }
@@ -260,11 +229,9 @@ public final class MethodUtils {
             Class<?> type1, Object value1,
             Class<?> type2, Object value2,
             Class<?> type3, Object value3) throws Exception {
-        Objects.requireNonNull(cls, "'cls' should not be null");
-        Objects.requireNonNull(methodName, "'methodName' should not be null");
-        Objects.requireNonNull(type1, "'type1' should not be null");
-        Objects.requireNonNull(type2, "'type2' should not be null");
-        Objects.requireNonNull(type2, "'type3' should not be null");
+        ValidationUtils.requireClsNonNull(cls);
+        ValidationUtils.requireMethodNameNonNull(methodName);
+        ValidationUtils.requireTypeNonNull(type1, type2, type3);
 
         return invokeStaticMethod(cls, methodName, new Class<?>[] { type1, type2, type3 }, new Object[] { value1, value2, value3 });
     }
@@ -279,7 +246,7 @@ public final class MethodUtils {
      * @throws Exception in case if any problem; check type for details
      */
     public static <T> T invokeStaticMethod(Method method, Object... values) throws Exception {
-        Objects.requireNonNull(method, "'method' should not be null");
+        ValidationUtils.requireMethodNonNull(method);
 
         return InvokeUtils.invokeFunction(method, m -> (T)m.invoke(null, values));
     }
@@ -298,8 +265,8 @@ public final class MethodUtils {
      */
     @SuppressWarnings("MethodCanBeVariableArityMethod")
     public static <T> T invokeStaticMethod(Class<?> cls, String methodName, Class<?>[] types, Object[] values) throws Exception {
-        Objects.requireNonNull(cls, "'cls' should not be null");
-        Objects.requireNonNull(methodName, "'methodName' should not be null");
+        ValidationUtils.requireClsNonNull(cls);
+        ValidationUtils.requireMethodNameNonNull(methodName);
 
         return invokeStaticMethod(getMethod(cls, methodName, types), values);
     }
@@ -314,8 +281,8 @@ public final class MethodUtils {
      * @throws NoSuchFieldException in case of filed was not found
      */
     private static Method getMethod(Class<?> cls, String methodName, Class<?>... types) throws NoSuchMethodException {
-        Objects.requireNonNull(cls, "'cls' should not be null");
-        Objects.requireNonNull(methodName, "'methodName' should not be null");
+        ValidationUtils.requireClsNonNull(cls);
+        ValidationUtils.requireMethodNameNonNull(methodName);
 
         Method method = null;
         Class<?> clazz = cls;
@@ -342,7 +309,7 @@ public final class MethodUtils {
      * @return not {@literal null} {@link Class} object
      */
     public static Class<?> getReturnType(Method method) {
-        Objects.requireNonNull(method, "'method' should not be null");
+        ValidationUtils.requireMethodNonNull(method);
 
         return method.getReturnType();
     }
