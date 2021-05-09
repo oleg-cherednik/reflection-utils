@@ -27,6 +27,7 @@ public final class EnumUtils {
     public static <T extends Enum<?>> void addConstant(Class<T> cls, String constantName) throws Exception {
         Objects.requireNonNull(cls, "'cls' should not be null");
         Objects.requireNonNull(constantName, "'constantName' should not be null");
+
         addConstant(cls, constantName, (InvokeUtils.Consumer<T>)InvokeUtils.Consumer.NULL);
     }
 
@@ -73,10 +74,16 @@ public final class EnumUtils {
     }
 
     private static <T extends Enum<?>> void setFieldValue(T obj, String fieldName, Object value) throws Exception {
+        Objects.requireNonNull(obj, "'obj' should not be null");
+        Objects.requireNonNull(fieldName, "'fieldName' should not be null");
+
         InvokeUtils.invokeConsumer(Enum.class.getDeclaredField(fieldName), field -> field.set(obj, value));
     }
 
     private static <T extends Enum<?>> void setField(Class<T> cls, String fieldName, Object value) throws Exception {
+        Objects.requireNonNull(cls, "'cls' should not be null");
+        Objects.requireNonNull(fieldName, "'fieldName' should not be null");
+
         InvokeUtils.invokeConsumer(Class.class.getDeclaredField(fieldName), field -> field.set(cls, value));
     }
 
