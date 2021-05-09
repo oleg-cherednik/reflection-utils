@@ -21,7 +21,8 @@ public final class EnumUtils {
      * @param cls          not {@literal null} enum class object
      * @param constantName not {@literal null} enum's constant name
      * @param <T>          enum class type
-     * @throws Exception in case if any problem; check type for details
+     * @throws Exception            in case if any problem; check type for details
+     * @throws NullPointerException in case of any of required parameters is {@literal null}
      */
     public static <T extends Enum<?>> void addConstant(Class<T> cls, String constantName) throws Exception {
         Objects.requireNonNull(cls, "'cls' should not be null");
@@ -37,7 +38,8 @@ public final class EnumUtils {
      * @param constantName      not {@literal null} enum's constant name
      * @param setExtraFieldTask not {@literal null} consumer is called for the new constant
      * @param <T>               enum class type
-     * @throws Exception in case if any problem; check type for details
+     * @throws Exception            in case if any problem; check type for details
+     * @throws NullPointerException in case of any of required parameters is {@literal null}
      */
     @SuppressWarnings("UseOfSunClasses")
     public static <T extends Enum<?>> void addConstant(Class<T> cls, String constantName, InvokeUtils.Consumer<T> setExtraFieldTask)
@@ -70,12 +72,12 @@ public final class EnumUtils {
         setField(cls, "enumConstantDirectory", null);
     }
 
-    private static <T extends Enum<?>> void setFieldValue(T obj, String name, Object value) throws Exception {
-        InvokeUtils.invokeConsumer(Enum.class.getDeclaredField(name), field -> field.set(obj, value));
+    private static <T extends Enum<?>> void setFieldValue(T obj, String fieldName, Object value) throws Exception {
+        InvokeUtils.invokeConsumer(Enum.class.getDeclaredField(fieldName), field -> field.set(obj, value));
     }
 
-    private static <T extends Enum<?>> void setField(Class<T> cls, String name, Object value) throws Exception {
-        InvokeUtils.invokeConsumer(Class.class.getDeclaredField(name), field -> field.set(cls, value));
+    private static <T extends Enum<?>> void setField(Class<T> cls, String fieldName, Object value) throws Exception {
+        InvokeUtils.invokeConsumer(Class.class.getDeclaredField(fieldName), field -> field.set(cls, value));
     }
 
     /**
@@ -84,14 +86,14 @@ public final class EnumUtils {
      * @param cls          not {@literal null} enum class object
      * @param constantName not {@literal null} enum's constant name
      * @param <T>          enum class type
-     * @throws IllegalArgumentException in case of enums contains constaint with given name
+     * @throws IllegalArgumentException in case of enums contains constant with given name
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
      */
-    private static <T extends Enum<?>> void requireConstantNotExist(Class<T> cls, String constantName) throws IllegalArgumentException {
+    private static <T extends Enum<?>> void requireConstantNotExist(Class<T> cls, String constantName) {
         Objects.requireNonNull(cls, "'cls' should not be null");
         Objects.requireNonNull(constantName, "'constantName' should not be null");
 
-        if (Arrays.stream(cls.getEnumConstants())
-                  .anyMatch(value -> value.name().equals(constantName)))
+        if (Arrays.stream(cls.getEnumConstants()).anyMatch(value -> value.name().equals(constantName)))
             throw new IllegalArgumentException("Enum '" + cls + "' already has constant with name '" + constantName + '\'');
     }
 

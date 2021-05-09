@@ -1,9 +1,9 @@
 package ru.olegcherednik.utils.reflection;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Utils for working with methods using reflection.
@@ -26,6 +26,7 @@ public final class MethodUtils {
     public static <T> T invokeMethod(Object obj, String methodName) throws Exception {
         Objects.requireNonNull(obj, "'obj' should not be null");
         Objects.requireNonNull(methodName, "'methodName' should not be null");
+
         return invokeMethod(obj, methodName, (Class<?>[])null, null);
     }
 
@@ -46,6 +47,7 @@ public final class MethodUtils {
         Objects.requireNonNull(obj, "'obj' should not be null");
         Objects.requireNonNull(methodName, "'methodName' should not be null");
         Objects.requireNonNull(type, "'type' should not be null");
+
         return invokeMethod(obj, methodName, new Class<?>[] { type }, new Object[] { value });
     }
 
@@ -71,6 +73,7 @@ public final class MethodUtils {
         Objects.requireNonNull(methodName, "'methodName' should not be null");
         Objects.requireNonNull(type1, "'type1' should not be null");
         Objects.requireNonNull(type2, "'type2' should not be null");
+
         return invokeMethod(obj, methodName, new Class<?>[] { type1, type2 }, new Object[] { value1, value2 });
     }
 
@@ -101,6 +104,7 @@ public final class MethodUtils {
         Objects.requireNonNull(type1, "'type1' should not be null");
         Objects.requireNonNull(type2, "'type2' should not be null");
         Objects.requireNonNull(type2, "'type3' should not be null");
+
         return invokeMethod(obj, methodName, new Class<?>[] { type1, type2, type3 }, new Object[] { value1, value2, value3 });
     }
 
@@ -117,6 +121,7 @@ public final class MethodUtils {
     public static <T> T invokeMethod(Object obj, Method method, Object... values) throws Exception {
         Objects.requireNonNull(obj, "'obj' should not be null");
         Objects.requireNonNull(method, "'method' should not be null");
+
         return InvokeUtils.invokeFunction(method, m -> (T)m.invoke(obj, values));
     }
 
@@ -137,9 +142,17 @@ public final class MethodUtils {
     public static <T> T invokeMethod(Object obj, String methodName, Class<?>[] types, Object[] values) throws Exception {
         requireLengthMatch(types, values);
         requireValuesNotNull(types);
+
         return invokeMethod(obj, getMethod(obj.getClass(), methodName, types), values);
     }
 
+    /**
+     * Checks that given arrays {@code types} and {@code values} have the same length
+     *
+     * @param types  types of the parameters
+     * @param values values of the parameters
+     * @throws IllegalArgumentException in case of given arrays have not the same length
+     */
     @SuppressWarnings("MethodCanBeVariableArityMethod")
     private static void requireLengthMatch(Class<?>[] types, Object[] values) {
         int typesLength = types == null ? 0 : types.length;
@@ -149,43 +162,161 @@ public final class MethodUtils {
             throw new IllegalArgumentException("Length of 'types' and 'value' should be equal");
     }
 
+    /**
+     * Checks that given array {@code types} has not {@literal null} values if it is not {@literal null} itself.
+     *
+     * @param types types of the parameters
+     * @throws NullPointerException in case of given {@code types} has {@literal null} values
+     */
     private static void requireValuesNotNull(Class<?>... types) {
         if (types != null)
             for (int i = 0; i < types.length; i++)
                 Objects.requireNonNull(types[i], "'type[" + i + "]' should not be null");
     }
 
+    /**
+     * Invoke static method with the given {@code methodName} for the given {@code cls}<br>
+     * Method with this {@code methodName} could be as in the given class itself as in any it's parents. The first found method is taken.
+     *
+     * @param cls        not {@literal null} class object
+     * @param methodName not {@literal null} method name
+     * @param <T>        type of the method's return value
+     * @return return value of the method
+     * @throws Exception in case if any problem; check type for details
+     */
     public static <T> T invokeStaticMethod(Class<?> cls, String methodName) throws Exception {
+        Objects.requireNonNull(cls, "'cls' should not be null");
+        Objects.requireNonNull(methodName, "'methodName' should not be null");
+
         return invokeStaticMethod(cls, methodName, (Class<?>[])null, null);
     }
 
+    /**
+     * Invoke static method with the given {@code methodName} and exactly one parameter (with {@code type} and {@code value}) for the given
+     * {@code cls}.<br>
+     * Method with this {@code methodName} could be as in the given class itself as in any it's parents. The first found method is taken.
+     *
+     * @param cls        not {@literal null} class object
+     * @param methodName not {@literal null} method name
+     * @param type       not {@literal null} type of the parameter
+     * @param value      value of the parameter
+     * @param <T>        type of the method's return value
+     * @return return value of the method
+     * @throws Exception in case if any problem; check type for details
+     */
     public static <T> T invokeStaticMethod(Class<?> cls, String methodName, Class<?> type, Object value) throws Exception {
+        Objects.requireNonNull(cls, "'cls' should not be null");
+        Objects.requireNonNull(methodName, "'methodName' should not be null");
+        Objects.requireNonNull(type, "'type' should not be null");
+
         return invokeStaticMethod(cls, methodName, new Class<?>[] { type }, new Object[] { value });
     }
 
+    /**
+     * Invoke static method with the given {@code methodName} and exactly two parameters (with {@code type1} and {@code value1} for the first
+     * parameter and {@code type2} and {@code value2} for the second parameter) for the given {@code cls}.<br>
+     * Method with this {@code methodName} could be as in the given class itself as in any it's parents. The first found method is taken.
+     *
+     * @param cls        not {@literal null} class object
+     * @param methodName not {@literal null} method name
+     * @param type1      not {@literal null} type of the 1st parameter
+     * @param value1     value of the 1st parameter
+     * @param type2      not {@literal null} type of the 2nd parameter
+     * @param value2     value of the 2nd parameter
+     * @param <T>        type of the method's return value
+     * @return return value of the method
+     * @throws Exception in case if any problem; check type for details
+     */
     public static <T> T invokeStaticMethod(Class<?> cls, String methodName,
             Class<?> type1, Object value1,
             Class<?> type2, Object value2) throws Exception {
+        Objects.requireNonNull(cls, "'cls' should not be null");
+        Objects.requireNonNull(methodName, "'methodName' should not be null");
+        Objects.requireNonNull(type1, "'type1' should not be null");
+        Objects.requireNonNull(type2, "'type2' should not be null");
+
         return invokeStaticMethod(cls, methodName, new Class<?>[] { type1, type2 }, new Object[] { value1, value2 });
     }
 
+    /**
+     * Invoke static method with the given {@code methodName} and exactly three parameters (with {@code type1} and {@code value1} for the first
+     * parameter, {@code type2} and {@code value2} for the second parameter and {@code type3} and {@code value3} for the third parameter) for the
+     * given {@code cls}.<br>
+     * Method with this {@code methodName} could be as in the given class itself as in any it's parents. The first found method is taken.
+     *
+     * @param cls        not {@literal null} class object
+     * @param methodName not {@literal null} method name
+     * @param type1      not {@literal null} type of the 1st parameter
+     * @param value1     value of the 1st parameter
+     * @param type2      not {@literal null} type of the 2nd parameter
+     * @param value2     value of the 2nd parameter
+     * @param type3      not {@literal null} type of the 3rd parameter
+     * @param value3     value of the 3rd parameter
+     * @param <T>        type of the method's return value
+     * @return return value of the method
+     * @throws Exception in case if any problem; check type for details
+     */
     public static <T> T invokeStaticMethod(Class<?> cls, String methodName,
             Class<?> type1, Object value1,
             Class<?> type2, Object value2,
             Class<?> type3, Object value3) throws Exception {
+        Objects.requireNonNull(cls, "'cls' should not be null");
+        Objects.requireNonNull(methodName, "'methodName' should not be null");
+        Objects.requireNonNull(type1, "'type1' should not be null");
+        Objects.requireNonNull(type2, "'type2' should not be null");
+        Objects.requireNonNull(type2, "'type3' should not be null");
+
         return invokeStaticMethod(cls, methodName, new Class<?>[] { type1, type2, type3 }, new Object[] { value1, value2, value3 });
     }
 
+    /**
+     * Invoke static {@code method} with parameters' {@code values}.
+     *
+     * @param method not {@literal null} method
+     * @param values values of the parameters
+     * @param <T>    type of the method's return value
+     * @return return value of the method
+     * @throws Exception in case if any problem; check type for details
+     */
     public static <T> T invokeStaticMethod(Method method, Object... values) throws Exception {
+        Objects.requireNonNull(method, "'method' should not be null");
+
         return InvokeUtils.invokeFunction(method, m -> (T)m.invoke(null, values));
     }
 
+    /**
+     * Invoke static method with the given {@code methodName} and parameters with given {@code types} and {@code values}<br>
+     * Method with this {@code methodName} could be as in the given class itself as in any it's parents. The first found method is taken.
+     *
+     * @param cls        not {@literal null} class object
+     * @param methodName not {@literal null} method name
+     * @param types      types of the parameters
+     * @param values     values of the parameters
+     * @param <T>        type of the method's return value
+     * @return return value of the method
+     * @throws Exception in case if any problem; check type for details
+     */
     @SuppressWarnings("MethodCanBeVariableArityMethod")
     public static <T> T invokeStaticMethod(Class<?> cls, String methodName, Class<?>[] types, Object[] values) throws Exception {
+        Objects.requireNonNull(cls, "'cls' should not be null");
+        Objects.requireNonNull(methodName, "'methodName' should not be null");
+
         return invokeStaticMethod(getMethod(cls, methodName, types), values);
     }
 
+    /**
+     * Retrieve method with given {@code methodName} for the given {@code cls}. If method was not found in the given class, then parent class will be
+     * used to find the method and etc.
+     *
+     * @param cls        not {@literal null} class object
+     * @param methodName not {@literal null} method name
+     * @return not {@literal null} method
+     * @throws NoSuchFieldException in case of filed was not found
+     */
     private static Method getMethod(Class<?> cls, String methodName, Class<?>... types) throws NoSuchMethodException {
+        Objects.requireNonNull(cls, "'cls' should not be null");
+        Objects.requireNonNull(methodName, "'methodName' should not be null");
+
         Method method = null;
         Class<?> clazz = cls;
 
@@ -197,13 +328,32 @@ public final class MethodUtils {
             }
         }
 
-        return Optional.ofNullable(method).orElseThrow(NoSuchElementException::new);
+        if (method == null)
+            throw new NoSuchElementException(String.format("Method '%s' with parameters '%s' was not found in class '%s' and it's parents",
+                    methodName, Arrays.toString(types), cls));
+
+        return method;
     }
 
+    /**
+     * Retrieve return value's {@link Class} of the given {@code method}.
+     *
+     * @param method not {@literal null} method
+     * @return not {@literal null} {@link Class} object
+     */
     public static Class<?> getReturnType(Method method) {
+        Objects.requireNonNull(method, "'method' should not be null");
+
         return method.getReturnType();
     }
 
+    /**
+     * Retrieve return value's {@link Class} of the given {@code method} if the method is not {@literal null} or {@code def} otherwise.
+     *
+     * @param method method
+     * @param def    default {@link Class}
+     * @return {@link Class} object
+     */
     public static Class<?> getReturnType(Method method, Class<?> def) {
         return method == null ? def : method.getReturnType();
     }
