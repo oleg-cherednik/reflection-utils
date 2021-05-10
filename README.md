@@ -117,8 +117,8 @@ Person person = ConstructorUtils.invokeConstructor(Person.class,
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class,
-                                                   new Class<?>[] { String.class, int.class, boolean.class },
-                                                   new Object[] { "marvin", 91, true });
+                                  new Class<?>[] { String.class, int.class, boolean.class },
+                                  new Object[] { "marvin", 91, true });
 ```
 >```
 >person.name = "marvin"
