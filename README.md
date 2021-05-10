@@ -28,8 +28,114 @@ compile 'ru.oleg-cherednik.utils.reflection:reflection-utils:1.0'
     <version>1.0</version>
 </dependency>
 ```                                                    
-
 ## Usage 
+
+To simplify usage of _reflection-utils_, there're following classes:
+* [ConstructorUtils](#constructorutils) - working with constructors;
+* [MethodUtils](#methodutils) - working with methods;
+* [FieldUtils](#fieldutils) - working with fields;
+* [EnumUtils](#enumutils) - working with enums;
+* [InvokeUtils](#constructorutils) - working with accessible objects;
+
+### ConstructorUtils
+
+This is a class definition for examples:
+```java
+public class Person {
+    
+    private String name = "defaultName";
+    private int age = -1;
+    private boolean marker;
+
+    public Person() {}
+
+    public Person(String name) {
+        this.name = name;
+    }
+    
+    public Person(String name, int age) {
+        this.name = name;             
+        this.age = age;
+    }
+
+    public Person(String name, int age, boolean marker) {
+        this.name = name;             
+        this.age = age;                               
+        this.marker = marker;
+    }
+
+}
+
+``` 
+
+#### Invoke a constructor with no arguments
+
+```java
+Person person = ConstructorUtils.invokeConstructor(Person.class);
+```
+>```
+>person.name = "defaultName"
+>``` 
+
+#### Invoke a constructor with exactly one argument
+
+```java
+Person person = ConstructorUtils.invokeConstructor(Person.class,
+                                                   String.class, "anna");
+```
+>```
+>person.name = "anna"
+>```        
+
+#### Invoke a constructor with exactly two arguments
+
+```java
+Person person = ConstructorUtils.invokeConstructor(Person.class,
+                                                   String.class, "peter",
+                                                   int.class, 71);
+```
+>```
+>person.name = "peter"
+>person.age = 71
+>```
+
+#### Invoke a constructor with exactly three arguments
+
+```java
+Person person = ConstructorUtils.invokeConstructor(Person.class,
+                                                   String.class, "marvin",
+                                                   int.class, 91,
+                                                   boolean.class, true); 
+```
+>```
+>person.name = "marvin"
+>person.age = 91
+>person.marker = true
+>```
+
+#### Invoke a constructor with many arguments
+
+```java
+Person person = ConstructorUtils.invokeConstructor(Person.class,
+                     new Class<?>[] { String.class, int.class, boolean.class },
+                     new Object[] { "marvin", 91, true });
+```
+>```
+>person.name = "marvin"
+>person.age = 91
+>person.marker = true
+>```
+
+### MethodUtils
+
+
+### FieldUtils
+
+
+### EnumUtils
+
+
+### InvokeUtils
 
 ### Links
 

@@ -14,7 +14,7 @@ import java.lang.reflect.Constructor;
 public final class ConstructorUtils {
 
     /**
-     * Invoke constructor with no arguments for the given {@code cls}.
+     * Invoke a constructor with no arguments for the given {@code cls}.
      *
      * @param cls not {@literal null} class object
      * @param <T> type of the class that contains the constructor
@@ -30,7 +30,7 @@ public final class ConstructorUtils {
     }
 
     /**
-     * Invoke constructor with exactly one argument ({@code type}/{@code value}) for the given {@code cls}.<br>
+     * Invoke a constructor with exactly one argument ({@code type}/{@code value}) for the given {@code cls}.<br>
      *
      * @param cls   not {@literal null} class object
      * @param type  not {@literal null} type of the argument
@@ -49,7 +49,7 @@ public final class ConstructorUtils {
     }
 
     /**
-     * Invoke constructor with exactly two arguments ({@code type1}/{@code value1} for the first argument and {@code type2}/{@code value2} for the
+     * Invoke a constructor with exactly two arguments ({@code type1}/{@code value1} for the first argument and {@code type2}/{@code value2} for the
      * second argument) for the given {@code cls}.
      *
      * @param cls    not {@literal null} class object
@@ -73,7 +73,7 @@ public final class ConstructorUtils {
     }
 
     /**
-     * Invoke constructor with exactly three arguments ({@code type1}/{@code value1} for the first argument, {@code type2}/{@code value2} for the
+     * Invoke a constructor with exactly three arguments ({@code type1}/{@code value1} for the first argument, {@code type2}/{@code value2} for the
      * second argument and {@code type3}/{@code value3} for the third argument) for the given {@code cls}.
      *
      * @param cls    not {@literal null} class object
@@ -100,7 +100,7 @@ public final class ConstructorUtils {
     }
 
     /**
-     * Invoke constructor with arguments of given {@code types}/{@code values} for the given {@code cls}. The array's length {@code types} and
+     * Invoke a constructor with arguments of given {@code types}/{@code values} for the given {@code cls}. The array's length {@code types} and
      * {@code value} should be equal.
      *
      * @param cls    not {@literal null} class object
@@ -122,7 +122,7 @@ public final class ConstructorUtils {
     }
 
     /**
-     * Invoke constructor with no arguments for the class with given {@code className}.
+     * Invoke a constructor with no arguments for the class with given {@code className}.
      *
      * @param className not {@literal null} class name
      * @param <T>       type of the class that contains the constructor
@@ -139,7 +139,7 @@ public final class ConstructorUtils {
     }
 
     /**
-     * Invoke constructor with exactly one argument ({@code type}/{@code value}) for the class with given {@code className}.
+     * Invoke a constructor with exactly one argument ({@code type}/{@code value}) for the class with given {@code className}.
      *
      * @param className not {@literal null} class name
      * @param type      not {@literal null} type of the argument
@@ -159,7 +159,7 @@ public final class ConstructorUtils {
     }
 
     /**
-     * Invoke constructor with exactly two arguments ({@code type1}/{@code value1} for the first argument and {@code type2}/{@code value2} for the
+     * Invoke a constructor with exactly two arguments ({@code type1}/{@code value1} for the first argument and {@code type2}/{@code value2} for the
      * second argument) for the class with given {@code className}.
      *
      * @param className not {@literal null} class name
@@ -183,7 +183,7 @@ public final class ConstructorUtils {
     }
 
     /**
-     * Invoke constructor with exactly three arguments ({@code type1}/{@code value1} for the first argument, {@code type2}/{@code value2} for the
+     * Invoke a constructor with exactly three arguments ({@code type1}/{@code value1} for the first argument, {@code type2}/{@code value2} for the
      * second argument and {@code type3}/{@code value3} for the third argument) for the class with given {@code className}.
      *
      * @param className not {@literal null} class name
@@ -210,7 +210,7 @@ public final class ConstructorUtils {
     }
 
     /**
-     * Invoke constructor with arguments of given {@code types}/{@code values} for the class with given {@code className}. The array's length
+     * Invoke a constructor with arguments of given {@code types}/{@code values} for the class with given {@code className}. The array's length
      * {@code types} and {@code value} should be equal.
      *
      * @param className not {@literal null} class name
@@ -232,7 +232,7 @@ public final class ConstructorUtils {
     }
 
     /**
-     * Invoke constructor {@code constructor} with arguments' {@code values}.
+     * Invoke a constructor {@code constructor} with arguments' {@code values}.
      *
      * @param constructor not {@literal null} constructor
      * @param values      values of the arguments (array length should match with constructor's arguments amount)
@@ -288,7 +288,6 @@ public final class ConstructorUtils {
             throw new ClassNotFoundException(className);
         }
     }
-
 
     private ConstructorUtils() {}
 
