@@ -14,14 +14,14 @@ import java.lang.reflect.Modifier;
  */
 public final class InvokeUtils {
 
-    public static <T extends AccessibleObject & Member> void invokeConsumer(T accessibleObject, Consumer<T> task) throws Exception {
+    public static <T extends AccessibleObject & Member> void invokeConsumer(T accessibleObject, Consumer<T> task) {
         invokeFunction(accessibleObject, (Function<T, Void>)func -> {
             task.accept(accessibleObject);
             return null;
         });
     }
 
-    public static <T extends AccessibleObject & Member, R> R invokeFunction(T accessibleObject, Function<T, R> task) throws Exception {
+    public static <T extends AccessibleObject & Member, R> R invokeFunction(T accessibleObject, Function<T, R> task) {
         boolean accessible = accessibleObject.isAccessible();
 
         try {
@@ -30,6 +30,10 @@ public final class InvokeUtils {
             if (accessibleObject instanceof Field)
                 return invokeWithModifiers(accessibleObject, task);
             return task.apply(accessibleObject);
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         } finally {
             accessibleObject.setAccessible(accessible);
         }

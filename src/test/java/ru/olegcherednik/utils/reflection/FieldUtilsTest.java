@@ -3,6 +3,7 @@ package ru.olegcherednik.utils.reflection;
 import org.testng.annotations.Test;
 import ru.olegcherednik.utils.reflection.data.Data;
 import ru.olegcherednik.utils.reflection.data.TypeData;
+import ru.olegcherednik.utils.reflection.exceptions.NoSuchFieldException;
 
 import java.lang.reflect.Field;
 
@@ -16,37 +17,37 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Test
 public class FieldUtilsTest {
 
-    public void shouldRetrieveFieldValueWhenGetFieldValueByField() throws Exception {
+    public void shouldRetrieveFieldValueWhenGetFieldValueByField() throws java.lang.NoSuchFieldException {
         Data data = Data.create();
         Field field = data.getClass().getDeclaredField("name");
         String actual = FieldUtils.getFieldValue(data, field);
         assertThat(actual).isEqualTo("oleg.cherednik");
     }
 
-    public void shouldRetrieveFieldValueWhenGetFieldValueByFieldName() throws Exception {
+    public void shouldRetrieveFieldValueWhenGetFieldValueByFieldName() {
         Data data = Data.create();
         String actual = FieldUtils.getFieldValue(data, "name");
         assertThat(actual).isEqualTo("oleg.cherednik");
     }
 
-    public void shouldRetrieveFieldValueWhenGetFieldValueFromBaseClassByFieldName() throws Exception {
+    public void shouldRetrieveFieldValueWhenGetFieldValueFromBaseClassByFieldName() {
         Data data = Data.create();
         String actual = FieldUtils.getFieldValue(data, "baseName");
         assertThat(actual).isEqualTo("pizza");
     }
 
-    public void shouldThrowNoSuchElementExceptionWhenGetNotExistedFieldByFieldName() throws NoSuchFieldException {
+    public void shouldThrowNoSuchElementExceptionWhenGetNotExistedFieldByFieldName() {
         assertThatThrownBy(() -> FieldUtils.getFieldValue(Data.create(), "unknownName"))
                 .isExactlyInstanceOf(NoSuchFieldException.class);
     }
 
-    public void shouldRetrieveFieldTypeWhenGetType() throws NoSuchFieldException {
+    public void shouldRetrieveFieldTypeWhenGetType() throws java.lang.NoSuchFieldException {
         Data data = Data.create();
         Field field = data.getClass().getDeclaredField("name");
         assertThat(FieldUtils.getType(field)).isSameAs(String.class);
     }
 
-    public void shouldRetrieveFieldTypeWhenGetTypeForExistedField() throws NoSuchFieldException {
+    public void shouldRetrieveFieldTypeWhenGetTypeForExistedField() throws java.lang.NoSuchFieldException {
         Data data = Data.create();
         Field field = data.getClass().getDeclaredField("name");
         assertThat(FieldUtils.getType(field, Number.class)).isSameAs(String.class);
@@ -56,24 +57,24 @@ public class FieldUtilsTest {
         assertThat(FieldUtils.getType(null, Number.class)).isSameAs(Number.class);
     }
 
-    public void shouldRetrieveStaticFieldValueWhenGetStaticFieldValueByField() throws Exception {
+    public void shouldRetrieveStaticFieldValueWhenGetStaticFieldValueByField() throws java.lang.NoSuchFieldException {
         Field field = Data.class.getDeclaredField("AUTO");
         String actual = FieldUtils.getStaticFieldValue(field);
         assertThat(actual).isEqualTo("ferrari");
     }
 
-    public void shouldRetrieveStaticFieldValueWhenGetStaticFieldValueByFieldName() throws Exception {
+    public void shouldRetrieveStaticFieldValueWhenGetStaticFieldValueByFieldName() {
         String actual = FieldUtils.getStaticFieldValue(Data.class, "AUTO");
         assertThat(actual).isEqualTo("ferrari");
     }
 
-    public void shouldRetrieveStaticFieldValueWhenGetStaticFieldValueFromBaseClassByFieldName() throws Exception {
+    public void shouldRetrieveStaticFieldValueWhenGetStaticFieldValueFromBaseClassByFieldName() {
         Data data = Data.create();
         String actual = FieldUtils.getFieldValue(data, "MONITOR");
         assertThat(actual).isEqualTo("dell");
     }
 
-    public void shouldSetFieldValueWhenSetFieldValueByField() throws Exception {
+    public void shouldSetFieldValueWhenSetFieldValueByField() throws java.lang.NoSuchFieldException {
         Data data = Data.create();
         assertThat(data.getName()).isNotEqualTo("moskow");
 
@@ -82,7 +83,7 @@ public class FieldUtilsTest {
         assertThat(data.getName()).isEqualTo("moskow");
     }
 
-    public void shouldSetFieldValueWhenSetFieldValueByFieldName() throws Exception {
+    public void shouldSetFieldValueWhenSetFieldValueByFieldName() {
         Data data = Data.create();
         assertThat(data.getName()).isNotEqualTo("moskow");
 
@@ -90,7 +91,7 @@ public class FieldUtilsTest {
         assertThat(data.getName()).isEqualTo("moskow");
     }
 
-    public void shouldSetFieldValueWhenSetFieldValueByFieldWithConsumer() throws Exception {
+    public void shouldSetFieldValueWhenSetFieldValueByFieldWithConsumer() throws java.lang.NoSuchFieldException {
         Data data = Data.create();
         assertThat(data.getName()).isNotEqualTo("moskow");
 
@@ -99,7 +100,7 @@ public class FieldUtilsTest {
         assertThat(data.getName()).isEqualTo("moskow");
     }
 
-    public void shouldSetFieldValueWhenSetFieldValueByFieldNameWithConsumer() throws Exception {
+    public void shouldSetFieldValueWhenSetFieldValueByFieldNameWithConsumer() {
         Data data = Data.create();
         assertThat(data.getName()).isNotEqualTo("moskow");
 
@@ -107,7 +108,7 @@ public class FieldUtilsTest {
         assertThat(data.getName()).isEqualTo("moskow");
     }
 
-    public void shouldSetStaticFieldValueWhenSetFieldValueByField() throws Exception {
+    public void shouldSetStaticFieldValueWhenSetFieldValueByField() throws java.lang.NoSuchFieldException {
         Field field = Data.class.getDeclaredField("AUTO");
         assertThat((String)FieldUtils.getStaticFieldValue(field)).isEqualTo("ferrari");
 
@@ -118,7 +119,7 @@ public class FieldUtilsTest {
         assertThat((String)FieldUtils.getStaticFieldValue(field)).isEqualTo("ferrari");
     }
 
-    public void shouldSetStaticFieldValueWhenSetFieldValueByFieldName() throws Exception {
+    public void shouldSetStaticFieldValueWhenSetFieldValueByFieldName() {
         assertThat((String)FieldUtils.getStaticFieldValue(Data.class, "AUTO")).isEqualTo("ferrari");
 
         FieldUtils.setStaticFieldValue(Data.class, "AUTO", "audi");
@@ -128,7 +129,7 @@ public class FieldUtilsTest {
         assertThat((String)FieldUtils.getStaticFieldValue(Data.class, "AUTO")).isEqualTo("ferrari");
     }
 
-    public void shouldSetStaticFieldValueWhenSetFieldValueByFieldNameInBaseCalss() throws Exception {
+    public void shouldSetStaticFieldValueWhenSetFieldValueByFieldNameInBaseClass() {
         assertThat((String)FieldUtils.getStaticFieldValue(Data.class, "MONITOR")).isEqualTo("dell");
 
         FieldUtils.setStaticFieldValue(Data.class, "MONITOR", "acer");
@@ -138,7 +139,7 @@ public class FieldUtilsTest {
         assertThat((String)FieldUtils.getStaticFieldValue(Data.class, "MONITOR")).isEqualTo("dell");
     }
 
-    public void shouldSetStaticFieldValueWhenSetFieldValueByFieldConsumer() throws Exception {
+    public void shouldSetStaticFieldValueWhenSetFieldValueByFieldConsumer() throws java.lang.NoSuchFieldException {
         assertThat((String)FieldUtils.getStaticFieldValue(Data.class, "AUTO")).isEqualTo("ferrari");
 
         Field field = Data.class.getDeclaredField("AUTO");
@@ -149,7 +150,7 @@ public class FieldUtilsTest {
         assertThat((String)FieldUtils.getStaticFieldValue(Data.class, "AUTO")).isEqualTo("ferrari");
     }
 
-    public void shouldSetStaticFieldValueWhenSetFieldValueByFieldNameConsumer() throws Exception {
+    public void shouldSetStaticFieldValueWhenSetFieldValueByFieldNameConsumer() {
         assertThat((String)FieldUtils.getStaticFieldValue(Data.class, "AUTO")).isEqualTo("ferrari");
 
         FieldUtils.setStaticFieldValue(Data.class, "AUTO", field -> field.set(Data.class, "audi"));
@@ -159,7 +160,7 @@ public class FieldUtilsTest {
         assertThat((String)FieldUtils.getStaticFieldValue(Data.class, "AUTO")).isEqualTo("ferrari");
     }
 
-    public void shouldSetIntFieldValueWhenSetFieldValue() throws Exception {
+    public void shouldSetIntFieldValueWhenSetFieldValue() {
         TypeData data = new TypeData();
         assertThat(data.getValInt()).isEqualTo(0);
         assertThat(data.getValInteger()).isNull();
@@ -175,7 +176,7 @@ public class FieldUtilsTest {
         assertThat(data.getValInteger()).isNull();
     }
 
-    public void shouldSetBooleanFieldValueWhenSetFieldValue() throws Exception {
+    public void shouldSetBooleanFieldValueWhenSetFieldValue() {
         TypeData data = new TypeData();
         assertThat(data.isValBoolean()).isFalse();
         assertThat(data.getValBooleanWrapper()).isNull();
@@ -191,7 +192,7 @@ public class FieldUtilsTest {
         assertThat(data.getValBooleanWrapper()).isNull();
     }
 
-    public void shouldSetByteFieldValueWhenSetFieldValue() throws Exception {
+    public void shouldSetByteFieldValueWhenSetFieldValue() {
         TypeData data = new TypeData();
         assertThat(data.getValByte()).isEqualTo((byte)0);
         assertThat(data.getValByteWrapper()).isNull();
@@ -207,7 +208,7 @@ public class FieldUtilsTest {
         assertThat(data.getValByteWrapper()).isNull();
     }
 
-    public void shouldSetCharFieldValueWhenSetFieldValue() throws Exception {
+    public void shouldSetCharFieldValueWhenSetFieldValue() {
         TypeData data = new TypeData();
         assertThat(data.getValChar()).isEqualTo('\0');
         assertThat(data.getValCharacter()).isNull();
@@ -223,7 +224,7 @@ public class FieldUtilsTest {
         assertThat(data.getValCharacter()).isNull();
     }
 
-    public void shouldSetDoubleFieldValueWhenSetFieldValue() throws Exception {
+    public void shouldSetDoubleFieldValueWhenSetFieldValue() {
         TypeData data = new TypeData();
         assertThat(data.getValDouble()).isEqualTo(0.0);
         assertThat(data.getValDoubleWrapper()).isNull();
@@ -239,7 +240,7 @@ public class FieldUtilsTest {
         assertThat(data.getValDoubleWrapper()).isNull();
     }
 
-    public void shouldSetLongFieldValueWhenSetFieldValue() throws Exception {
+    public void shouldSetLongFieldValueWhenSetFieldValue() {
         TypeData data = new TypeData();
         assertThat(data.getValLong()).isEqualTo(0L);
         assertThat(data.getValLongWrapper()).isNull();
@@ -258,7 +259,7 @@ public class FieldUtilsTest {
         assertThat(data.getValLongWrapper()).isNull();
     }
 
-    public void shouldSetShortFieldValueWhenSetFieldValue() throws Exception {
+    public void shouldSetShortFieldValueWhenSetFieldValue() {
         TypeData data = new TypeData();
         assertThat(data.getValShort()).isEqualTo((short)0);
         assertThat(data.getValShortWrapper()).isNull();
@@ -277,7 +278,7 @@ public class FieldUtilsTest {
         assertThat(data.getValShortWrapper()).isNull();
     }
 
-    public void shouldSetFloatFieldValueWhenSetFieldValue() throws Exception {
+    public void shouldSetFloatFieldValueWhenSetFieldValue() {
         TypeData data = new TypeData();
         assertThat(data.getValFloat()).isEqualTo((float)0);
         assertThat(data.getValFloatWrapper()).isNull();
@@ -296,7 +297,7 @@ public class FieldUtilsTest {
         assertThat(data.getValFloatWrapper()).isNull();
     }
 
-    public void shouldThrowNoSuchElementExceptionWhenGetNotExistedStaticFieldByFieldName() throws NoSuchFieldException {
+    public void shouldThrowNoSuchElementExceptionWhenGetNotExistedStaticFieldByFieldName() {
         assertThatThrownBy(() -> FieldUtils.getStaticFieldValue(Data.class, "unknownName"))
                 .isExactlyInstanceOf(NoSuchFieldException.class);
     }

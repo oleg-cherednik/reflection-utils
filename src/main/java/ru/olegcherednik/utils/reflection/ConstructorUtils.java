@@ -215,7 +215,7 @@ public final class ConstructorUtils {
      * @return not {@literal null} instance of created type
      * @throws Exception in case if any problem; check type for details
      */
-    public static <T> T invokeConstructor(Constructor<T> constructor, Object... values) throws Exception {
+    public static <T> T invokeConstructor(Constructor<T> constructor, Object... values) {
         ValidationUtils.requireConstructorNonNull(constructor);
         ValidationUtils.requireLengthMatch(constructor.getParameterTypes(), values);
 
