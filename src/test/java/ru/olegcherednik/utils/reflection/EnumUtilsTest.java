@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Test
 public class EnumUtilsTest {
 
-    public void shouldAddConstantsToEnumWhenAddConstant() throws Throwable {
+    public void shouldAddConstantsToEnumWhenAddConstant() {
         assertThat(CarBrand.class.getEnumConstants()).extracting(Enum::name).containsExactly(CarBrand.BMW.name(), CarBrand.MERCEDES.name());
         assertThat(CarBrand.values()).extracting(Enum::name).containsExactly(CarBrand.BMW.name(), CarBrand.MERCEDES.name());
 
@@ -35,7 +35,7 @@ public class EnumUtilsTest {
             assertThatCode(() -> CarBrand.valueOf(brand.name())).doesNotThrowAnyException();
     }
 
-    public void shouldThrowIllegalArgumentExceptionWhenConstantWithGivenNameExists() throws Throwable {
+    public void shouldThrowIllegalArgumentExceptionWhenConstantWithGivenNameExists() {
         assertThatThrownBy(() -> EnumUtils.addConstant(CarBrand.class, CarBrand.BMW.name()))
                 .isExactlyInstanceOf(IllegalArgumentException.class);
     }
