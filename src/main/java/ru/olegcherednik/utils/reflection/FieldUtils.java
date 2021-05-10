@@ -39,8 +39,8 @@ public final class FieldUtils {
      * @param <T>       type of the field
      * @return value of the field
      * @throws NullPointerException in case of any of required parameters is {@literal null}
-     * @throws NoSuchFieldException in case of filed with {@code fieldName} was not found
      * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NoSuchFieldException in case of filed with {@code fieldName} was not found
      */
     public static <T> T getFieldValue(Object obj, String fieldName) {
         ValidationUtils.requireObjNonNull(obj);
@@ -73,8 +73,8 @@ public final class FieldUtils {
      * @param <T>       type of the field
      * @return value of the static field
      * @throws NullPointerException in case of any of required parameters is {@literal null}
-     * @throws NoSuchFieldException in case of filed with {@code fieldName} was not found
      * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NoSuchFieldException in case of filed with {@code fieldName} was not found
      */
     public static <T> T getStaticFieldValue(Class<?> cls, String fieldName) {
         ValidationUtils.requireClsNonNull(cls);
@@ -90,8 +90,8 @@ public final class FieldUtils {
      * @param field not {@literal null} field
      * @param value new value of the field
      * @throws NullPointerException   in case of any of required parameters is {@literal null}
-     * @throws IllegalAccessException in case of value cannot be set to the field
      * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws IllegalAccessException in case of value cannot be set to the field
      */
     public static void setFieldValue(Object obj, Field field, Object value) {
         ValidationUtils.requireObjNonNull(obj);
@@ -108,9 +108,9 @@ public final class FieldUtils {
      * @param fieldName not {@literal null} field name
      * @param value     new value of the field
      * @throws NullPointerException   in case of any of required parameters is {@literal null}
+     * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
      * @throws NoSuchFieldException   in case of filed with {@code fieldName} was not found
      * @throws IllegalAccessException in case of value cannot be set to the field
-     * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
      */
     public static void setFieldValue(Object obj, String fieldName, Object value) {
         ValidationUtils.requireObjNonNull(obj);
@@ -144,8 +144,8 @@ public final class FieldUtils {
      * @param fieldName    not {@literal null} field name
      * @param setValueTask not {@literal null} consumer is called for the field
      * @throws NullPointerException in case of any of required parameters is {@literal null}
-     * @throws NoSuchFieldException in case of filed with {@code fieldName} was not found
      * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NoSuchFieldException in case of filed with {@code fieldName} was not found
      */
     public static void setFieldValue(Object obj, String fieldName, InvokeUtils.Consumer<Field> setValueTask) {
         ValidationUtils.requireObjNonNull(obj);
@@ -161,8 +161,8 @@ public final class FieldUtils {
      * @param field not {@literal null} field
      * @param value new value of the field
      * @throws NullPointerException   in case of any of required parameters is {@literal null}
-     * @throws IllegalAccessException in case of value cannot be set to the field
      * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws IllegalAccessException in case of value cannot be set to the field
      */
     public static void setStaticFieldValue(Field field, Object value) {
         ValidationUtils.requireFieldNonNull(field);
@@ -178,9 +178,9 @@ public final class FieldUtils {
      * @param fieldName not {@literal null} field name
      * @param value     new value of the field
      * @throws NullPointerException   in case of any of required parameters is {@literal null}
+     * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
      * @throws NoSuchFieldException   in case of filed with {@code fieldName} was not found
      * @throws IllegalAccessException in case of value cannot be set to the field
-     * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
      */
     public static void setStaticFieldValue(Class<?> cls, String fieldName, Object value) {
         ValidationUtils.requireClsNonNull(cls);
@@ -212,8 +212,8 @@ public final class FieldUtils {
      * @param fieldName    not {@literal null} field name
      * @param setValueTask not {@literal null} consumer is called for the field
      * @throws NullPointerException in case of any of required parameters is {@literal null}
-     * @throws NoSuchFieldException in case of filed with {@code fieldName} was not found
      * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NoSuchFieldException in case of filed with {@code fieldName} was not found
      */
     public static void setStaticFieldValue(Class<?> cls, String fieldName, InvokeUtils.Consumer<Field> setValueTask) {
         ValidationUtils.requireClsNonNull(cls);
@@ -231,6 +231,7 @@ public final class FieldUtils {
      * @param fieldName not {@literal null} field name
      * @return not {@literal null} filed
      * @throws NullPointerException in case of any of required parameters is {@literal null}
+     * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
      * @throws NoSuchFieldException in case of filed was not found
      */
     private static Field getField(Class<?> cls, String fieldName) {
@@ -259,8 +260,8 @@ public final class FieldUtils {
      * @param obj   {@literal null} for static field or not {@literal null} for not static field
      * @param value new value of the field
      * @throws NullPointerException   in case of any of required parameters is {@literal null}
-     * @throws IllegalAccessException in case of value cannot be set to the field
      * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws IllegalAccessException in case of value cannot be set to the field
      */
     private static void setFieldValueImpl(Field field, Object obj, Object value) throws IllegalAccessException {
         ValidationUtils.requireFieldNonNull(field);

@@ -12,31 +12,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Test
 public class ConstructorUtilsTest {
 
-    public void shouldInvokeDefaultConstructorWhenInvokeConstructorWithNoArguments() throws Exception {
+    public void shouldInvokeDefaultConstructorWhenInvokeConstructorWithNoArguments() {
         Data expected = Data.create();
         Data actual = ConstructorUtils.invokeConstructor(Data.class);
         assertThat(actual).isEqualTo(expected);
     }
 
-    public void shouldInvokeOneArgumentConstructorWhenInvokeConstructorWithOneArgument() throws Exception {
+    public void shouldInvokeOneArgumentConstructorWhenInvokeConstructorWithOneArgument() {
         Data expected = Data.create("anna");
         Data actual = ConstructorUtils.invokeConstructor(Data.class, String.class, "anna");
         assertThat(actual).isEqualTo(expected);
     }
 
-    public void shouldInvokeTwoArgumentsConstructorWhenInvokeConstructorWithTwoArguments() throws Exception {
+    public void shouldInvokeTwoArgumentsConstructorWhenInvokeConstructorWithTwoArguments() {
         Data expected = Data.create("peter", 71);
         Data actual = ConstructorUtils.invokeConstructor(Data.class, String.class, "peter", int.class, 71);
         assertThat(actual).isEqualTo(expected);
     }
 
-    public void shouldInvokeThreeArgumentsConstructorWhenInvokeConstructorWithThreeArguments() throws Exception {
+    public void shouldInvokeThreeArgumentsConstructorWhenInvokeConstructorWithThreeArguments() {
         Data expected = Data.create("marvin", 91, true);
         Data actual = ConstructorUtils.invokeConstructor(Data.class, String.class, "marvin", int.class, 91, boolean.class, true);
         assertThat(actual).isEqualTo(expected);
     }
 
-    public void shouldInvokeGivenArgumentsConstructorWhenInvokeConstructorWithMultipleArguments() throws Exception {
+    public void shouldInvokeGivenArgumentsConstructorWhenInvokeConstructorWithMultipleArguments() {
         Data expected = Data.create("marvin", 91, true);
         Data actual = ConstructorUtils.invokeConstructor(Data.class,
                 new Class<?>[] { String.class, int.class, boolean.class },
@@ -44,31 +44,31 @@ public class ConstructorUtilsTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    public void shouldInvokeDefaultConstructorWhenInvokeConstructorStringWithNoArguments() throws Exception {
+    public void shouldInvokeDefaultConstructorWhenInvokeConstructorStringWithNoArguments() {
         Data expected = Data.create();
         Data actual = ConstructorUtils.invokeConstructor(Data.class.getCanonicalName());
         assertThat(actual).isEqualTo(expected);
     }
 
-    public void shouldInvokeOneArgumentConstructorWhenInvokeConstructorStringWithOneArgument() throws Exception {
+    public void shouldInvokeOneArgumentConstructorWhenInvokeConstructorStringWithOneArgument() {
         Data expected = Data.create("anna");
         Data actual = ConstructorUtils.invokeConstructor(Data.class.getCanonicalName(), String.class, "anna");
         assertThat(actual).isEqualTo(expected);
     }
 
-    public void shouldInvokeTwoArgumentsConstructorWhenInvokeConstructorStringWithTwoArguments() throws Exception {
+    public void shouldInvokeTwoArgumentsConstructorWhenInvokeConstructorStringWithTwoArguments() {
         Data expected = Data.create("peter", 71);
         Data actual = ConstructorUtils.invokeConstructor(Data.class.getCanonicalName(), String.class, "peter", int.class, 71);
         assertThat(actual).isEqualTo(expected);
     }
 
-    public void shouldInvokeThreeArgumentsConstructorWhenInvokeConstructorStringWithThreeArguments() throws Exception {
+    public void shouldInvokeThreeArgumentsConstructorWhenInvokeConstructorStringWithThreeArguments() {
         Data expected = Data.create("marvin", 91, true);
         Data actual = ConstructorUtils.invokeConstructor(Data.class.getCanonicalName(), String.class, "marvin", int.class, 91, boolean.class, true);
         assertThat(actual).isEqualTo(expected);
     }
 
-    public void shouldInvokeGivenArgumentsConstructorWhenInvokeConstructorStringWithMultipleArguments() throws Exception {
+    public void shouldInvokeGivenArgumentsConstructorWhenInvokeConstructorStringWithMultipleArguments() {
         Data expected = Data.create("marvin", 91, true);
         Data actual = ConstructorUtils.invokeConstructor(Data.class.getCanonicalName(),
                 new Class<?>[] { String.class, int.class, boolean.class },
@@ -76,25 +76,25 @@ public class ConstructorUtilsTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    public void shouldInvokeConstructorWithNoArgumentsWhenInvokeConstructorWithNoArguments() throws Exception {
+    public void shouldInvokeConstructorWithNoArgumentsWhenInvokeConstructorWithNoArguments() throws NoSuchMethodException {
         Data expected = Data.create();
         Data actual = ConstructorUtils.invokeConstructor(Data.class.getDeclaredConstructor());
         assertThat(actual).isEqualTo(expected);
     }
 
-    public void shouldInvokeConstructorWithOneArgumentWhenInvokeConstructorWithOneArguments() throws Exception {
+    public void shouldInvokeConstructorWithOneArgumentWhenInvokeConstructorWithOneArguments() throws NoSuchMethodException {
         Data expected = Data.create("anna");
         Data actual = ConstructorUtils.invokeConstructor(Data.class.getDeclaredConstructor(String.class), "anna");
         assertThat(actual).isEqualTo(expected);
     }
 
-    public void shouldInvokeConstructorWithTwoArgumentsWhenInvokeConstructorWithTwoArguments() throws Exception {
+    public void shouldInvokeConstructorWithTwoArgumentsWhenInvokeConstructorWithTwoArguments() throws NoSuchMethodException {
         Data expected = Data.create("peter", 71);
         Data actual = ConstructorUtils.invokeConstructor(Data.class.getDeclaredConstructor(String.class, int.class), "peter", 71);
         assertThat(actual).isEqualTo(expected);
     }
 
-    public void shouldInvokeConstructorWithThreeArgumentsWhenInvokeConstructorWithThreeArguments() throws Exception {
+    public void shouldInvokeConstructorWithThreeArgumentsWhenInvokeConstructorWithThreeArguments() throws NoSuchMethodException {
         Data expected = Data.create("marvin", 91, true);
         Data actual = ConstructorUtils.invokeConstructor(Data.class.getDeclaredConstructor(String.class, int.class, boolean.class),
                 "marvin", 91, true);

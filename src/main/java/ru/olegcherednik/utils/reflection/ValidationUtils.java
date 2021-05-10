@@ -71,7 +71,7 @@ final class ValidationUtils {
         int valuesLength = values == null ? 0 : values.length;
 
         if (typesLength != valuesLength)
-            throw new IllegalArgumentException("Length of 'types' and 'value' should be equal");
+            throw new IllegalArgumentException("Length of 'types' and 'values' should be equal");
     }
 
     /**

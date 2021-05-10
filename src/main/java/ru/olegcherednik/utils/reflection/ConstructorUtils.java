@@ -1,5 +1,8 @@
 package ru.olegcherednik.utils.reflection;
 
+import ru.olegcherednik.utils.reflection.exceptions.ClassNotFoundException;
+import ru.olegcherednik.utils.reflection.exceptions.NoSuchConstructorException;
+
 import java.lang.reflect.Constructor;
 
 /**
@@ -16,12 +19,14 @@ public final class ConstructorUtils {
      * @param cls not {@literal null} class object
      * @param <T> type of the class that contains the constructor
      * @return not {@literal null} instance of created type
-     * @throws Exception in case if any problem; check type for details
+     * @throws NullPointerException       in case of any of required parameters is {@literal null}
+     * @throws RuntimeException           in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NoSuchConstructorException in case of constructor was not found
      */
-    public static <T> T invokeConstructor(Class<T> cls) throws Exception {
+    public static <T> T invokeConstructor(Class<T> cls) {
         ValidationUtils.requireClsNonNull(cls);
 
-        return invokeConstructor(cls.getDeclaredConstructor());
+        return invokeConstructor(getConstructor(cls));
     }
 
     /**
@@ -32,13 +37,15 @@ public final class ConstructorUtils {
      * @param value value of the argument
      * @param <T>   type of the class that contains the constructor
      * @return not {@literal null} instance of created type
-     * @throws Exception in case if any problem; check type for details
+     * @throws NullPointerException       in case of any of required parameters is {@literal null}
+     * @throws RuntimeException           in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NoSuchConstructorException in case of constructor was not found
      */
-    public static <T> T invokeConstructor(Class<T> cls, Class<?> type, Object value) throws Exception {
+    public static <T> T invokeConstructor(Class<T> cls, Class<?> type, Object value) {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireTypeNonNull(type);
 
-        return invokeConstructor(cls.getDeclaredConstructor(type), value);
+        return invokeConstructor(getConstructor(cls, type), value);
     }
 
     /**
@@ -52,15 +59,17 @@ public final class ConstructorUtils {
      * @param value2 value of the 2nd argument
      * @param <T>    type of the class that contains the constructor
      * @return not {@literal null} instance of created type
-     * @throws Exception in case if any problem; check type for details
+     * @throws NullPointerException       in case of any of required parameters is {@literal null}
+     * @throws RuntimeException           in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NoSuchConstructorException in case of constructor was not found
      */
     public static <T> T invokeConstructor(Class<T> cls,
             Class<?> type1, Object value1,
-            Class<?> type2, Object value2) throws Exception {
+            Class<?> type2, Object value2) {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireTypeNonNull(type1, type2);
 
-        return invokeConstructor(cls.getDeclaredConstructor(type1, type2), value1, value2);
+        return invokeConstructor(getConstructor(cls, type1, type2), value1, value2);
     }
 
     /**
@@ -76,16 +85,18 @@ public final class ConstructorUtils {
      * @param value3 value of the 3rd argument
      * @param <T>    type of the class that contains the constructor
      * @return not {@literal null} instance of created type
-     * @throws Exception in case if any problem; check type for details
+     * @throws NullPointerException       in case of any of required parameters is {@literal null}
+     * @throws RuntimeException           in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NoSuchConstructorException in case of constructor was not found
      */
     public static <T> T invokeConstructor(Class<T> cls,
             Class<?> type1, Object value1,
             Class<?> type2, Object value2,
-            Class<?> type3, Object value3) throws Exception {
+            Class<?> type3, Object value3) {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireTypeNonNull(type1, type2, type3);
 
-        return invokeConstructor(cls.getDeclaredConstructor(type1, type2, type3), value1, value2, value3);
+        return invokeConstructor(getConstructor(cls, type1, type2, type3), value1, value2, value3);
     }
 
     /**
@@ -97,15 +108,17 @@ public final class ConstructorUtils {
      * @param values values of the arguments (array length should match with {@code types})
      * @param <T>    type of the class that contains the constructor
      * @return not {@literal null} instance of created type
-     * @throws Exception in case if any problem; check type for details
+     * @throws NullPointerException       in case of any of required parameters is {@literal null}
+     * @throws RuntimeException           in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NoSuchConstructorException in case of constructor was not found
      */
     @SuppressWarnings("MethodCanBeVariableArityMethod")
-    public static <T> T invokeConstructor(Class<T> cls, Class<?>[] types, Object[] values) throws Exception {
+    public static <T> T invokeConstructor(Class<T> cls, Class<?>[] types, Object[] values) {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireLengthMatch(types, values);
         ValidationUtils.requireValuesNotNull(types);
 
-        return invokeConstructor(cls.getDeclaredConstructor(types), values);
+        return invokeConstructor(getConstructor(cls, types), values);
     }
 
     /**
@@ -114,12 +127,15 @@ public final class ConstructorUtils {
      * @param className not {@literal null} class name
      * @param <T>       type of the class that contains the constructor
      * @return not {@literal null} instance of created type
-     * @throws Exception in case if any problem; check type for details
+     * @throws NullPointerException       in case of any of required parameters is {@literal null}
+     * @throws RuntimeException           in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NoSuchConstructorException in case of constructor was not found
+     * @throws ClassNotFoundException     in case of class was not found
      */
-    public static <T> T invokeConstructor(String className) throws Exception {
+    public static <T> T invokeConstructor(String className) {
         ValidationUtils.requireClassNameNonNull(className);
 
-        return invokeConstructor((Class<T>)Class.forName(className));
+        return invokeConstructor(getClass(className));
     }
 
     /**
@@ -130,13 +146,16 @@ public final class ConstructorUtils {
      * @param value     value of the argument
      * @param <T>       type of the class that contains the constructor
      * @return not {@literal null} instance of created type
-     * @throws Exception in case if any problem; check type for details
+     * @throws NullPointerException       in case of any of required parameters is {@literal null}
+     * @throws RuntimeException           in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NoSuchConstructorException in case of constructor was not found
+     * @throws ClassNotFoundException     in case of class was not found
      */
-    public static <T> T invokeConstructor(String className, Class<?> type, Object value) throws Exception {
+    public static <T> T invokeConstructor(String className, Class<?> type, Object value) {
         ValidationUtils.requireClassNameNonNull(className);
         ValidationUtils.requireTypeNonNull(type);
 
-        return invokeConstructor((Class<T>)Class.forName(className), type, value);
+        return invokeConstructor(getClass(className), type, value);
     }
 
     /**
@@ -150,15 +169,17 @@ public final class ConstructorUtils {
      * @param value2    value of the 2nd argument
      * @param <T>       type of the class that contains the constructor
      * @return not {@literal null} instance of created type
-     * @throws Exception in case if any problem; check type for details
+     * @throws NullPointerException   in case of any of required parameters is {@literal null}
+     * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws ClassNotFoundException in case of class was not found
      */
     public static <T> T invokeConstructor(String className,
             Class<?> type1, Object value1,
-            Class<?> type2, Object value2) throws Exception {
+            Class<?> type2, Object value2) {
         ValidationUtils.requireClassNameNonNull(className);
         ValidationUtils.requireTypeNonNull(type1, type2);
 
-        return invokeConstructor((Class<T>)Class.forName(className), type1, value1, type2, value2);
+        return invokeConstructor(getClass(className), type1, value1, type2, value2);
     }
 
     /**
@@ -174,16 +195,18 @@ public final class ConstructorUtils {
      * @param value3    value of the 3rd argument
      * @param <T>       type of the class that contains the constructor
      * @return not {@literal null} instance of created type
-     * @throws Exception in case if any problem; check type for details
+     * @throws NullPointerException   in case of any of required parameters is {@literal null}
+     * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws ClassNotFoundException in case of class was not found
      */
     public static <T> T invokeConstructor(String className,
             Class<?> type1, Object value1,
             Class<?> type2, Object value2,
-            Class<?> type3, Object value3) throws Exception {
+            Class<?> type3, Object value3) {
         ValidationUtils.requireClassNameNonNull(className);
         ValidationUtils.requireTypeNonNull(type1, type2, type3);
 
-        return invokeConstructor((Class<T>)Class.forName(className), type1, value1, type2, value2, type3, value3);
+        return invokeConstructor(getClass(className), type1, value1, type2, value2, type3, value3);
     }
 
     /**
@@ -195,15 +218,17 @@ public final class ConstructorUtils {
      * @param values    values of the arguments (array length should match with {@code types})
      * @param <T>       type of the class that contains the constructor
      * @return not {@literal null} instance of created type
-     * @throws Exception in case if any problem; check type for details
+     * @throws NullPointerException   in case of any of required parameters is {@literal null}
+     * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws ClassNotFoundException in case of class was not found
      */
     @SuppressWarnings("MethodCanBeVariableArityMethod")
-    public static <T> T invokeConstructor(String className, Class<?>[] types, Object[] values) throws Exception {
+    public static <T> T invokeConstructor(String className, Class<?>[] types, Object[] values) {
         ValidationUtils.requireClassNameNonNull(className);
         ValidationUtils.requireLengthMatch(types, values);
         ValidationUtils.requireValuesNotNull(types);
 
-        return invokeConstructor((Class<T>)Class.forName(className), types, values);
+        return invokeConstructor(getClass(className), types, values);
     }
 
     /**
@@ -213,7 +238,8 @@ public final class ConstructorUtils {
      * @param values      values of the arguments (array length should match with constructor's arguments amount)
      * @param <T>         type of the class that contains the constructor
      * @return not {@literal null} instance of created type
-     * @throws Exception in case if any problem; check type for details
+     * @throws NullPointerException in case of any of required parameters is {@literal null}
+     * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
      */
     public static <T> T invokeConstructor(Constructor<T> constructor, Object... values) {
         ValidationUtils.requireConstructorNonNull(constructor);
@@ -221,6 +247,48 @@ public final class ConstructorUtils {
 
         return InvokeUtils.invokeFunction(constructor, c -> c.newInstance(values));
     }
+
+    /**
+     * Retrieve constructor with with arguments of type {@code types}.
+     *
+     * @param cls   not {@literal null} class object
+     * @param types types of the arguments (each item should not be {@literal null})
+     * @param <T>   type of the class that contains the constructor
+     * @return not {@literal null} method
+     * @throws NullPointerException       in case of any of required parameters is {@literal null}
+     * @throws RuntimeException           in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NoSuchConstructorException in case of constructor was not found
+     */
+    private static <T> Constructor<T> getConstructor(Class<T> cls, Class<?>... types) {
+        ValidationUtils.requireClsNonNull(cls);
+
+        try {
+            return cls.getDeclaredConstructor(types);
+        } catch (NoSuchMethodException e) {
+            throw new NoSuchConstructorException(cls, types);
+        }
+    }
+
+    /**
+     * Retrieve {@link Class} instance with given {@code className}.
+     *
+     * @param className not {@literal null} class name
+     * @param <T>       type of the class that contains the constructor
+     * @return not {@literal null} class
+     * @throws NullPointerException   in case of any of required parameters is {@literal null}
+     * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws ClassNotFoundException in case of class was not found
+     */
+    private static <T> Class<T> getClass(String className) {
+        ValidationUtils.requireClassNameNonNull(className);
+
+        try {
+            return (Class<T>)Class.forName(className);
+        } catch (java.lang.ClassNotFoundException e) {
+            throw new ClassNotFoundException(className);
+        }
+    }
+
 
     private ConstructorUtils() {}
 

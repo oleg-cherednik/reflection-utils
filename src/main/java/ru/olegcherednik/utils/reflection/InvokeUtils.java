@@ -64,7 +64,7 @@ public final class InvokeUtils {
      * @return value of the field or return value of the method
      * @throws Exception in case if any problem; check exception type for details
      */
-    public static <T> T invoke(Object obj, AccessibleObject accessibleObject) throws Exception {
+    public static <T> T invoke(Object obj, AccessibleObject accessibleObject) {
         if (accessibleObject instanceof Field) {
             Field field = (Field)accessibleObject;
             return obj == null ? FieldUtils.getStaticFieldValue(field) : FieldUtils.getFieldValue(obj, field);

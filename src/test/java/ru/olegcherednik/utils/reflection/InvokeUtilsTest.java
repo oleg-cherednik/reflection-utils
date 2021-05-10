@@ -17,30 +17,30 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Test
 public class InvokeUtilsTest {
 
-    public void shouldRetrieveFieldValueWhenInvokeFunctionOnField() throws Exception {
+    public void shouldRetrieveFieldValueWhenInvokeFunctionOnField() throws NoSuchFieldException {
         Data data = Data.create();
         Field field = data.getClass().getDeclaredField("name");
         String name = InvokeUtils.invokeFunction(field, f -> (String)f.get(data));
         assertThat(name).isEqualTo("oleg.cherednik");
     }
 
-    public void shouldRetrieveMethodReturnValueWhenInvokeFunctionOnMethod() throws Exception {
+    public void shouldRetrieveMethodReturnValueWhenInvokeFunctionOnMethod() throws NoSuchMethodException {
         Data data = Data.create();
         Method method = data.getClass().getDeclaredMethod("getCity");
         String city = InvokeUtils.invokeFunction(method, m -> (String)m.invoke(data));
         assertThat(city).isEqualTo("Saint-Petersburg");
     }
 
-    public void shouldThrowExceptionWhenWhenInvokeFunctionWithException() throws Exception {
+    public void shouldThrowExceptionWhenWhenInvokeFunctionWithException() throws NoSuchMethodException {
         Data data = Data.create();
         Method method = data.getClass().getDeclaredMethod("getCity");
 
         assertThatThrownBy(() -> InvokeUtils.invokeFunction(method, m -> {
             throw new NoSuchMethodException("xxx");
-        })).isExactlyInstanceOf(NoSuchMethodException.class).hasMessage("xxx");
+        })).isExactlyInstanceOf(RuntimeException.class).hasCauseInstanceOf(NoSuchMethodException.class).hasMessageContaining("xxx");
     }
 
-    public void shouldRestoreFieldModifiersWhenInvokeFunctionOnField() throws Exception {
+    public void shouldRestoreFieldModifiersWhenInvokeFunctionOnField() throws NoSuchFieldException {
         Data data = Data.create();
         Field field = data.getClass().getDeclaredField("name");
         boolean expectedAccessible = field.isAccessible();
@@ -51,7 +51,7 @@ public class InvokeUtilsTest {
         assertThat(field.getModifiers()).isEqualTo(expectedModifiers);
     }
 
-    public void shouldRestoreFieldModifiersWhenInvokeFunctionOnMethod() throws Exception {
+    public void shouldRestoreFieldModifiersWhenInvokeFunctionOnMethod() throws NoSuchMethodException {
         Data data = Data.create();
         Method method = data.getClass().getDeclaredMethod("getCity");
         boolean expectedAccessible = method.isAccessible();
@@ -62,7 +62,7 @@ public class InvokeUtilsTest {
         assertThat(method.getModifiers()).isEqualTo(expectedModifiers);
     }
 
-    public void shouldRetrieveFieldValueWhenInvokeOnField() throws Exception {
+    public void shouldRetrieveFieldValueWhenInvokeOnField() throws NoSuchFieldException {
         Data data = Data.create();
         Field field = data.getClass().getDeclaredField("name");
 
@@ -70,7 +70,7 @@ public class InvokeUtilsTest {
         assertThat(actual).isEqualTo("oleg.cherednik");
     }
 
-    public void shouldRetrieveMethodReturnValueWhenInvokeOnMethod() throws Exception {
+    public void shouldRetrieveMethodReturnValueWhenInvokeOnMethod() throws NoSuchMethodException {
         Data data = Data.create();
         Method method = data.getClass().getDeclaredMethod("getCity");
 
@@ -78,7 +78,7 @@ public class InvokeUtilsTest {
         assertThat(actual).isEqualTo("Saint-Petersburg");
     }
 
-    public void shouldThrowIllegalArgumentExceptionWhenInvokeNotFieldOrMethod() throws Exception {
+    public void shouldThrowIllegalArgumentExceptionWhenInvokeNotFieldOrMethod() throws NoSuchMethodException {
         Data data = Data.create();
         Constructor<?> constructor = data.getClass().getDeclaredConstructor();
 
