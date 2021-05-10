@@ -5,7 +5,6 @@ import sun.misc.Unsafe;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
-import java.util.Arrays;
 
 /**
  * Utils for working with {@link Enum} using reflection.
@@ -48,8 +47,7 @@ public final class EnumUtils {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireConstantNameNonNull(constantName);
         ValidationUtils.requireSetExtraFieldTaskNonNull(setExtraFieldTask);
-
-        requireConstantNotExist(cls, constantName);
+        ValidationUtils.requireConstantNotExist(cls, constantName);
 
         try {
             Constructor<?> constructor = Unsafe.class.getDeclaredConstructor();
@@ -77,7 +75,7 @@ public final class EnumUtils {
         }
     }
 
-    private static <T extends Enum<?>> void setFieldValue(T obj, String fieldName, Object value) {
+    static <T extends Enum<?>> void setFieldValue(T obj, String fieldName, Object value) {
         ValidationUtils.requireObjNonNull(obj);
         ValidationUtils.requireFieldNameNonNull(fieldName);
 
@@ -88,7 +86,7 @@ public final class EnumUtils {
         }
     }
 
-    private static <T extends Enum<?>> void setField(Class<T> cls, String fieldName, Object value) {
+    static <T extends Enum<?>> void setField(Class<T> cls, String fieldName, Object value) {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireFieldNameNonNull(fieldName);
 
@@ -97,24 +95,6 @@ public final class EnumUtils {
         } catch (java.lang.NoSuchFieldException e) {
             throw new NoSuchFieldException(cls, fieldName);
         }
-    }
-
-    /**
-     * Checks that given enum {@code cls} does not contain constant (case-sensitive) with given {@code constantName}.
-     *
-     * @param cls          not {@literal null} enum class object
-     * @param constantName not {@literal null} enum's constant name
-     * @param <T>          enum class type
-     * @throws NullPointerException     in case of any of required parameters is {@literal null}
-     * @throws RuntimeException         in case if any other problem; checked exception is wrapped with runtime exception as well
-     * @throws IllegalArgumentException in case of enums contains constant with given name
-     */
-    private static <T extends Enum<?>> void requireConstantNotExist(Class<T> cls, String constantName) {
-        ValidationUtils.requireClsNonNull(cls);
-        ValidationUtils.requireConstantNameNonNull(constantName);
-
-        if (Arrays.stream(cls.getEnumConstants()).anyMatch(value -> value.name().equals(constantName)))
-            throw new IllegalArgumentException("Enum '" + cls + "' already has constant with name '" + constantName + '\'');
     }
 
     private EnumUtils() { }

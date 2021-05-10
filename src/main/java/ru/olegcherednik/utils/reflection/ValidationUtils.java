@@ -3,6 +3,7 @@ package ru.olegcherednik.utils.reflection;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -80,6 +81,24 @@ final class ValidationUtils {
 
     public static <T> Constructor<T> requireConstructorNonNull(Constructor<T> constructor) {
         return Objects.requireNonNull(constructor, "'constructor' should not be null");
+    }
+
+    /**
+     * Checks that given enum {@code cls} does not contain constant (case-sensitive) with given {@code constantName}.
+     *
+     * @param cls          not {@literal null} enum class object
+     * @param constantName not {@literal null} enum's constant name
+     * @param <T>          enum class type
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws RuntimeException         in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws IllegalArgumentException in case of enums contains constant with given name
+     */
+    public static <T extends Enum<?>> void requireConstantNotExist(Class<T> cls, String constantName) {
+        requireClsNonNull(cls);
+        requireConstantNameNonNull(constantName);
+
+        if (Arrays.stream(cls.getEnumConstants()).anyMatch(value -> value.name().equals(constantName)))
+            throw new IllegalArgumentException("Enum '" + cls + "' already has constant with name '" + constantName + '\'');
     }
 
     private ValidationUtils() {}

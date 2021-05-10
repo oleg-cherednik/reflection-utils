@@ -234,7 +234,7 @@ public final class FieldUtils {
      * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
      * @throws NoSuchFieldException in case of filed was not found
      */
-    private static Field getField(Class<?> cls, String fieldName) {
+    static Field getField(Class<?> cls, String fieldName) {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireFieldNameNonNull(fieldName);
 
@@ -263,7 +263,7 @@ public final class FieldUtils {
      * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
      * @throws IllegalAccessException in case of value cannot be set to the field
      */
-    private static void setFieldValueImpl(Field field, Object obj, Object value) throws IllegalAccessException {
+    static void setFieldValueImpl(Field field, Object obj, Object value) throws IllegalAccessException {
         ValidationUtils.requireFieldNonNull(field);
 
         if (field.getType().isAssignableFrom(int.class))
