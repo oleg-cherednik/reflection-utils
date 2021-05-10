@@ -43,14 +43,14 @@ final class ValidationUtils {
         return Objects.requireNonNull(methodName, "'methodName' should not be null");
     }
 
-    public static void requireTypeNonNull(Class<?> type, Class<?>... types) {
+    public static void requireTypeNonNull(Class<?>... types) {
         if (types == null || types.length == 0)
-            Objects.requireNonNull(type, "'type' should not be null");
+            return;
+        if (types.length == 1)
+            Objects.requireNonNull(types[0], "'type' should not be null");
         else {
-            Objects.requireNonNull(type, "'type1' should not be null");
-
             for (int i = 0; i < types.length; i++)
-                Objects.requireNonNull(type, "'type" + (i + 2) + "' should not be null");
+                Objects.requireNonNull(types[i], "'type" + (i + 1) + "' should not be null");
         }
     }
 
@@ -72,18 +72,6 @@ final class ValidationUtils {
 
         if (typesLength != valuesLength)
             throw new IllegalArgumentException("Length of 'types' and 'values' should be equal");
-    }
-
-    /**
-     * Checks that given array {@code types} has not {@literal null} values if it is not {@literal null} itself.
-     *
-     * @param types types of the parameters
-     * @throws NullPointerException in case of given {@code types} has {@literal null} values
-     */
-    public static void requireValuesNotNull(Class<?>... types) {
-        if (types != null)
-            for (int i = 0; i < types.length; i++)
-                Objects.requireNonNull(types[i], "'type[" + i + "]' should not be null");
     }
 
     public static String requireClassNameNonNull(String className) {

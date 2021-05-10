@@ -116,7 +116,7 @@ public final class ConstructorUtils {
     public static <T> T invokeConstructor(Class<T> cls, Class<?>[] types, Object[] values) {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireLengthMatch(types, values);
-        ValidationUtils.requireValuesNotNull(types);
+        ValidationUtils.requireTypeNonNull(types);
 
         return invokeConstructor(getConstructor(cls, types), values);
     }
@@ -226,7 +226,7 @@ public final class ConstructorUtils {
     public static <T> T invokeConstructor(String className, Class<?>[] types, Object[] values) {
         ValidationUtils.requireClassNameNonNull(className);
         ValidationUtils.requireLengthMatch(types, values);
-        ValidationUtils.requireValuesNotNull(types);
+        ValidationUtils.requireTypeNonNull(types);
 
         return invokeConstructor(getClass(className), types, values);
     }

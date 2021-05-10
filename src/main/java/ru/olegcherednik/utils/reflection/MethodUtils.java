@@ -150,7 +150,7 @@ public final class MethodUtils {
         ValidationUtils.requireObjNonNull(obj);
         ValidationUtils.requireMethodNameNonNull(methodName);
         ValidationUtils.requireLengthMatch(types, values);
-        ValidationUtils.requireValuesNotNull(types);
+        ValidationUtils.requireTypeNonNull(types);
 
         return invokeMethod(obj, getMethod(obj.getClass(), methodName, types), values);
     }
