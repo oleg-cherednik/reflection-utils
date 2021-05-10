@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 /**
- * Utils for working with methods using reflection.
+ * Utils for working with {@link Method} using reflection.
  *
  * @author Oleg Cherednik
  * @since 06.12.2020
@@ -110,7 +110,7 @@ public final class MethodUtils {
      * @param method not {@literal null} method
      * @param values values of the arguments
      * @param <T>    type of the method's return value
-     * @return type of the method's return value
+     * @return return value of the method
      * @throws Exception in case if any problem; check type for details
      */
     public static <T> T invokeMethod(Object obj, Method method, Object... values) throws Exception {
@@ -130,7 +130,7 @@ public final class MethodUtils {
      * @param types      types of the arguments (each item should not be {@literal null})
      * @param values     values of the arguments (array length should match with {@code types})
      * @param <T>        type of the method's return value
-     * @return type of the method's return value
+     * @return return value of the method
      * @throws Exception in case if any problem; check type for details
      */
     @SuppressWarnings("MethodCanBeVariableArityMethod")

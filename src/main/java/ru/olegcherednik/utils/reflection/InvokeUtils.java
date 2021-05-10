@@ -7,6 +7,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
+ * Utils for working with {@link AccessibleObject} and {@link Member} invocation.
+ *
  * @author Oleg Cherednik
  * @since 06.12.2020
  */
@@ -48,12 +50,40 @@ public final class InvokeUtils {
         }
     }
 
-    public static <R> R invoke(Object obj, AccessibleObject accessibleObject) throws Exception {
-        if (accessibleObject instanceof Field)
-            return FieldUtils.getFieldValue(obj, (Field)accessibleObject);
-        if (accessibleObject instanceof Method)
-            return MethodUtils.invokeMethod(obj, (Method)accessibleObject);
+    /**
+     * Invoke given {@code accessibleObject} ({@link Field} or {@link Method}) for the given {@code obj}. In case of {@code obj} is {@literal null},
+     * then static accessible object will be invoked.
+     *
+     * @param obj              object instance
+     * @param accessibleObject not {@literal null} accessible object ({@link Field} or {@link Method})
+     * @param <T>              type of the field or type of the method's return value
+     * @return value of the field or return value of the method
+     * @throws Exception in case if any problem; check exception type for details
+     */
+    public static <T> T invoke(Object obj, AccessibleObject accessibleObject) throws Exception {
+        if (accessibleObject instanceof Field) {
+            Field field = (Field)accessibleObject;
+            return obj == null ? FieldUtils.getStaticFieldValue(field) : FieldUtils.getFieldValue(obj, field);
+        }
+
+        if (accessibleObject instanceof Method) {
+            Method method = (Method)accessibleObject;
+            return obj == null ? MethodUtils.invokeStaticMethod(method) : MethodUtils.invokeMethod(obj, method);
+        }
+
         throw new IllegalArgumentException("Unknown 'accessibleObject' class: " + accessibleObject.getClass());
+    }
+
+    /**
+     * Invoke given static {@code accessibleObject} ({@link Field} or {@link Method}).
+     *
+     * @param accessibleObject not {@literal null} accessible object ({@link Field} or {@link Method})
+     * @param <T>              type of the field or type of the method's return value
+     * @return value of the field or return value of the method
+     * @throws Exception in case if any problem; check exception type for details
+     */
+    public static <T> T invoke(AccessibleObject accessibleObject) throws Exception {
+        return invoke(null, accessibleObject);
     }
 
     public interface Function<T, R> {

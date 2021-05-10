@@ -3,7 +3,7 @@ package ru.olegcherednik.utils.reflection;
 import java.lang.reflect.Constructor;
 
 /**
- * Utils for working with constructors using reflection.
+ * Utils for working with {@link Constructor} using reflection.
  *
  * @author Oleg Cherednik
  * @since 27.02.2021

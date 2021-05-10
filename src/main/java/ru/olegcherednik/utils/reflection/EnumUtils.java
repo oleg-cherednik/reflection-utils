@@ -7,7 +7,7 @@ import java.lang.reflect.Constructor;
 import java.util.Arrays;
 
 /**
- * Utils for working with enums using reflection.
+ * Utils for working with {@link Enum} using reflection.
  *
  * @author Oleg Cherednik
  * @since 06.12.2020
