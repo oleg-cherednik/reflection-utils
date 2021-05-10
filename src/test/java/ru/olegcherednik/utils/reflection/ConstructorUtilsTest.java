@@ -2,8 +2,11 @@ package ru.olegcherednik.utils.reflection;
 
 import org.testng.annotations.Test;
 import ru.olegcherednik.utils.reflection.data.Data;
+import ru.olegcherednik.utils.reflection.exceptions.ClassNotFoundException;
+import ru.olegcherednik.utils.reflection.exceptions.NoSuchConstructorException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Oleg Cherednik
@@ -101,4 +104,18 @@ public class ConstructorUtilsTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    public void shouldThrowNoSuchConstructorExceptionWhenConstructorNotFound() {
+        assertThatThrownBy(() -> ConstructorUtils.invokeConstructor(Data.class, int.class, 12, long.class, 15L))
+                .isExactlyInstanceOf(NoSuchConstructorException.class)
+                .hasMessageContaining("Constructor with arguments '[int, long]' was not found in class ");
+    }
+
+    public void shouldThrowClassNotFoundExceptionWhenInvokeConstructorForNotExistedClass() {
+        assertThatThrownBy(() -> ConstructorUtils.invokeConstructor("aaa.bbb.Data"))
+                .isExactlyInstanceOf(ClassNotFoundException.class)
+                .hasMessage("Class 'aaa.bbb.Data' was not found");
+    }
+
 }
+
+
