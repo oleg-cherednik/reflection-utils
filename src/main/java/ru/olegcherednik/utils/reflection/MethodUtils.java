@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 public final class MethodUtils {
 
     /**
-     * Invoke not static method with the given {@code methodName} and no parameters for the given {@code obj}.<br>
+     * Invoke not static method with the given {@code methodName} and no arguments for the given {@code obj}.<br>
      * Method with this {@code methodName} could be as in the given class itself as in any it's parents. The first found method is taken.
      *
      * @param obj        not {@literal null} object instance
@@ -30,14 +30,14 @@ public final class MethodUtils {
     }
 
     /**
-     * Invoke not static method with the given {@code methodName} and exactly one parameter (with {@code type} and {@code value}) for the given
+     * Invoke not static method with the given {@code methodName} and exactly one argument ({@code type}/{@code value}) for the given
      * {@code obj}.<br>
      * Method with this {@code methodName} could be as in the given class itself as in any it's parents. The first found method is taken.
      *
      * @param obj        not {@literal null} object instance
      * @param methodName not {@literal null} method name
-     * @param type       not {@literal null} type of the parameter
-     * @param value      value of the parameter
+     * @param type       not {@literal null} type of the argument
+     * @param value      value of the argument
      * @param <T>        type of the method's return value
      * @return return value of the method
      * @throws Exception in case if any problem; check type for details
@@ -51,16 +51,16 @@ public final class MethodUtils {
     }
 
     /**
-     * Invoke not static method with the given {@code methodName} and exactly two parameters (with {@code type1} and {@code value1} for the first
-     * parameter and {@code type2} and {@code value2} for the second parameter) for the given {@code obj}.<br>
+     * Invoke not static method with the given {@code methodName} and exactly two arguments ({@code type1}/{@code value1} for the first argument and
+     * {@code type2}/{@code value2} for the second argument) for the given {@code obj}.<br>
      * Method with this {@code methodName} could be as in the given class itself as in any it's parents. The first found method is taken.
      *
      * @param obj        not {@literal null} object instance
      * @param methodName not {@literal null} method name
-     * @param type1      not {@literal null} type of the 1st parameter
-     * @param value1     value of the 1st parameter
-     * @param type2      not {@literal null} type of the 2nd parameter
-     * @param value2     value of the 2nd parameter
+     * @param type1      not {@literal null} type of the 1st argument
+     * @param value1     value of the 1st argument
+     * @param type2      not {@literal null} type of the 2nd argument
+     * @param value2     value of the 2nd argument
      * @param <T>        type of the method's return value
      * @return return value of the method
      * @throws Exception in case if any problem; check type for details
@@ -76,19 +76,18 @@ public final class MethodUtils {
     }
 
     /**
-     * Invoke not static method with the given {@code methodName} and exactly three parameters (with {@code type1} and {@code value1} for the first
-     * parameter, {@code type2} and {@code value2} for the second parameter and {@code type3} and {@code value3} for the third parameter) for the
-     * given {@code obj}.<br>
+     * Invoke not static method with the given {@code methodName} and exactly three arguments ({@code type1}/{@code value1} for the first argument,
+     * {@code type2}/{@code value2} for the second argument and {@code type3}/{@code value3} for the third argument) for the given {@code obj}.<br>
      * Method with this {@code methodName} could be as in the given class itself as in any it's parents. The first found method is taken.
      *
      * @param obj        not {@literal null} object instance
      * @param methodName not {@literal null} method name
-     * @param type1      not {@literal null} type of the 1st parameter
-     * @param value1     value of the 1st parameter
-     * @param type2      not {@literal null} type of the 2nd parameter
-     * @param value2     value of the 2nd parameter
-     * @param type3      not {@literal null} type of the 3rd parameter
-     * @param value3     value of the 3rd parameter
+     * @param type1      not {@literal null} type of the 1st argument
+     * @param value1     value of the 1st argument
+     * @param type2      not {@literal null} type of the 2nd argument
+     * @param value2     value of the 2nd argument
+     * @param type3      not {@literal null} type of the 3rd argument
+     * @param value3     value of the 3rd argument
      * @param <T>        type of the method's return value
      * @return return value of the method
      * @throws Exception in case if any problem; check type for details
@@ -105,11 +104,11 @@ public final class MethodUtils {
     }
 
     /**
-     * Invoke not static {@code method} with parameters' {@code values} for the given {@code obj}.
+     * Invoke not static {@code method} with arguments' {@code values} for the given {@code obj}.
      *
      * @param obj    not {@literal null} object instance
      * @param method not {@literal null} method
-     * @param values values of the parameters
+     * @param values values of the arguments
      * @param <T>    type of the method's return value
      * @return type of the method's return value
      * @throws Exception in case if any problem; check type for details
@@ -122,14 +121,14 @@ public final class MethodUtils {
     }
 
     /**
-     * Invoke not static method with the given {@code methodName} and parameters of given {@code types} and {@code values} for the given {@code
+     * Invoke not static method with the given {@code methodName} and arguments of given {@code types}/{@code values} for the given {@code
      * obj}. The array's length {@code types} and {@code value} should be equal.<br>
      * Method with this {@code methodName} could be as in the given class itself as in any it's parents. The first found method is taken.
      *
      * @param obj        not {@literal null} object instance
      * @param methodName not {@literal null} method name
-     * @param types      types of the parameters (each item should not be {@literal null})
-     * @param values     values of the parameters (array length should match with {@code types})
+     * @param types      types of the arguments (each item should not be {@literal null})
+     * @param values     values of the arguments (array length should match with {@code types})
      * @param <T>        type of the method's return value
      * @return type of the method's return value
      * @throws Exception in case if any problem; check type for details
@@ -162,14 +161,13 @@ public final class MethodUtils {
     }
 
     /**
-     * Invoke static method with the given {@code methodName} and exactly one parameter (with {@code type} and {@code value}) for the given
-     * {@code cls}.<br>
+     * Invoke static method with the given {@code methodName} and exactly one argument ({@code type}/{@code value}) for the given {@code cls}.<br>
      * Method with this {@code methodName} could be as in the given class itself as in any it's parents. The first found method is taken.
      *
      * @param cls        not {@literal null} class object
      * @param methodName not {@literal null} method name
-     * @param type       not {@literal null} type of the parameter
-     * @param value      value of the parameter
+     * @param type       not {@literal null} type of the argument
+     * @param value      value of the argument
      * @param <T>        type of the method's return value
      * @return return value of the method
      * @throws Exception in case if any problem; check type for details
@@ -183,16 +181,16 @@ public final class MethodUtils {
     }
 
     /**
-     * Invoke static method with the given {@code methodName} and exactly two parameters (with {@code type1} and {@code value1} for the first
-     * parameter and {@code type2} and {@code value2} for the second parameter) for the given {@code cls}.<br>
+     * Invoke static method with the given {@code methodName} and exactly two arguments ({@code type1}/{@code value1} for the first argument and
+     * {@code type2}/{@code value2} for the second argument) for the given {@code cls}.<br>
      * Method with this {@code methodName} could be as in the given class itself as in any it's parents. The first found method is taken.
      *
      * @param cls        not {@literal null} class object
      * @param methodName not {@literal null} method name
-     * @param type1      not {@literal null} type of the 1st parameter
-     * @param value1     value of the 1st parameter
-     * @param type2      not {@literal null} type of the 2nd parameter
-     * @param value2     value of the 2nd parameter
+     * @param type1      not {@literal null} type of the 1st argument
+     * @param value1     value of the 1st argument
+     * @param type2      not {@literal null} type of the 2nd argument
+     * @param value2     value of the 2nd argument
      * @param <T>        type of the method's return value
      * @return return value of the method
      * @throws Exception in case if any problem; check type for details
@@ -208,19 +206,18 @@ public final class MethodUtils {
     }
 
     /**
-     * Invoke static method with the given {@code methodName} and exactly three parameters (with {@code type1} and {@code value1} for the first
-     * parameter, {@code type2} and {@code value2} for the second parameter and {@code type3} and {@code value3} for the third parameter) for the
-     * given {@code cls}.<br>
+     * Invoke static method with the given {@code methodName} and exactly three arguments ({@code type1}/{@code value1} for the first argument,
+     * {@code type2}/{@code value2} for the second argument and {@code type3}/{@code value3} for the third argument) for the given {@code cls}.<br>
      * Method with this {@code methodName} could be as in the given class itself as in any it's parents. The first found method is taken.
      *
      * @param cls        not {@literal null} class object
      * @param methodName not {@literal null} method name
-     * @param type1      not {@literal null} type of the 1st parameter
-     * @param value1     value of the 1st parameter
-     * @param type2      not {@literal null} type of the 2nd parameter
-     * @param value2     value of the 2nd parameter
-     * @param type3      not {@literal null} type of the 3rd parameter
-     * @param value3     value of the 3rd parameter
+     * @param type1      not {@literal null} type of the 1st argument
+     * @param value1     value of the 1st argument
+     * @param type2      not {@literal null} type of the 2nd argument
+     * @param value2     value of the 2nd argument
+     * @param type3      not {@literal null} type of the 3rd argument
+     * @param value3     value of the 3rd argument
      * @param <T>        type of the method's return value
      * @return return value of the method
      * @throws Exception in case if any problem; check type for details
@@ -237,10 +234,10 @@ public final class MethodUtils {
     }
 
     /**
-     * Invoke static {@code method} with parameters' {@code values}.
+     * Invoke static {@code method} with arguments' {@code values}.
      *
      * @param method not {@literal null} method
-     * @param values values of the parameters
+     * @param values values of the arguments
      * @param <T>    type of the method's return value
      * @return return value of the method
      * @throws Exception in case if any problem; check type for details
@@ -252,13 +249,13 @@ public final class MethodUtils {
     }
 
     /**
-     * Invoke static method with the given {@code methodName} and parameters with given {@code types} and {@code values}<br>
+     * Invoke static method with the given {@code methodName} and arguments with given {@code types}/{@code values}<br>
      * Method with this {@code methodName} could be as in the given class itself as in any it's parents. The first found method is taken.
      *
      * @param cls        not {@literal null} class object
      * @param methodName not {@literal null} method name
-     * @param types      types of the parameters
-     * @param values     values of the parameters
+     * @param types      types of the arguments
+     * @param values     values of the arguments
      * @param <T>        type of the method's return value
      * @return return value of the method
      * @throws Exception in case if any problem; check type for details
@@ -296,7 +293,7 @@ public final class MethodUtils {
         }
 
         if (method == null)
-            throw new NoSuchElementException(String.format("Method '%s' with parameters '%s' was not found in class '%s' and it's parents",
+            throw new NoSuchElementException(String.format("Method '%s' with arguments '%s' was not found in class '%s' and it's parents",
                     methodName, Arrays.toString(types), cls));
 
         return method;

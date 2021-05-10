@@ -1,5 +1,6 @@
 package ru.olegcherednik.utils.reflection;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
@@ -83,6 +84,14 @@ final class ValidationUtils {
         if (types != null)
             for (int i = 0; i < types.length; i++)
                 Objects.requireNonNull(types[i], "'type[" + i + "]' should not be null");
+    }
+
+    public static String requireClassNameNonNull(String className) {
+        return Objects.requireNonNull(className, "'className' should not be null");
+    }
+
+    public static <T> Constructor<T> requireConstructorNonNull(Constructor<T> constructor) {
+        return Objects.requireNonNull(constructor, "'constructor' should not be null");
     }
 
     private ValidationUtils() {}

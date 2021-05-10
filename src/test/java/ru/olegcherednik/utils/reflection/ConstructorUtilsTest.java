@@ -76,5 +76,29 @@ public class ConstructorUtilsTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    public void shouldInvokeConstructorWithNoArgumentsWhenInvokeConstructorWithNoArguments() throws Exception {
+        Data expected = Data.create();
+        Data actual = ConstructorUtils.invokeConstructor(Data.class.getDeclaredConstructor());
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    public void shouldInvokeConstructorWithOneArgumentWhenInvokeConstructorWithOneArguments() throws Exception {
+        Data expected = Data.create("anna");
+        Data actual = ConstructorUtils.invokeConstructor(Data.class.getDeclaredConstructor(String.class), "anna");
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    public void shouldInvokeConstructorWithTwoArgumentsWhenInvokeConstructorWithTwoArguments() throws Exception {
+        Data expected = Data.create("peter", 71);
+        Data actual = ConstructorUtils.invokeConstructor(Data.class.getDeclaredConstructor(String.class, int.class), "peter", 71);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    public void shouldInvokeConstructorWithThreeArgumentsWhenInvokeConstructorWithThreeArguments() throws Exception {
+        Data expected = Data.create("marvin", 91, true);
+        Data actual = ConstructorUtils.invokeConstructor(Data.class.getDeclaredConstructor(String.class, int.class, boolean.class),
+                "marvin", 91, true);
+        assertThat(actual).isEqualTo(expected);
+    }
 
 }
