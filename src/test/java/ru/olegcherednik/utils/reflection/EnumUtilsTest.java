@@ -37,7 +37,18 @@ public class EnumUtilsTest {
 
     public void shouldThrowIllegalArgumentExceptionWhenConstantWithGivenNameExists() {
         assertThatThrownBy(() -> EnumUtils.addConstant(CarBrand.class, CarBrand.BMW.name()))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+                .isExactlyInstanceOf(IllegalArgumentException.class)
+                .hasMessage(String.format("Enum '%s' already has a constant with name '%s'", CarBrand.class, CarBrand.BMW.name()));
+    }
+
+    public void shouldThrowRuntimeExceptionWhenExceptionExists() {
+        assertThatThrownBy(() -> EnumUtils.addConstant(CarBrand.class, "PORSCHE", carBrand -> {
+            throw new IllegalArgumentException("xxx");
+        }))
+                .isExactlyInstanceOf(RuntimeException.class)
+                .hasCauseInstanceOf(IllegalArgumentException.class)
+                .hasMessage("java.lang.IllegalArgumentException: xxx");
+
     }
 
     enum CarBrand {

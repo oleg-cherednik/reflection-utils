@@ -1,6 +1,5 @@
 package ru.olegcherednik.utils.reflection;
 
-import ru.olegcherednik.utils.reflection.exceptions.NoSuchFieldException;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Array;
@@ -75,26 +74,12 @@ public final class EnumUtils {
         }
     }
 
-    /* package */ static <T extends Enum<?>> void setFieldValue(T obj, String fieldName, Object value) {
-        ValidationUtils.requireObjNonNull(obj);
-        ValidationUtils.requireFieldNameNonNull(fieldName);
-
-        try {
-            InvokeUtils.invokeConsumer(Enum.class.getDeclaredField(fieldName), field -> field.set(obj, value));
-        } catch (java.lang.NoSuchFieldException e) {
-            throw new NoSuchFieldException(Enum.class, fieldName);
-        }
+    private static <T extends Enum<?>> void setFieldValue(T obj, String fieldName, Object value) {
+        FieldUtils.setStaticFieldValue(Enum.class, fieldName, field -> field.set(obj, value));
     }
 
-    /* package */ static <T extends Enum<?>> void setField(Class<T> cls, String fieldName, Object value) {
-        ValidationUtils.requireClsNonNull(cls);
-        ValidationUtils.requireFieldNameNonNull(fieldName);
-
-        try {
-            InvokeUtils.invokeConsumer(Class.class.getDeclaredField(fieldName), field -> field.set(cls, value));
-        } catch (java.lang.NoSuchFieldException e) {
-            throw new NoSuchFieldException(cls, fieldName);
-        }
+    private static <T extends Enum<?>> void setField(Class<T> cls, String fieldName, Object value) {
+        FieldUtils.setStaticFieldValue(Class.class, fieldName, field -> field.set(cls, value));
     }
 
     private EnumUtils() { }

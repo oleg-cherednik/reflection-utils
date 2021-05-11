@@ -98,7 +98,7 @@ final class ValidationUtils {
         requireConstantNameNonNull(constantName);
 
         if (Arrays.stream(cls.getEnumConstants()).anyMatch(value -> value.name().equals(constantName)))
-            throw new IllegalArgumentException("Enum '" + cls + "' already has constant with name '" + constantName + '\'');
+            throw new IllegalArgumentException(String.format("Enum '%s' already has a constant with name '%s'", cls, constantName));
     }
 
     private ValidationUtils() {}
