@@ -28,7 +28,7 @@ final class ValidationUtils {
         return Objects.requireNonNull(cls, "'cls' should not be null");
     }
 
-    public static InvokeUtils.Consumer<Field> requireSetValueTaskNonNull(InvokeUtils.Consumer<Field> setValueTask) {
+    public static Consumer<Field> requireSetValueTaskNonNull(Consumer<Field> setValueTask) {
         return Objects.requireNonNull(setValueTask, "'setValueTask' should not be null");
     }
 
@@ -36,7 +36,7 @@ final class ValidationUtils {
         return Objects.requireNonNull(constantName, "'constantName' should not be null");
     }
 
-    public static <T extends Enum<?>> InvokeUtils.Consumer<T> requireSetExtraFieldTaskNonNull(InvokeUtils.Consumer<T> setExtraFieldTask) {
+    public static <T extends Enum<?>> Consumer<T> requireSetExtraFieldTaskNonNull(Consumer<T> setExtraFieldTask) {
         return Objects.requireNonNull(setExtraFieldTask, "'setExtraFieldTask' should not be null");
     }
 

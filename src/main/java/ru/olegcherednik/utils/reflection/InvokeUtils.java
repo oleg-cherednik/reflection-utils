@@ -39,7 +39,7 @@ public final class InvokeUtils {
         }
     }
 
-    /* package */ static <T extends AccessibleObject & Member, R> R invokeWithModifiers(T accessibleObject, Function<T, R> task) throws Exception {
+    private static <T extends AccessibleObject & Member, R> R invokeWithModifiers(T accessibleObject, Function<T, R> task) throws Exception {
         Field modifiersField = Field.class.getDeclaredField("modifiers");
         boolean accessible = modifiersField.isAccessible();
         int modifiers = accessibleObject.getModifiers();
@@ -88,20 +88,6 @@ public final class InvokeUtils {
      */
     public static <T> T invoke(AccessibleObject accessibleObject) {
         return invoke(null, accessibleObject);
-    }
-
-    public interface Function<T, R> {
-
-        R apply(T t) throws Exception;
-
-    }
-
-    public interface Consumer<T> {
-
-        Consumer<?> NULL = (Consumer<Object>)obj -> { };
-
-        void accept(T t) throws Exception;
-
     }
 
     private InvokeUtils() { }

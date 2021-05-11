@@ -26,7 +26,7 @@ public final class EnumUtils {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireConstantNameNonNull(constantName);
 
-        addConstant(cls, constantName, (InvokeUtils.Consumer<T>)InvokeUtils.Consumer.NULL);
+        addConstant(cls, constantName, (Consumer<T>)Consumer.NULL);
     }
 
     /**
@@ -42,7 +42,7 @@ public final class EnumUtils {
      * @throws IllegalArgumentException in case of enums contains constant with given name
      */
     @SuppressWarnings("UseOfSunClasses")
-    public static <T extends Enum<?>> void addConstant(Class<T> cls, String constantName, InvokeUtils.Consumer<T> setExtraFieldTask) {
+    public static <T extends Enum<?>> void addConstant(Class<T> cls, String constantName, Consumer<T> setExtraFieldTask) {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireConstantNameNonNull(constantName);
         ValidationUtils.requireSetExtraFieldTaskNonNull(setExtraFieldTask);
@@ -54,8 +54,8 @@ public final class EnumUtils {
             Unsafe unsafe = (Unsafe)constructor.newInstance();
             T enumValue = (T)unsafe.allocateInstance(cls);
 
-            setFieldValue(enumValue, "name", constantName);
-            setFieldValue(enumValue, "ordinal", cls.getEnumConstants().length);
+            setEnumField("name", enumValue, constantName);
+            setEnumField("ordinal", enumValue, cls.getEnumConstants().length);
 
             setExtraFieldTask.accept(enumValue);
 
@@ -67,19 +67,19 @@ public final class EnumUtils {
                 field.set(null, newValues);
             });
 
-            setField(cls, "enumConstants", null);
-            setField(cls, "enumConstantDirectory", null);
+            setClassField("enumConstants", cls);
+            setClassField("enumConstantDirectory", cls);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static <T extends Enum<?>> void setFieldValue(T obj, String fieldName, Object value) {
+    private static <T extends Enum<?>> void setEnumField(String fieldName, T obj, Object value) {
         FieldUtils.setStaticFieldValue(Enum.class, fieldName, field -> field.set(obj, value));
     }
 
-    private static <T extends Enum<?>> void setField(Class<T> cls, String fieldName, Object value) {
-        FieldUtils.setStaticFieldValue(Class.class, fieldName, field -> field.set(cls, value));
+    private static <T extends Enum<?>> void setClassField(String fieldName, Class<T> cls) {
+        FieldUtils.setStaticFieldValue(Class.class, fieldName, field -> field.set(cls, null));
     }
 
     private EnumUtils() { }

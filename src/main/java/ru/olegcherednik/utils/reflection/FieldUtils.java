@@ -120,7 +120,7 @@ public final class FieldUtils {
     }
 
     /**
-     * Call given {@link InvokeUtils.Consumer} for the not static field {@code field} for the give {@code obj}.
+     * Call given {@link Consumer} for the not static field {@code field} for the give {@code obj}.
      *
      * @param obj          not {@literal null} object instance
      * @param field        not {@literal null} field
@@ -128,7 +128,7 @@ public final class FieldUtils {
      * @throws NullPointerException in case of any of required parameters is {@literal null}
      * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
      */
-    public static void setFieldValue(Object obj, Field field, InvokeUtils.Consumer<Field> setValueTask) {
+    public static void setFieldValue(Object obj, Field field, Consumer<Field> setValueTask) {
         ValidationUtils.requireObjNonNull(obj);
         ValidationUtils.requireFieldNonNull(field);
         ValidationUtils.requireSetValueTaskNonNull(setValueTask);
@@ -137,7 +137,7 @@ public final class FieldUtils {
     }
 
     /**
-     * Call given {@link InvokeUtils.Consumer} for the not static field with given {@code fieldName} for the given {@code obj}.<br>
+     * Call given {@link Consumer} for the not static field with given {@code fieldName} for the given {@code obj}.<br>
      * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
      *
      * @param obj          not {@literal null} object instance
@@ -147,7 +147,7 @@ public final class FieldUtils {
      * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
      * @throws NoSuchFieldException in case of filed with {@code fieldName} was not found
      */
-    public static void setFieldValue(Object obj, String fieldName, InvokeUtils.Consumer<Field> setValueTask) {
+    public static void setFieldValue(Object obj, String fieldName, Consumer<Field> setValueTask) {
         ValidationUtils.requireObjNonNull(obj);
         ValidationUtils.requireFieldNameNonNull(fieldName);
         ValidationUtils.requireSetValueTaskNonNull(setValueTask);
@@ -190,14 +190,14 @@ public final class FieldUtils {
     }
 
     /**
-     * Call given {@link InvokeUtils.Consumer} for the static field {@code field}.
+     * Call given {@link Consumer} for the static field {@code field}.
      *
      * @param field        not {@literal null} field
      * @param setValueTask not {@literal null} consumer is called for the field
      * @throws NullPointerException in case of any of required parameters is {@literal null}
      * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
      */
-    public static void setStaticFieldValue(Field field, InvokeUtils.Consumer<Field> setValueTask) {
+    public static void setStaticFieldValue(Field field, Consumer<Field> setValueTask) {
         ValidationUtils.requireFieldNonNull(field);
         ValidationUtils.requireSetValueTaskNonNull(setValueTask);
 
@@ -205,7 +205,7 @@ public final class FieldUtils {
     }
 
     /**
-     * Call given {@link InvokeUtils.Consumer} for the static field with given {@code fieldName} for the given {@code cls}.<br>
+     * Call given {@link Consumer} for the static field with given {@code fieldName} for the given {@code cls}.<br>
      * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
      *
      * @param cls          not {@literal null} class object
@@ -215,7 +215,7 @@ public final class FieldUtils {
      * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
      * @throws NoSuchFieldException in case of filed with {@code fieldName} was not found
      */
-    public static void setStaticFieldValue(Class<?> cls, String fieldName, InvokeUtils.Consumer<Field> setValueTask) {
+    public static void setStaticFieldValue(Class<?> cls, String fieldName, Consumer<Field> setValueTask) {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireFieldNameNonNull(fieldName);
         ValidationUtils.requireSetValueTaskNonNull(setValueTask);
@@ -234,7 +234,7 @@ public final class FieldUtils {
      * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
      * @throws NoSuchFieldException in case of filed was not found
      */
-    /* package */ static Field getField(Class<?> cls, String fieldName) {
+    private static Field getField(Class<?> cls, String fieldName) {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireFieldNameNonNull(fieldName);
 
@@ -263,7 +263,7 @@ public final class FieldUtils {
      * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
      * @throws IllegalAccessException in case of value cannot be set to the field
      */
-    /* package */ static void setFieldValueImpl(Field field, Object obj, Object value) throws IllegalAccessException {
+    private static void setFieldValueImpl(Field field, Object obj, Object value) throws IllegalAccessException {
         ValidationUtils.requireFieldNonNull(field);
 
         if (field.getType().isAssignableFrom(int.class))
