@@ -303,7 +303,7 @@ public final class MethodUtils {
      * @throws RuntimeException      in case if any other problem; checked exception is wrapped with runtime exception as well
      * @throws NoSuchMethodException in case of method was not found
      */
-    static Method getMethod(Class<?> cls, String methodName, Class<?>... types) {
+    /* package */ static Method getMethod(Class<?> cls, String methodName, Class<?>... types) {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireMethodNameNonNull(methodName);
 

@@ -39,7 +39,7 @@ public final class InvokeUtils {
         }
     }
 
-    static <T extends AccessibleObject & Member, R> R invokeWithModifiers(T accessibleObject, Function<T, R> task) throws Exception {
+    /* package */ static <T extends AccessibleObject & Member, R> R invokeWithModifiers(T accessibleObject, Function<T, R> task) throws Exception {
         Field modifiersField = Field.class.getDeclaredField("modifiers");
         boolean accessible = modifiersField.isAccessible();
         int modifiers = accessibleObject.getModifiers();

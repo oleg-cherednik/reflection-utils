@@ -75,7 +75,7 @@ public final class EnumUtils {
         }
     }
 
-    static <T extends Enum<?>> void setFieldValue(T obj, String fieldName, Object value) {
+    /* package */ static <T extends Enum<?>> void setFieldValue(T obj, String fieldName, Object value) {
         ValidationUtils.requireObjNonNull(obj);
         ValidationUtils.requireFieldNameNonNull(fieldName);
 
@@ -86,7 +86,7 @@ public final class EnumUtils {
         }
     }
 
-    static <T extends Enum<?>> void setField(Class<T> cls, String fieldName, Object value) {
+    /* package */ static <T extends Enum<?>> void setField(Class<T> cls, String fieldName, Object value) {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireFieldNameNonNull(fieldName);
 
