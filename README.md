@@ -40,7 +40,9 @@ To simplify usage of _reflection-utils_, there're following classes:
 ### ConstructorUtils
 
 This is a class definition for examples:
-```java
+```java   
+package ru.olegcherednik.utils.reflection.data;
+
 public class Person {
     
     private String name = "defaultName";
@@ -68,7 +70,9 @@ public class Person {
 
 ``` 
 
-#### Invoke a constructor with no arguments
+#### When class object is available to use 
+
+##### Invoke a constructor with no arguments
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class);
@@ -77,7 +81,7 @@ Person person = ConstructorUtils.invokeConstructor(Person.class);
 > person.name = "defaultName"
 > ``` 
 
-#### Invoke a constructor with exactly one argument
+##### Invoke a constructor with exactly one argument
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class,
@@ -87,19 +91,19 @@ Person person = ConstructorUtils.invokeConstructor(Person.class,
 > person.name = "anna"
 > ```        
 
-#### Invoke a constructor with exactly two arguments
+##### Invoke a constructor with exactly two arguments
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class,
                                                    String.class, "peter",
                                                    int.class, 71);
 ```
->```text
+> ```text
 > person.name = "peter"
 > person.age = 71
->```
+> ```
 
-#### Invoke a constructor with exactly three arguments
+##### Invoke a constructor with exactly three arguments
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class,
@@ -113,7 +117,7 @@ Person person = ConstructorUtils.invokeConstructor(Person.class,
 > person.marker = true
 > ```
 
-#### Invoke a constructor with many arguments
+##### Invoke a constructor with many arguments
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class,
@@ -125,6 +129,73 @@ Person person = ConstructorUtils.invokeConstructor(Person.class,
 > person.age = 91
 > person.marker = true
 > ```
+
+#### Class object is not available and use full class name as string
+
+Define variable with canonical class name for `Person`:
+```java
+String canonicalName = "ru.olegcherednik.utils.reflection.data.Person";
+// canonicalName == Person.class.getCanonicalName()
+``` 
+
+##### Invoke a constructor with no arguments
+
+```java
+Person person = ConstructorUtils.invokeConstructor(canonicalName);
+```
+> ```text
+> person.name = "defaultName"
+> ``` 
+        
+##### Invoke a constructor with exactly one argument
+
+```java
+Person person = ConstructorUtils.invokeConstructor(canonicalName,
+                                                   String.class, "anna");
+```
+> ```text
+> person.name = "anna"
+> ```        
+
+##### Invoke a constructor with exactly two arguments
+
+```java
+Person person = ConstructorUtils.invokeConstructor(canonicalName,
+                                                   String.class, "peter",
+                                                   int.class, 71);
+```
+> ```text
+> person.name = "peter"
+> person.age = 71
+> ```
+
+##### Invoke a constructor with exactly three arguments
+
+```java
+Person person = ConstructorUtils.invokeConstructor(canonicalName,
+                                                   String.class, "marvin",
+                                                   int.class, 91,
+                                                   boolean.class, true); 
+```
+> ```text
+> person.name = "marvin"
+> person.age = 91
+> person.marker = true
+> ```
+
+##### Invoke a constructor with many arguments
+
+```java
+Person person = ConstructorUtils.invokeConstructor(canonicalName,
+                                  new Class<?>[] { String.class, int.class, boolean.class },
+                                  new Object[] { "marvin", 91, true });
+```
+> ```text
+> person.name = "marvin"
+> person.age = 91
+> person.marker = true
+> ```
+
 
 ### MethodUtils
 
