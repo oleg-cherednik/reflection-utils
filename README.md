@@ -197,6 +197,16 @@ Person person = ConstructorUtils.invokeConstructor(constructor, "marvin", 91, tr
 
 ### EnumUtils
 
+##### Add new constant to the given enum
+
+```java 
+enum CarBrand {
+    BMW,
+    MERCEDES
+}
+
+EnumUtils.addConstant(CarBrand.class, "AUDI");
+```
 
 ### AccessibleObjectUtils
 
