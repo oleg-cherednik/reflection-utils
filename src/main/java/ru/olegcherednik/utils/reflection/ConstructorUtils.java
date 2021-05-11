@@ -259,8 +259,7 @@ public final class ConstructorUtils {
      * @throws RuntimeException           in case if any other problem; checked exception is wrapped with runtime exception as well
      * @throws NoSuchConstructorException in case of constructor was not found
      */
-    /* package */
-    static <T> Constructor<T> getConstructor(Class<T> cls, Class<?>... types) {
+    /* package */ static <T> Constructor<T> getConstructor(Class<T> cls, Class<?>... types) {
         ValidationUtils.requireClsNonNull(cls);
 
         try {
@@ -280,8 +279,7 @@ public final class ConstructorUtils {
      * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
      * @throws ClassNotFoundException in case of class was not found
      */
-    /* package */
-    static <T> Class<T> getClass(String className) {
+    /* package */ static <T> Class<T> getClass(String className) {
         ValidationUtils.requireClassNameNonNull(className);
 
         try {
