@@ -6,7 +6,7 @@ import java.util.Arrays;
  * @author Oleg Cherednik
  * @since 10.05.2021
  */
-public final class NoSuchMethodException extends RuntimeException {
+public final class NoSuchMethodException extends ReflectionUtilsException {
 
     private static final long serialVersionUID = -5313115007938010744L;
 

@@ -1,5 +1,6 @@
 package ru.olegcherednik.utils.reflection;
 
+import ru.olegcherednik.utils.reflection.exceptions.ReflectionUtilsException;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Array;
@@ -19,8 +20,9 @@ public final class EnumUtils {
      * @param cls          not {@literal null} enum class object
      * @param constantName not {@literal null} enum's constant name
      * @param <T>          enum class type
-     * @throws NullPointerException in case of any of required parameters is {@literal null}
-     * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
      */
     public static <T extends Enum<?>> void addConstant(Class<T> cls, String constantName) {
         ValidationUtils.requireClsNonNull(cls);
@@ -38,7 +40,8 @@ public final class EnumUtils {
      * @param setExtraFieldTask not {@literal null} consumer is called for the new constant
      * @param <T>               enum class type
      * @throws NullPointerException     in case of any of required parameters is {@literal null}
-     * @throws RuntimeException         in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
      * @throws IllegalArgumentException in case of enums contains constant with given name
      */
     @SuppressWarnings("UseOfSunClasses")

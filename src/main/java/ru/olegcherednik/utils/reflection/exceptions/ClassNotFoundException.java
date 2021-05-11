@@ -4,7 +4,7 @@ package ru.olegcherednik.utils.reflection.exceptions;
  * @author Oleg Cherednik
  * @since 10.05.2021
  */
-public final class ClassNotFoundException extends RuntimeException {
+public final class ClassNotFoundException extends ReflectionUtilsException {
 
     private static final long serialVersionUID = 9014565566139950106L;
 

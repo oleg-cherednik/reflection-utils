@@ -1,6 +1,7 @@
 package ru.olegcherednik.utils.reflection;
 
 import ru.olegcherednik.utils.reflection.exceptions.NoSuchMethodException;
+import ru.olegcherednik.utils.reflection.exceptions.ReflectionUtilsException;
 
 import java.lang.reflect.Method;
 import java.util.Optional;
@@ -21,9 +22,10 @@ public final class MethodUtils {
      * @param methodName not {@literal null} method name
      * @param <T>        type of the method's return value
      * @return return value of the method
-     * @throws NullPointerException  in case of any of required parameters is {@literal null}
-     * @throws RuntimeException      in case if any other problem; checked exception is wrapped with runtime exception as well
-     * @throws NoSuchMethodException in case of method was not found
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     * @throws NoSuchMethodException    in case of method was not found
      */
     public static <T> T invokeMethod(Object obj, String methodName) {
         ValidationUtils.requireObjNonNull(obj);
@@ -43,9 +45,10 @@ public final class MethodUtils {
      * @param value      value of the argument
      * @param <T>        type of the method's return value
      * @return return value of the method
-     * @throws NullPointerException  in case of any of required parameters is {@literal null}
-     * @throws RuntimeException      in case if any other problem; checked exception is wrapped with runtime exception as well
-     * @throws NoSuchMethodException in case of method was not found
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     * @throws NoSuchMethodException    in case of method was not found
      */
     public static <T> T invokeMethod(Object obj, String methodName, Class<?> type, Object value) {
         ValidationUtils.requireObjNonNull(obj);
@@ -68,9 +71,10 @@ public final class MethodUtils {
      * @param value2     value of the 2nd argument
      * @param <T>        type of the method's return value
      * @return return value of the method
-     * @throws NullPointerException  in case of any of required parameters is {@literal null}
-     * @throws RuntimeException      in case if any other problem; checked exception is wrapped with runtime exception as well
-     * @throws NoSuchMethodException in case of method was not found
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     * @throws NoSuchMethodException    in case of method was not found
      */
     public static <T> T invokeMethod(Object obj, String methodName,
             Class<?> type1, Object value1,
@@ -97,9 +101,10 @@ public final class MethodUtils {
      * @param value3     value of the 3rd argument
      * @param <T>        type of the method's return value
      * @return return value of the method
-     * @throws NullPointerException  in case of any of required parameters is {@literal null}
-     * @throws RuntimeException      in case if any other problem; checked exception is wrapped with runtime exception as well
-     * @throws NoSuchMethodException in case of method was not found
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     * @throws NoSuchMethodException    in case of method was not found
      */
     public static <T> T invokeMethod(Object obj, String methodName,
             Class<?> type1, Object value1,
@@ -120,8 +125,9 @@ public final class MethodUtils {
      * @param values values of the arguments
      * @param <T>    type of the method's return value
      * @return return value of the method
-     * @throws NullPointerException in case of any of required parameters is {@literal null}
-     * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
      */
     public static <T> T invokeMethod(Object obj, Method method, Object... values) {
         ValidationUtils.requireObjNonNull(obj);
@@ -141,9 +147,10 @@ public final class MethodUtils {
      * @param values     values of the arguments (array length should match with {@code types})
      * @param <T>        type of the method's return value
      * @return return value of the method
-     * @throws NullPointerException  in case of any of required parameters is {@literal null}
-     * @throws RuntimeException      in case if any other problem; checked exception is wrapped with runtime exception as well
-     * @throws NoSuchMethodException in case of method was not found
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     * @throws NoSuchMethodException    in case of method was not found
      */
     @SuppressWarnings("MethodCanBeVariableArityMethod")
     public static <T> T invokeMethod(Object obj, String methodName, Class<?>[] types, Object[] values) {
@@ -163,9 +170,10 @@ public final class MethodUtils {
      * @param methodName not {@literal null} method name
      * @param <T>        type of the method's return value
      * @return return value of the method
-     * @throws NullPointerException  in case of any of required parameters is {@literal null}
-     * @throws RuntimeException      in case if any other problem; checked exception is wrapped with runtime exception as well
-     * @throws NoSuchMethodException in case of method was not found
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     * @throws NoSuchMethodException    in case of method was not found
      */
     public static <T> T invokeStaticMethod(Class<?> cls, String methodName) {
         ValidationUtils.requireClsNonNull(cls);
@@ -184,9 +192,10 @@ public final class MethodUtils {
      * @param value      value of the argument
      * @param <T>        type of the method's return value
      * @return return value of the method
-     * @throws NullPointerException  in case of any of required parameters is {@literal null}
-     * @throws RuntimeException      in case if any other problem; checked exception is wrapped with runtime exception as well
-     * @throws NoSuchMethodException in case of method was not found
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     * @throws NoSuchMethodException    in case of method was not found
      */
     public static <T> T invokeStaticMethod(Class<?> cls, String methodName, Class<?> type, Object value) {
         ValidationUtils.requireClsNonNull(cls);
@@ -209,9 +218,10 @@ public final class MethodUtils {
      * @param value2     value of the 2nd argument
      * @param <T>        type of the method's return value
      * @return return value of the method
-     * @throws NullPointerException  in case of any of required parameters is {@literal null}
-     * @throws RuntimeException      in case if any other problem; checked exception is wrapped with runtime exception as well
-     * @throws NoSuchMethodException in case of method was not found
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     * @throws NoSuchMethodException    in case of method was not found
      */
     public static <T> T invokeStaticMethod(Class<?> cls, String methodName,
             Class<?> type1, Object value1,
@@ -238,9 +248,10 @@ public final class MethodUtils {
      * @param value3     value of the 3rd argument
      * @param <T>        type of the method's return value
      * @return return value of the method
-     * @throws NullPointerException  in case of any of required parameters is {@literal null}
-     * @throws RuntimeException      in case if any other problem; checked exception is wrapped with runtime exception as well
-     * @throws NoSuchMethodException in case of method was not found
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     * @throws NoSuchMethodException    in case of method was not found
      */
     public static <T> T invokeStaticMethod(Class<?> cls, String methodName,
             Class<?> type1, Object value1,
@@ -260,8 +271,9 @@ public final class MethodUtils {
      * @param values values of the arguments
      * @param <T>    type of the method's return value
      * @return return value of the method
-     * @throws NullPointerException in case of any of required parameters is {@literal null}
-     * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
      */
     public static <T> T invokeStaticMethod(Method method, Object... values) {
         ValidationUtils.requireMethodNonNull(method);
@@ -279,9 +291,10 @@ public final class MethodUtils {
      * @param values     values of the arguments
      * @param <T>        type of the method's return value
      * @return return value of the method
-     * @throws NullPointerException  in case of any of required parameters is {@literal null}
-     * @throws RuntimeException      in case if any other problem; checked exception is wrapped with runtime exception as well
-     * @throws NoSuchMethodException in case of method was not found
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     * @throws NoSuchMethodException    in case of method was not found
      */
     @SuppressWarnings("MethodCanBeVariableArityMethod")
     public static <T> T invokeStaticMethod(Class<?> cls, String methodName, Class<?>[] types, Object[] values) {
@@ -299,9 +312,10 @@ public final class MethodUtils {
      * @param methodName not {@literal null} method name
      * @param types      types of the arguments
      * @return not {@literal null} method
-     * @throws NullPointerException  in case of any of required parameters is {@literal null}
-     * @throws RuntimeException      in case if any other problem; checked exception is wrapped with runtime exception as well
-     * @throws NoSuchMethodException in case of method was not found
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     * @throws NoSuchMethodException    in case of method was not found
      */
     private static Method getMethod(Class<?> cls, String methodName, Class<?>... types) {
         ValidationUtils.requireClsNonNull(cls);

@@ -2,6 +2,7 @@ package ru.olegcherednik.utils.reflection;
 
 import ru.olegcherednik.utils.reflection.exceptions.ClassNotFoundException;
 import ru.olegcherednik.utils.reflection.exceptions.NoSuchConstructorException;
+import ru.olegcherednik.utils.reflection.exceptions.ReflectionUtilsException;
 
 import java.lang.reflect.Constructor;
 
@@ -20,7 +21,8 @@ public final class ConstructorUtils {
      * @param <T> type of the class that contains the constructor
      * @return not {@literal null} instance of created type
      * @throws NullPointerException       in case of any of required parameters is {@literal null}
-     * @throws RuntimeException           in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws ReflectionUtilsException   in case of any checked exception is thrown
+     * @throws RuntimeException           in case if any other problem
      * @throws NoSuchConstructorException in case of constructor was not found
      */
     public static <T> T invokeConstructor(Class<T> cls) {
@@ -38,7 +40,8 @@ public final class ConstructorUtils {
      * @param <T>   type of the class that contains the constructor
      * @return not {@literal null} instance of created type
      * @throws NullPointerException       in case of any of required parameters is {@literal null}
-     * @throws RuntimeException           in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws ReflectionUtilsException   in case of any checked exception is thrown
+     * @throws RuntimeException           in case if any other problem
      * @throws NoSuchConstructorException in case of constructor was not found
      */
     public static <T> T invokeConstructor(Class<T> cls, Class<?> type, Object value) {
@@ -60,7 +63,8 @@ public final class ConstructorUtils {
      * @param <T>    type of the class that contains the constructor
      * @return not {@literal null} instance of created type
      * @throws NullPointerException       in case of any of required parameters is {@literal null}
-     * @throws RuntimeException           in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws ReflectionUtilsException   in case of any checked exception is thrown
+     * @throws RuntimeException           in case if any other problem
      * @throws NoSuchConstructorException in case of constructor was not found
      */
     public static <T> T invokeConstructor(Class<T> cls,
@@ -86,7 +90,8 @@ public final class ConstructorUtils {
      * @param <T>    type of the class that contains the constructor
      * @return not {@literal null} instance of created type
      * @throws NullPointerException       in case of any of required parameters is {@literal null}
-     * @throws RuntimeException           in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws ReflectionUtilsException   in case of any checked exception is thrown
+     * @throws RuntimeException           in case if any other problem
      * @throws NoSuchConstructorException in case of constructor was not found
      */
     public static <T> T invokeConstructor(Class<T> cls,
@@ -109,7 +114,8 @@ public final class ConstructorUtils {
      * @param <T>    type of the class that contains the constructor
      * @return not {@literal null} instance of created type
      * @throws NullPointerException       in case of any of required parameters is {@literal null}
-     * @throws RuntimeException           in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws ReflectionUtilsException   in case of any checked exception is thrown
+     * @throws RuntimeException           in case if any other problem
      * @throws NoSuchConstructorException in case of constructor was not found
      */
     @SuppressWarnings("MethodCanBeVariableArityMethod")
@@ -128,7 +134,8 @@ public final class ConstructorUtils {
      * @param <T>       type of the class that contains the constructor
      * @return not {@literal null} instance of created type
      * @throws NullPointerException       in case of any of required parameters is {@literal null}
-     * @throws RuntimeException           in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws ReflectionUtilsException   in case of any checked exception is thrown
+     * @throws RuntimeException           in case if any other problem
      * @throws NoSuchConstructorException in case of constructor was not found
      * @throws ClassNotFoundException     in case of class was not found
      */
@@ -147,7 +154,8 @@ public final class ConstructorUtils {
      * @param <T>       type of the class that contains the constructor
      * @return not {@literal null} instance of created type
      * @throws NullPointerException       in case of any of required parameters is {@literal null}
-     * @throws RuntimeException           in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws ReflectionUtilsException   in case of any checked exception is thrown
+     * @throws RuntimeException           in case if any other problem
      * @throws NoSuchConstructorException in case of constructor was not found
      * @throws ClassNotFoundException     in case of class was not found
      */
@@ -169,9 +177,10 @@ public final class ConstructorUtils {
      * @param value2    value of the 2nd argument
      * @param <T>       type of the class that contains the constructor
      * @return not {@literal null} instance of created type
-     * @throws NullPointerException   in case of any of required parameters is {@literal null}
-     * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
-     * @throws ClassNotFoundException in case of class was not found
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     * @throws ClassNotFoundException   in case of class was not found
      */
     public static <T> T invokeConstructor(String className,
             Class<?> type1, Object value1,
@@ -195,9 +204,10 @@ public final class ConstructorUtils {
      * @param value3    value of the 3rd argument
      * @param <T>       type of the class that contains the constructor
      * @return not {@literal null} instance of created type
-     * @throws NullPointerException   in case of any of required parameters is {@literal null}
-     * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
-     * @throws ClassNotFoundException in case of class was not found
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     * @throws ClassNotFoundException   in case of class was not found
      */
     public static <T> T invokeConstructor(String className,
             Class<?> type1, Object value1,
@@ -218,9 +228,10 @@ public final class ConstructorUtils {
      * @param values    values of the arguments (array length should match with {@code types})
      * @param <T>       type of the class that contains the constructor
      * @return not {@literal null} instance of created type
-     * @throws NullPointerException   in case of any of required parameters is {@literal null}
-     * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
-     * @throws ClassNotFoundException in case of class was not found
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     * @throws ClassNotFoundException   in case of class was not found
      */
     @SuppressWarnings("MethodCanBeVariableArityMethod")
     public static <T> T invokeConstructor(String className, Class<?>[] types, Object[] values) {
@@ -238,8 +249,9 @@ public final class ConstructorUtils {
      * @param values      values of the arguments (array length should match with constructor's arguments amount)
      * @param <T>         type of the class that contains the constructor
      * @return not {@literal null} instance of created type
-     * @throws NullPointerException in case of any of required parameters is {@literal null}
-     * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
      */
     public static <T> T invokeConstructor(Constructor<T> constructor, Object... values) {
         ValidationUtils.requireConstructorNonNull(constructor);
@@ -256,7 +268,8 @@ public final class ConstructorUtils {
      * @param <T>   type of the class that contains the constructor
      * @return not {@literal null} method
      * @throws NullPointerException       in case of any of required parameters is {@literal null}
-     * @throws RuntimeException           in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws ReflectionUtilsException   in case of any checked exception is thrown
+     * @throws RuntimeException           in case if any other problem
      * @throws NoSuchConstructorException in case of constructor was not found
      */
     private static <T> Constructor<T> getConstructor(Class<T> cls, Class<?>... types) {
@@ -275,9 +288,10 @@ public final class ConstructorUtils {
      * @param className not {@literal null} class name
      * @param <T>       type of the class that contains the constructor
      * @return not {@literal null} class
-     * @throws NullPointerException   in case of any of required parameters is {@literal null}
-     * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
-     * @throws ClassNotFoundException in case of class was not found
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     * @throws ClassNotFoundException   in case of class was not found
      */
     private static <T> Class<T> getClass(String className) {
         ValidationUtils.requireClassNameNonNull(className);

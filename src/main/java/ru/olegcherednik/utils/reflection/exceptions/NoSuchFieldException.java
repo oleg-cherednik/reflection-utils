@@ -4,7 +4,7 @@ package ru.olegcherednik.utils.reflection.exceptions;
  * @author Oleg Cherednik
  * @since 10.05.2021
  */
-public final class NoSuchFieldException extends RuntimeException {
+public final class NoSuchFieldException extends ReflectionUtilsException {
 
     private static final long serialVersionUID = -2044079362036348059L;
 

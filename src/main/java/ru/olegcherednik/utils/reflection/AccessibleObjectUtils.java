@@ -1,5 +1,7 @@
 package ru.olegcherednik.utils.reflection;
 
+import ru.olegcherednik.utils.reflection.exceptions.ReflectionUtilsException;
+
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Member;
@@ -20,8 +22,9 @@ public final class AccessibleObjectUtils {
      * @param accessibleObject not {@literal null} accessible object
      * @param task             not {@literal null} task
      * @param <T>              accessible object instance type
-     * @throws NullPointerException in case of any of required parameters is {@literal null}
-     * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
      */
     public static <T extends AccessibleObject & Member> void invokeConsumer(T accessibleObject, Consumer<T> task) {
         ValidationUtils.requireObjNonNull(accessibleObject);
@@ -41,8 +44,9 @@ public final class AccessibleObjectUtils {
      * @param <T>              accessible object type
      * @param <R>              type of the field or type of the method's return value
      * @return value of the field or return value of the method
-     * @throws NullPointerException in case of any of required parameters is {@literal null}
-     * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
      */
     public static <T extends AccessibleObject & Member, R> R invokeFunction(T accessibleObject, Function<T, R> task) {
         ValidationUtils.requireAccessibleObjectNonNull(accessibleObject);
@@ -59,7 +63,7 @@ public final class AccessibleObjectUtils {
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new ReflectionUtilsException(e);
         } finally {
             accessibleObject.setAccessible(accessible);
         }

@@ -2,6 +2,7 @@ package ru.olegcherednik.utils.reflection;
 
 import org.testng.annotations.Test;
 import ru.olegcherednik.utils.reflection.data.Data;
+import ru.olegcherednik.utils.reflection.exceptions.ReflectionUtilsException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -37,7 +38,10 @@ public class AccessibleObjectUtilsTest {
 
         assertThatThrownBy(() -> AccessibleObjectUtils.invokeFunction(method, m -> {
             throw new NoSuchMethodException("xxx");
-        })).isExactlyInstanceOf(RuntimeException.class).hasCauseInstanceOf(NoSuchMethodException.class).hasMessageContaining("xxx");
+        }))
+                .isExactlyInstanceOf(ReflectionUtilsException.class)
+                .hasCauseInstanceOf(NoSuchMethodException.class)
+                .hasMessageContaining("xxx");
     }
 
     public void shouldRestoreFieldModifiersWhenInvokeFunctionOnField() throws NoSuchFieldException {
