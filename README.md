@@ -41,10 +41,6 @@ To simplify usage of _reflection-utils_, there're following classes:
 
 This is a class definition for examples:
 
-<details>
-<summary>I could use some help...</summary>
-<p>
-
 ```java   
 package ru.olegcherednik.utils.reflection.data;
 
@@ -74,9 +70,6 @@ public class Person {
 }
 
 \``` 
-
-</p>
-</details> 
 
 #### Class object is available to use 
 
