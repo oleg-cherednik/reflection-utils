@@ -73,7 +73,7 @@ public final class EnumUtils {
             setClassField("enumConstants", cls);
             setClassField("enumConstantDirectory", cls);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new ReflectionUtilsException(e);
         }
     }
 

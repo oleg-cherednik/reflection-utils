@@ -1,6 +1,7 @@
 package ru.olegcherednik.utils.reflection;
 
 import org.testng.annotations.Test;
+import ru.olegcherednik.utils.reflection.exceptions.ReflectionUtilsException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -41,11 +42,11 @@ public class EnumUtilsTest {
                 .hasMessage(String.format("Enum '%s' already has a constant with name '%s'", CarBrand.class, CarBrand.BMW.name()));
     }
 
-    public void shouldThrowRuntimeExceptionWhenExceptionExists() {
+    public void shouldThrowReflectionUtilsExceptionWhenExceptionExists() {
         assertThatThrownBy(() -> EnumUtils.addConstant(CarBrand.class, "PORSCHE", carBrand -> {
             throw new IllegalArgumentException("xxx");
         }))
-                .isExactlyInstanceOf(RuntimeException.class)
+                .isExactlyInstanceOf(ReflectionUtilsException.class)
                 .hasCauseInstanceOf(IllegalArgumentException.class)
                 .hasMessage("java.lang.IllegalArgumentException: xxx");
 
