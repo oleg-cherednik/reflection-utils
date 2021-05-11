@@ -175,14 +175,17 @@ Person person = ConstructorUtils.invokeConstructor(constructor, "anna");
 ##### Invoke a given constructor providing two arguments
 
 ```java                                                                             
-Constructor<Person> constructor = Person.class.getDeclaredConstructor(String.class, int.class);
+Constructor<Person> constructor = Person.class.getDeclaredConstructor(String.class,
+                                                                      int.class);
 Person person = ConstructorUtils.invokeConstructor(constructor, "peter", 71);
 ```
 
 ##### Invoke a given constructor providing three arguments
 
 ```java                                                                                        
-Constructor<Person> constructor = Person.class.getDeclaredConstructor(String.class, int.class, boolean.class);
+Constructor<Person> constructor = Person.class.getDeclaredConstructor(String.class,
+                                                                      int.class,
+                                                                      boolean.class);
 Person person = ConstructorUtils.invokeConstructor(constructor, "marvin", 91, true); 
 ```
 
