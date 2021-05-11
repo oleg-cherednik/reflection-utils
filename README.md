@@ -31,11 +31,11 @@ compile 'ru.oleg-cherednik.utils.reflection:reflection-utils:1.0'
 ## Usage 
 
 To simplify usage of _reflection-utils_, there're following classes:
-  * [ConstructorUtils](#constructorutils) - working with constructors;
-  * [MethodUtils](#methodutils) - working with methods;
-  * [FieldUtils](#fieldutils) - working with fields;
-  * [EnumUtils](#enumutils) - working with enums;
-  * [AccessibleObjectUtils](#accessibleobjectutils) - working with accessible objects;
+*   [ConstructorUtils](#constructorutils) - working with constructors;
+*   [MethodUtils](#methodutils) - working with methods;
+*   [FieldUtils](#fieldutils) - working with fields;
+*   [EnumUtils](#enumutils) - working with enums;
+*   [AccessibleObjectUtils](#accessibleobjectutils) - working with accessible objects;
 
 ### ConstructorUtils
 
