@@ -127,7 +127,7 @@ public final class MethodUtils {
         ValidationUtils.requireObjNonNull(obj);
         ValidationUtils.requireMethodNonNull(method);
 
-        return InvokeUtils.invokeFunction(method, m -> (T)m.invoke(obj, values));
+        return AccessibleObjectUtils.invokeFunction(method, m -> (T)m.invoke(obj, values));
     }
 
     /**
@@ -266,7 +266,7 @@ public final class MethodUtils {
     public static <T> T invokeStaticMethod(Method method, Object... values) {
         ValidationUtils.requireMethodNonNull(method);
 
-        return InvokeUtils.invokeFunction(method, m -> (T)m.invoke(null, values));
+        return AccessibleObjectUtils.invokeFunction(method, m -> (T)m.invoke(null, values));
     }
 
     /**

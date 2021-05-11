@@ -245,7 +245,7 @@ public final class ConstructorUtils {
         ValidationUtils.requireConstructorNonNull(constructor);
         ValidationUtils.requireLengthMatch(constructor.getParameterTypes(), values);
 
-        return InvokeUtils.invokeFunction(constructor, c -> c.newInstance(values));
+        return AccessibleObjectUtils.invokeFunction(constructor, c -> c.newInstance(values));
     }
 
     /**

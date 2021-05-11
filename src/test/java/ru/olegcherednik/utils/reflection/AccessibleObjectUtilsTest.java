@@ -15,19 +15,19 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * @since 27.02.2021
  */
 @Test
-public class InvokeUtilsTest {
+public class AccessibleObjectUtilsTest {
 
     public void shouldRetrieveFieldValueWhenInvokeFunctionOnField() throws NoSuchFieldException {
         Data data = Data.create();
         Field field = data.getClass().getDeclaredField("name");
-        String name = InvokeUtils.invokeFunction(field, f -> (String)f.get(data));
+        String name = AccessibleObjectUtils.invokeFunction(field, f -> (String)f.get(data));
         assertThat(name).isEqualTo("oleg.cherednik");
     }
 
     public void shouldRetrieveMethodReturnValueWhenInvokeFunctionOnMethod() throws NoSuchMethodException {
         Data data = Data.create();
         Method method = data.getClass().getDeclaredMethod("getCity");
-        String city = InvokeUtils.invokeFunction(method, m -> (String)m.invoke(data));
+        String city = AccessibleObjectUtils.invokeFunction(method, m -> (String)m.invoke(data));
         assertThat(city).isEqualTo("Saint-Petersburg");
     }
 
@@ -35,7 +35,7 @@ public class InvokeUtilsTest {
         Data data = Data.create();
         Method method = data.getClass().getDeclaredMethod("getCity");
 
-        assertThatThrownBy(() -> InvokeUtils.invokeFunction(method, m -> {
+        assertThatThrownBy(() -> AccessibleObjectUtils.invokeFunction(method, m -> {
             throw new NoSuchMethodException("xxx");
         })).isExactlyInstanceOf(RuntimeException.class).hasCauseInstanceOf(NoSuchMethodException.class).hasMessageContaining("xxx");
     }
@@ -46,7 +46,7 @@ public class InvokeUtilsTest {
         boolean expectedAccessible = field.isAccessible();
         int expectedModifiers = field.getModifiers();
 
-        InvokeUtils.invokeFunction(field, f -> (String)f.get(data));
+        AccessibleObjectUtils.invokeFunction(field, f -> (String)f.get(data));
         assertThat(field.isAccessible()).isEqualTo(expectedAccessible);
         assertThat(field.getModifiers()).isEqualTo(expectedModifiers);
     }
@@ -57,7 +57,7 @@ public class InvokeUtilsTest {
         boolean expectedAccessible = method.isAccessible();
         int expectedModifiers = method.getModifiers();
 
-        InvokeUtils.invokeFunction(method, m -> (String)m.invoke(data));
+        AccessibleObjectUtils.invokeFunction(method, m -> (String)m.invoke(data));
         assertThat(method.isAccessible()).isEqualTo(expectedAccessible);
         assertThat(method.getModifiers()).isEqualTo(expectedModifiers);
     }
@@ -66,7 +66,7 @@ public class InvokeUtilsTest {
         Data data = Data.create();
         Field field = data.getClass().getDeclaredField("name");
 
-        String actual = InvokeUtils.invoke(data, field);
+        String actual = AccessibleObjectUtils.invoke(data, field);
         assertThat(actual).isEqualTo("oleg.cherednik");
     }
 
@@ -74,7 +74,7 @@ public class InvokeUtilsTest {
         Data data = Data.create();
         Method method = data.getClass().getDeclaredMethod("getCity");
 
-        String actual = InvokeUtils.invoke(data, method);
+        String actual = AccessibleObjectUtils.invoke(data, method);
         assertThat(actual).isEqualTo("Saint-Petersburg");
     }
 
@@ -82,9 +82,52 @@ public class InvokeUtilsTest {
         Data data = Data.create();
         Constructor<?> constructor = data.getClass().getDeclaredConstructor();
 
-        assertThatThrownBy(() -> InvokeUtils.invoke(data, constructor))
+        assertThatThrownBy(() -> AccessibleObjectUtils.invoke(data, constructor))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Unknown 'accessibleObject' class: class java.lang.reflect.Constructor");
+    }
+
+    public void shouldNotWrapRuntimeExceptionWhenRuntimeExceptionIsThrown() throws NoSuchMethodException {
+        Data data = Data.create();
+        Method method = data.getClass().getDeclaredMethod("getCity");
+
+        assertThatThrownBy(() -> AccessibleObjectUtils.invokeFunction(method, (Function<Method, String>)m -> {
+            throw new IllegalArgumentException("xxx");
+        }))
+                .isExactlyInstanceOf(IllegalArgumentException.class)
+                .hasMessage("xxx");
+    }
+
+    public void shouldRetrieveFieldValueWhenInvokeOnStaticField() throws NoSuchFieldException {
+        Data data = Data.create();
+        Field field = data.getClass().getDeclaredField("AUTO");
+
+        String actual = AccessibleObjectUtils.invoke(null, field);
+        assertThat(actual).isEqualTo("ferrari");
+    }
+
+    public void shouldRetrieveMethodReturnValueWhenInvokeOnStaticMethod() throws NoSuchMethodException {
+        Data data = Data.create();
+        Method method = data.getClass().getDeclaredMethod("getMarker");
+
+        String actual = AccessibleObjectUtils.invoke(null, method);
+        assertThat(actual).isEqualTo("green");
+    }
+
+    public void shouldRetrieveFieldValueWhenInvokeOnStaticFieldSpecialMethod() throws NoSuchFieldException {
+        Data data = Data.create();
+        Field field = data.getClass().getDeclaredField("AUTO");
+
+        String actual = AccessibleObjectUtils.invoke(field);
+        assertThat(actual).isEqualTo("ferrari");
+    }
+
+    public void shouldRetrieveMethodReturnValueWhenInvokeOnStaticMethodSpecialMethod() throws NoSuchMethodException {
+        Data data = Data.create();
+        Method method = data.getClass().getDeclaredMethod("getMarker");
+
+        String actual = AccessibleObjectUtils.invoke(method);
+        assertThat(actual).isEqualTo("green");
     }
 
 }

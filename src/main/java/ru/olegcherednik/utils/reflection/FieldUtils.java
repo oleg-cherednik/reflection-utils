@@ -27,7 +27,7 @@ public final class FieldUtils {
         ValidationUtils.requireObjNonNull(obj);
         ValidationUtils.requireFieldNonNull(field);
 
-        return InvokeUtils.invokeFunction(field, f -> (T)field.get(obj));
+        return AccessibleObjectUtils.invokeFunction(field, f -> (T)field.get(obj));
     }
 
     /**
@@ -61,7 +61,7 @@ public final class FieldUtils {
     public static <T> T getStaticFieldValue(Field field) {
         ValidationUtils.requireFieldNonNull(field);
 
-        return InvokeUtils.invokeFunction(field, f -> (T)f.get(field.getDeclaringClass()));
+        return AccessibleObjectUtils.invokeFunction(field, f -> (T)f.get(field.getDeclaringClass()));
     }
 
     /**
@@ -97,7 +97,7 @@ public final class FieldUtils {
         ValidationUtils.requireObjNonNull(obj);
         ValidationUtils.requireFieldNonNull(field);
 
-        InvokeUtils.invokeConsumer(field, f -> setFieldValueImpl(f, obj, value));
+        AccessibleObjectUtils.invokeConsumer(field, f -> setFieldValueImpl(f, obj, value));
     }
 
     /**
@@ -133,7 +133,7 @@ public final class FieldUtils {
         ValidationUtils.requireFieldNonNull(field);
         ValidationUtils.requireSetValueTaskNonNull(setValueTask);
 
-        InvokeUtils.invokeConsumer(field, setValueTask);
+        AccessibleObjectUtils.invokeConsumer(field, setValueTask);
     }
 
     /**
@@ -167,7 +167,7 @@ public final class FieldUtils {
     public static void setStaticFieldValue(Field field, Object value) {
         ValidationUtils.requireFieldNonNull(field);
 
-        InvokeUtils.invokeConsumer(field, f -> setFieldValueImpl(f, null, value));
+        AccessibleObjectUtils.invokeConsumer(field, f -> setFieldValueImpl(f, null, value));
     }
 
     /**
@@ -201,7 +201,7 @@ public final class FieldUtils {
         ValidationUtils.requireFieldNonNull(field);
         ValidationUtils.requireSetValueTaskNonNull(setValueTask);
 
-        InvokeUtils.invokeConsumer(field, setValueTask);
+        AccessibleObjectUtils.invokeConsumer(field, setValueTask);
     }
 
     /**
