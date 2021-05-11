@@ -119,19 +119,19 @@ String canonicalName = "ru.olegcherednik.utils.reflection.data.Person";
 // canonicalName == Person.class.getCanonicalName()
 ``` 
 
-##### Invoke a constructor with no arguments for given class name
+##### Invoke a constructor with no arguments for given classname
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName);
 ```
-##### Invoke a constructor with exactly one argument for given class name
+##### Invoke a constructor with exactly one argument for given classname
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName,
                                                    String.class, "anna");
 ```    
 
-##### Invoke a constructor with exactly two arguments for given class name
+##### Invoke a constructor with exactly two arguments for given a classname
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName,
@@ -139,7 +139,7 @@ Person person = ConstructorUtils.invokeConstructor(canonicalName,
                                                    int.class, 71);
 ```
 
-##### Invoke a constructor with exactly three arguments for given class name
+##### Invoke a constructor with exactly three arguments for given classname
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName,
@@ -148,12 +148,42 @@ Person person = ConstructorUtils.invokeConstructor(canonicalName,
                                                    boolean.class, true); 
 ```
 
-##### Invoke a constructor with many arguments for given class name
+##### Invoke a constructor with many arguments for given classname
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName,
                                   new Class<?>[] { String.class, int.class, boolean.class },
                                   new Object[] { "marvin", 91, true });
+```
+
+#### Constructor object is available to use
+
+##### Invoke a given constructor providing zero arguments
+
+```java
+Constructor<Person> constructor = Person.class.getDeclaredConstructor();
+Person person = ConstructorUtils.invokeConstructor(constructor); 
+```
+
+##### Invoke a given constructor providing one argument
+
+```java                                                                 
+Constructor<Person> constructor = Person.class.getDeclaredConstructor(String.class);
+Person person = ConstructorUtils.invokeConstructor(constructor, "anna");
+```    
+
+##### Invoke a given constructor providing two arguments
+
+```java                                                                             
+Constructor<Person> constructor = Person.class.getDeclaredConstructor(String.class, int.class);
+Person person = ConstructorUtils.invokeConstructor(constructor, "peter", 71);
+```
+
+##### Invoke a given constructor providing three arguments
+
+```java                                                                                        
+Constructor<Person> constructor = Person.class.getDeclaredConstructor(String.class, int.class, boolean.class);
+Person person = ConstructorUtils.invokeConstructor(constructor, "marvin", 91, true); 
 ```
 
 ### MethodUtils
