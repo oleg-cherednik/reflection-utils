@@ -73,9 +73,9 @@ public class Person {
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class);
 ```
->```
->person.name = "defaultName"
->``` 
+> ```
+> person.name = "defaultName"
+> ``` 
 
 #### Invoke a constructor with exactly one argument
 
