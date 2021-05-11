@@ -72,7 +72,7 @@ public class Person {
 
 #### Class object is available to use 
 
-##### Invoke a constructor with no arguments
+#### Invoke a constructor with no arguments for given class
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class);
@@ -81,7 +81,7 @@ Person person = ConstructorUtils.invokeConstructor(Person.class);
 > person.name = "defaultName"
 > ``` 
 
-##### Invoke a constructor with exactly one argument
+##### Invoke a constructor with exactly one argument for given class
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class,
@@ -91,7 +91,7 @@ Person person = ConstructorUtils.invokeConstructor(Person.class,
 > person.name = "anna"
 > ```        
 
-##### Invoke a constructor with exactly two arguments
+##### Invoke a constructor with exactly two arguments for given class
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class,
@@ -103,7 +103,7 @@ Person person = ConstructorUtils.invokeConstructor(Person.class,
 > person.age = 71
 > ```
 
-##### Invoke a constructor with exactly three arguments
+##### Invoke a constructor with exactly three arguments for given class
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class,
@@ -117,7 +117,7 @@ Person person = ConstructorUtils.invokeConstructor(Person.class,
 > person.marker = true
 > ```
 
-##### Invoke a constructor with many arguments
+##### Invoke a constructor with many arguments for given class
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class,
@@ -138,7 +138,7 @@ String canonicalName = "ru.olegcherednik.utils.reflection.data.Person";
 // canonicalName == Person.class.getCanonicalName()
 ``` 
 
-##### Invoke a constructor with no arguments
+##### Invoke a constructor with no arguments for given class name
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName);
@@ -147,7 +147,7 @@ Person person = ConstructorUtils.invokeConstructor(canonicalName);
 > person.name = "defaultName"
 > ``` 
         
-##### Invoke a constructor with exactly one argument
+##### Invoke a constructor with exactly one argument for given class name
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName,
@@ -157,7 +157,7 @@ Person person = ConstructorUtils.invokeConstructor(canonicalName,
 > person.name = "anna"
 > ```        
 
-##### Invoke a constructor with exactly two arguments
+##### Invoke a constructor with exactly two arguments for given class name
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName,
@@ -169,7 +169,7 @@ Person person = ConstructorUtils.invokeConstructor(canonicalName,
 > person.age = 71
 > ```
 
-##### Invoke a constructor with exactly three arguments
+##### Invoke a constructor with exactly three arguments for given class name
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName,
@@ -183,7 +183,7 @@ Person person = ConstructorUtils.invokeConstructor(canonicalName,
 > person.marker = true
 > ```
 
-##### Invoke a constructor with many arguments
+##### Invoke a constructor with many arguments for given class name
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName,
