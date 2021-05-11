@@ -1,7 +1,9 @@
 package ru.olegcherednik.utils.reflection;
 
+import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Objects;
@@ -28,8 +30,8 @@ final class ValidationUtils {
         return Objects.requireNonNull(cls, "'cls' should not be null");
     }
 
-    public static Consumer<Field> requireSetValueTaskNonNull(Consumer<Field> setValueTask) {
-        return Objects.requireNonNull(setValueTask, "'setValueTask' should not be null");
+    public static <T> T requireTaskNonNull(T task) {
+        return Objects.requireNonNull(task, "'task' should not be null");
     }
 
     public static String requireConstantNameNonNull(String constantName) {
@@ -99,6 +101,10 @@ final class ValidationUtils {
 
         if (Arrays.stream(cls.getEnumConstants()).anyMatch(value -> value.name().equals(constantName)))
             throw new IllegalArgumentException(String.format("Enum '%s' already has a constant with name '%s'", cls, constantName));
+    }
+
+    public static <T extends AccessibleObject & Member> T requireAccessibleObjectNonNull(T accessibleObject) {
+        return Objects.requireNonNull(accessibleObject, "'accessibleObject' should not be null");
     }
 
     private ValidationUtils() {}

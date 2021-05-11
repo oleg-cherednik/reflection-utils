@@ -122,18 +122,18 @@ public final class FieldUtils {
     /**
      * Call given {@link Consumer} for the not static field {@code field} for the give {@code obj}.
      *
-     * @param obj          not {@literal null} object instance
-     * @param field        not {@literal null} field
-     * @param setValueTask not {@literal null} consumer is called for the field
+     * @param obj   not {@literal null} object instance
+     * @param field not {@literal null} field
+     * @param task  not {@literal null} consumer is called for the field
      * @throws NullPointerException in case of any of required parameters is {@literal null}
      * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
      */
-    public static void setFieldValue(Object obj, Field field, Consumer<Field> setValueTask) {
+    public static void setFieldValue(Object obj, Field field, Consumer<Field> task) {
         ValidationUtils.requireObjNonNull(obj);
         ValidationUtils.requireFieldNonNull(field);
-        ValidationUtils.requireSetValueTaskNonNull(setValueTask);
+        ValidationUtils.requireTaskNonNull(task);
 
-        AccessibleObjectUtils.invokeConsumer(field, setValueTask);
+        AccessibleObjectUtils.invokeConsumer(field, task);
     }
 
     /**
@@ -150,7 +150,7 @@ public final class FieldUtils {
     public static void setFieldValue(Object obj, String fieldName, Consumer<Field> setValueTask) {
         ValidationUtils.requireObjNonNull(obj);
         ValidationUtils.requireFieldNameNonNull(fieldName);
-        ValidationUtils.requireSetValueTaskNonNull(setValueTask);
+        ValidationUtils.requireTaskNonNull(setValueTask);
 
         setFieldValue(obj, getField(obj.getClass(), fieldName), setValueTask);
     }
@@ -192,16 +192,16 @@ public final class FieldUtils {
     /**
      * Call given {@link Consumer} for the static field {@code field}.
      *
-     * @param field        not {@literal null} field
-     * @param setValueTask not {@literal null} consumer is called for the field
+     * @param field not {@literal null} field
+     * @param task  not {@literal null} consumer is called for the field
      * @throws NullPointerException in case of any of required parameters is {@literal null}
      * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
      */
-    public static void setStaticFieldValue(Field field, Consumer<Field> setValueTask) {
+    public static void setStaticFieldValue(Field field, Consumer<Field> task) {
         ValidationUtils.requireFieldNonNull(field);
-        ValidationUtils.requireSetValueTaskNonNull(setValueTask);
+        ValidationUtils.requireTaskNonNull(task);
 
-        AccessibleObjectUtils.invokeConsumer(field, setValueTask);
+        AccessibleObjectUtils.invokeConsumer(field, task);
     }
 
     /**
@@ -218,7 +218,7 @@ public final class FieldUtils {
     public static void setStaticFieldValue(Class<?> cls, String fieldName, Consumer<Field> setValueTask) {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireFieldNameNonNull(fieldName);
-        ValidationUtils.requireSetValueTaskNonNull(setValueTask);
+        ValidationUtils.requireTaskNonNull(setValueTask);
 
         setStaticFieldValue(getField(cls, fieldName), setValueTask);
     }

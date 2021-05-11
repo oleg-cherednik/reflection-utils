@@ -22,8 +22,8 @@ public class ValidationUtilsTest {
                 .isExactlyInstanceOf(NullPointerException.class).hasMessage("'fieldName' should not be null");
         assertThatThrownBy(() -> ValidationUtils.requireClsNonNull(null))
                 .isExactlyInstanceOf(NullPointerException.class).hasMessage("'cls' should not be null");
-        assertThatThrownBy(() -> ValidationUtils.requireSetValueTaskNonNull(null))
-                .isExactlyInstanceOf(NullPointerException.class).hasMessage("'setValueTask' should not be null");
+        assertThatThrownBy(() -> ValidationUtils.requireTaskNonNull(null))
+                .isExactlyInstanceOf(NullPointerException.class).hasMessage("'task' should not be null");
         assertThatThrownBy(() -> ValidationUtils.requireConstantNameNonNull(null))
                 .isExactlyInstanceOf(NullPointerException.class).hasMessage("'constantName' should not be null");
         assertThatThrownBy(() -> ValidationUtils.requireSetExtraFieldTaskNonNull(null))
@@ -36,6 +36,8 @@ public class ValidationUtilsTest {
                 .isExactlyInstanceOf(NullPointerException.class).hasMessage("'className' should not be null");
         assertThatThrownBy(() -> ValidationUtils.requireConstructorNonNull(null))
                 .isExactlyInstanceOf(NullPointerException.class).hasMessage("'constructor' should not be null");
+        assertThatThrownBy(() -> ValidationUtils.requireAccessibleObjectNonNull(null))
+                .isExactlyInstanceOf(NullPointerException.class).hasMessage("'accessibleObject' should not be null");
     }
 
     public void shouldThrowNullPointerExceptionWhenSomeTypesDoNotExist() {
