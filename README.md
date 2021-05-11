@@ -70,7 +70,7 @@ public class Person {
 
 ``` 
 
-#### When class object is available to use 
+#### Class object is available to use 
 
 ##### Invoke a constructor with no arguments
 
