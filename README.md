@@ -254,12 +254,8 @@ An accessible object could be either `Field` or `Method`.
 
 ```java
 Field field = data.getClass().getDeclaredField("AUTO");
-String auto = AccessibleObjectUtils.invoke(field);
-```
-or
-```java
-Field field = data.getClass().getDeclaredField("AUTO");
-String auto = AccessibleObjectUtils.invoke(null, field);
+String auto1 = AccessibleObjectUtils.invoke(field);
+String auto2 = AccessibleObjectUtils.invoke(null, field);    // alternative
 ```
 
 ### Links
