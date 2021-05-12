@@ -79,9 +79,7 @@ public class Person {
 </p>
 </details>
 
-### ConstructorUtils
-
-<details><summary>details</summary>
+<details><summary>### ConstructorUtils</summary>
 <p>
 
 #### Class object is available to use 
