@@ -197,9 +197,7 @@ Person person = ConstructorUtils.invokeConstructor(constructor, "marvin", 91, tr
 
 ### MethodUtils
 
-
 ### FieldUtils
-
 
 ### EnumUtils
 
