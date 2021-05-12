@@ -216,6 +216,9 @@ EnumUtils.addConstant(CarBrand.class, "AUDI");
 
 ### AccessibleObjectUtils
 
+<details><summary>CLICK ME</summary>
+<p>
+
 #### Invoke consumer on the accessible object
 
 Use consumer to do any activity on the given accessible object and no return any value.
@@ -257,6 +260,8 @@ Field field = data.getClass().getDeclaredField("AUTO");
 String auto1 = AccessibleObjectUtils.invoke(field);
 String auto2 = AccessibleObjectUtils.invoke(null, field);    // alternative
 ```
+</p>
+</details>
 
 ### Links
 
