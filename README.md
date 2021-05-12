@@ -238,7 +238,7 @@ Function<Method, String> task = m -> (String)m.invoke(person);
 String city = AccessibleObjectUtils.invokeFunction(field, task);
 ```
 
-#### Invoke not static the accessible object
+#### Invoke not static accessible object
 
 An accessible object could be either `Field` or `Method`.
 
@@ -248,7 +248,7 @@ Field field = data.getClass().getDeclaredField("name");
 AccessibleObjectUtils.invoke(person, field);
 ```
 
-#### Invoke not static the accessible object
+#### Invoke static accessible object
 
 An accessible object could be either `Field` or `Method`.
 
@@ -261,7 +261,6 @@ String auto2 = AccessibleObjectUtils.invoke(null, field);    // alternative
 ### Links
 
 *   Home page: https://github.com/oleg-cherednik/reflection-utils
-
 *   Maven:
     *   **central:** https://mvnrepository.com/artifact/ru.oleg-cherednik.utils.reflection/reflection-utils
     *   **download:** https://repo1.maven.org/maven2/ru/oleg-cherednik/utils/reflection/reflection-utils/
