@@ -201,7 +201,7 @@ Person person = ConstructorUtils.invokeConstructor(constructor, "marvin", 91, tr
 
 ### EnumUtils
 
-##### Add new constant to the given enum
+#### Add new constant to the given enum
 
 ```java 
 enum CarBrand {
