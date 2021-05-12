@@ -38,10 +38,9 @@ To simplify usage of _reflection-utils_, there're following classes:
 *   [EnumUtils](#enumutils) - working with enums;
 *   [AccessibleObjectUtils](#accessibleobjectutils) - working with accessible objects;
 
-### Class definition for examples
 
-This is a class definition for examples:
-
+<details><summary>Person class for examples</summary>
+<p>
 ```java   
 package ru.olegcherednik.utils.reflection.data;
 
@@ -76,6 +75,8 @@ public class Person {
 
 }
 ```
+</p>
+</details>
 
 ### ConstructorUtils
 
