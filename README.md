@@ -38,7 +38,6 @@ To simplify usage of _reflection-utils_, there're following classes:
 *   [EnumUtils](#enumutils) - working with enums;
 *   [AccessibleObjectUtils](#accessibleobjectutils) - working with accessible objects;
 
-
 <details><summary>Person class for examples</summary>
 <p>
 
