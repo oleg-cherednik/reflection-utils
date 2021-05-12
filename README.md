@@ -27,7 +27,8 @@ compile 'ru.oleg-cherednik.utils.reflection:reflection-utils:1.0'
     <artifactId>reflection-utils</artifactId>
     <version>1.0</version>
 </dependency>
-```                                                    
+```
+                                                    
 ## Usage 
 
 To simplify usage of _reflection-utils_, there're following classes:
@@ -37,7 +38,7 @@ To simplify usage of _reflection-utils_, there're following classes:
 *   [EnumUtils](#enumutils) - working with enums;
 *   [AccessibleObjectUtils](#accessibleobjectutils) - working with accessible objects;
 
-### ConstructorUtils
+### Class definition for examples
 
 This is a class definition for examples:
 
@@ -74,8 +75,9 @@ public class Person {
     }
 
 }
+```
 
-``` 
+### ConstructorUtils
 
 #### Class object is available to use 
 
