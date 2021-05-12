@@ -216,7 +216,7 @@ EnumUtils.addConstant(CarBrand.class, "AUDI");
 
 ### AccessibleObjectUtils
 
-<details><summary>CLICK ME</summary>
+<details><summary>details</summary>
 <p>
 
 #### Invoke consumer on the accessible object
