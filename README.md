@@ -79,6 +79,9 @@ public class Person {
 
 ### ConstructorUtils
 
+<details><summary>details</summary>
+<p>
+
 #### Class object is available to use 
 
 #### Invoke a constructor with no arguments for given class
@@ -196,6 +199,8 @@ Constructor<Person> constructor = Person.class.getDeclaredConstructor(String.cla
                                                                       boolean.class);
 Person person = ConstructorUtils.invokeConstructor(constructor, "marvin", 91, true); 
 ```
+</p>
+</details>
 
 ### MethodUtils
 
