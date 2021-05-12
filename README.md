@@ -44,7 +44,9 @@ This is a class definition for examples:
 ```java   
 package ru.olegcherednik.utils.reflection.data;
 
-public class Person {
+public class Person {         
+
+    private static final String AUTO = "ferrari";
     
     private String name = "defaultName";
     private int age = -1;
@@ -65,6 +67,10 @@ public class Person {
         this.name = name;             
         this.age = age;                               
         this.marker = marker;
+    }
+
+    public String getCity() {
+        return "Saint-Petersburg";
     }
 
 }
@@ -209,6 +215,52 @@ EnumUtils.addConstant(CarBrand.class, "AUDI");
 ```
 
 ### AccessibleObjectUtils
+
+#### Invoke consumer on the accessible object
+
+Use consumer to do any activity on the given accessible object and no return any value.
+
+```java
+Person person = new Person();
+Field field = person.getClass().getDeclaredField("name");
+Consumer<Field> task = f -> f.set(person, "oleg");
+AccessibleObjectUtils.invokeConsumer(field, task);
+```
+
+#### Invoke function on the accessible object
+
+Use function to do any activity on the given accessible object and return a value
+
+```java
+Person person = new Person();  
+Method method = person.getClass().getDeclaredMethod("getCity");
+Function<Method, String> task = m -> (String)m.invoke(person); 
+String city = AccessibleObjectUtils.invokeFunction(field, task);
+```
+
+#### Invoke not static the accessible object
+
+An accessible object could be either `Field` or `Method`.
+
+```java
+Person person = new Person();  
+Field field = data.getClass().getDeclaredField("name");
+AccessibleObjectUtils.invoke(person, field);
+```
+
+#### Invoke not static the accessible object
+
+An accessible object could be either `Field` or `Method`.
+
+```java
+Field field = data.getClass().getDeclaredField("AUTO");
+String auto = AccessibleObjectUtils.invoke(field);
+```
+or
+```java
+Field field = data.getClass().getDeclaredField("AUTO");
+String auto = AccessibleObjectUtils.invoke(null, field);
+```
 
 ### Links
 

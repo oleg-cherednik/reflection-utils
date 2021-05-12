@@ -98,7 +98,7 @@ public final class AccessibleObjectUtils {
      * Invoke given {@code accessibleObject} ({@link Field} or {@link Method}) for the given {@code obj}. In case of {@code obj} is {@literal null},
      * then static accessible object will be invoked.
      *
-     * @param obj              object instance
+     * @param obj              object instance ({@literal null} in case of static accessible object)
      * @param accessibleObject not {@literal null} accessible object ({@link Field} or {@link Method})
      * @param <T>              type of the field or type of the method's return value
      * @return value of the field or return value of the method
