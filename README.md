@@ -259,6 +259,7 @@ String auto2 = AccessibleObjectUtils.invoke(null, field);    // alternative
 ### Links
 
 *   Home page: https://github.com/oleg-cherednik/reflection-utils
+
 *   Maven:
     *   **central:** https://mvnrepository.com/artifact/ru.oleg-cherednik.utils.reflection/reflection-utils
     *   **download:** https://repo1.maven.org/maven2/ru/oleg-cherednik/utils/reflection/reflection-utils/
