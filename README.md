@@ -41,6 +41,7 @@ To simplify usage of _reflection-utils_, there're following classes:
 
 <details><summary>Person class for examples</summary>
 <p>
+
 ```java   
 package ru.olegcherednik.utils.reflection.data;
 
