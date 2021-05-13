@@ -33,8 +33,8 @@ compile 'ru.oleg-cherednik.utils.reflection:reflection-utils:1.0'
 
 To simplify usage of _reflection-utils_, there're following classes:
 *   [ConstructorUtils](#constructorutils) - working with `Constructor`;
-*   [MethodUtils](#methodutils) - working with `Method``;
-*   [FieldUtils](#fieldutils) - working with `Field``;
+*   [MethodUtils](#methodutils) - working with `Method`;
+*   [FieldUtils](#fieldutils) - working with `Field`;
 *   [EnumUtils](#enumutils) - working with `Enum`;
 *   [AccessibleObjectUtils](#accessibleobjectutils) - working with `AccessibleObject`;
 
