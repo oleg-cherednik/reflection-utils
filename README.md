@@ -331,8 +331,8 @@ String staticArgThree = MethodUtils.invokeMethod(Person.class, "getStaticArgThre
 
 ```java                      
 String staticArgThree = MethodUtils.invokeMethod(Person.class, "getStaticArgThree"
-                                                 new Class<?>[] { int.class, String.class, boolean.class },
-                                                 new Object[] { 1, "x2", true });
+                                               new Class<?>[] { int.class, String.class, boolean.class },
+                                               new Object[] { 1, "x2", true });
 // staticArgThree == "args_1_x2_true"
 ```
 
