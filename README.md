@@ -73,6 +73,18 @@ public class Person {
         return "Saint-Petersburg";
     }
 
+    public String getArgOne(int one) {
+        return "args_" + one;
+    }
+
+    public String getArgTwo(int one, String two) {
+        return "args_" + one + '_' + two; 
+    }
+
+    public String getArgThree(int one, String two, boolean three) {
+        return "args_" + one + '_' + two + '_' + three; 
+    }
+
 }
 ```
 </p>
@@ -85,7 +97,7 @@ public class Person {
 
 #### Class object is available to use 
 
-#### Invoke a constructor with no arguments for given class
+##### Invoke a constructor with no arguments for given class
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class);
@@ -131,19 +143,19 @@ String canonicalName = "ru.olegcherednik.utils.reflection.data.Person";
 // canonicalName == Person.class.getCanonicalName()
 ``` 
 
-##### Invoke a constructor with no arguments for given classname
+##### Invoke a constructor with no arguments for class with given classname
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName);
 ```
-##### Invoke a constructor with exactly one argument for given classname
+##### Invoke a constructor with exactly one argument for class with given classname
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName,
                                                    String.class, "anna");
 ```    
 
-##### Invoke a constructor with exactly two arguments for given a classname
+##### Invoke a constructor with exactly two arguments for class with given classname
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName,
@@ -151,7 +163,7 @@ Person person = ConstructorUtils.invokeConstructor(canonicalName,
                                                    int.class, 71);
 ```
 
-##### Invoke a constructor with exactly three arguments for given classname
+##### Invoke a constructor with exactly three arguments for class with given classname
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName,
@@ -160,7 +172,7 @@ Person person = ConstructorUtils.invokeConstructor(canonicalName,
                                                    boolean.class, true); 
 ```
 
-##### Invoke a constructor with many arguments for given classname
+##### Invoke a constructor with any number of arguments for class with given classname
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName,
@@ -207,6 +219,64 @@ Person person = ConstructorUtils.invokeConstructor(constructor, "marvin", 91, tr
 
 <details><summary>details</summary>
 <p>
+
+Assume that instance of `Person` is declared:
+
+```java
+Person person = new Person();
+```
+
+#### Invoke not static method with given name and no arguments
+
+```java                                                                             
+String city = MethodUtils.invokeMethod(person, "getCity");
+// city == "Saint-Ptersburg"
+```
+
+#### Invoke not static method with given name and exactly 1 argument
+
+```java                      
+String argOne = MethodUtils.invokeMethod(person, "getArgOne"
+                                         int.class, 1);
+// argOne == "args_1"
+```   
+
+#### Invoke not static method with given name and exactly 2 arguments
+
+```java                      
+String argTwo = MethodUtils.invokeMethod(person, "getArgTwo"
+                                         int.class, 1,
+                                         String.class, "x2");
+// argTwo == "args_1_x2"
+```
+
+#### Invoke not static method with given name and exactly 3 arguments
+
+```java                      
+String argThree = MethodUtils.invokeMethod(person, "getArgThree"
+                                           int.class, 1,
+                                           String.class, "x2",
+                                           boolean.class, true);
+// argThree == "args_1_x2_true"
+```
+
+#### Invoke not static method with given name and any number of arguments
+
+```java                      
+String argThree = MethodUtils.invokeMethod(person, "getArgThree"
+                                           new Class<?>[] { int.class, String.class, boolean.class },
+                                           new Object[] { 1, "x2", true });
+// argThree == "args_1_x2_true"
+```
+
+#### Invoke not static given method with given arguments
+
+```java                      
+Method method = person.getClass().getDeclaredMethod("getArgThree");
+String argThree = MethodUtils.invokeMethod(person, method, 1, "x2", true);
+// argThree == "args_1_x2_true"
+```
+
 </p>
 </details>
 

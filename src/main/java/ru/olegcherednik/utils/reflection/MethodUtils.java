@@ -118,25 +118,6 @@ public final class MethodUtils {
     }
 
     /**
-     * Invoke not static {@code method} with arguments' {@code values} for the given {@code obj}.
-     *
-     * @param obj    not {@literal null} object instance
-     * @param method not {@literal null} method
-     * @param values values of the arguments
-     * @param <T>    type of the method's return value
-     * @return return value of the method
-     * @throws NullPointerException     in case of any of required parameters is {@literal null}
-     * @throws ReflectionUtilsException in case of any checked exception is thrown
-     * @throws RuntimeException         in case if any other problem
-     */
-    public static <T> T invokeMethod(Object obj, Method method, Object... values) {
-        ValidationUtils.requireObjNonNull(obj);
-        ValidationUtils.requireMethodNonNull(method);
-
-        return AccessibleObjectUtils.invokeFunction(method, m -> (T)m.invoke(obj, values));
-    }
-
-    /**
      * Invoke not static method with the given {@code methodName} and arguments of given {@code types}/{@code values} for the given {@code
      * obj}. The array's length {@code types} and {@code value} should be equal.<br>
      * Method with this {@code methodName} could be as in the given class itself as in any it's parents. The first found method is taken.
@@ -160,6 +141,25 @@ public final class MethodUtils {
         ValidationUtils.requireTypeNonNull(types);
 
         return invokeMethod(obj, getMethod(obj.getClass(), methodName, types), values);
+    }
+
+    /**
+     * Invoke not static {@code method} with arguments' {@code values} for the given {@code obj}.
+     *
+     * @param obj    not {@literal null} object instance
+     * @param method not {@literal null} method
+     * @param values values of the arguments
+     * @param <T>    type of the method's return value
+     * @return return value of the method
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     */
+    public static <T> T invokeMethod(Object obj, Method method, Object... values) {
+        ValidationUtils.requireObjNonNull(obj);
+        ValidationUtils.requireMethodNonNull(method);
+
+        return AccessibleObjectUtils.invokeFunction(method, m -> (T)m.invoke(obj, values));
     }
 
     /**
