@@ -69,8 +69,8 @@ public class Person {
         this.marker = marker;
     }
 
-    public String getCity() {
-        return "Saint-Petersburg";
+    public String getArgZero() {
+        return "args_0";
     }
 
     public String getArgOne(int one) {
@@ -83,6 +83,22 @@ public class Person {
 
     public String getArgThree(int one, String two, boolean three) {
         return "args_" + one + '_' + two + '_' + three; 
+    }
+
+    public static String getStaticArgZero() {
+        return "static_args_0";
+    }
+
+    public static String getStaticArgOne(int one) {
+        return "static_args_" + one;
+    }
+
+    public static String getStaticArgTwo(int one, String two) {
+        return "static_args_" + one + '_' + two; 
+    }
+
+    public static String getStaticArgThree(int one, String two, boolean three) {
+        return "static_args_" + one + '_' + two + '_' + three; 
     }
 
 }
@@ -229,8 +245,8 @@ Person person = new Person();
 #### Invoke not static method with given name and no arguments
 
 ```java                                                                             
-String city = MethodUtils.invokeMethod(person, "getCity");
-// city == "Saint-Ptersburg"
+String argZero = MethodUtils.invokeMethod(person, "getArgZero");
+// argZero == "args_0"
 ```
 
 #### Invoke not static method with given name and exactly 1 argument
@@ -269,12 +285,78 @@ String argThree = MethodUtils.invokeMethod(person, "getArgThree"
 // argThree == "args_1_x2_true"
 ```
 
-#### Invoke not static given method with given arguments
+#### Invoke not static method with given arguments
 
 ```java                      
 Method method = person.getClass().getDeclaredMethod("getArgThree");
 String argThree = MethodUtils.invokeMethod(person, method, 1, "x2", true);
 // argThree == "args_1_x2_true"
+```
+
+#### Invoke static method with given name and no arguments
+
+```java                                                                             
+String staticArgZero = MethodUtils.invokeMethod(Person.class, "getStaticArgZero");
+// staticArgZero == "static_args_0"
+```
+
+#### Invoke static method with given name and exactly 1 argument
+
+```java                      
+String staticArgOne = MethodUtils.invokeMethod(Person.class, "getStaticArgOne"
+                                               int.class, 1);
+// staticArgOne == "static_args_1"
+```   
+
+#### Invoke static method with given name and exactly 2 arguments
+
+```java                      
+String staticArgTwo = MethodUtils.invokeMethod(Person.class, "getStaticArgTwo"
+                                               int.class, 1,
+                                               String.class, "x2");
+// staticArgTwo == "static_args_1_x2"
+```
+
+#### Invoke static method with given name and exactly 3 arguments
+
+```java                      
+String staticArgThree = MethodUtils.invokeMethod(Person.class, "getStaticArgThree"
+                                                 int.class, 1,
+                                                 String.class, "x2",
+                                                 boolean.class, true);
+// staticArgThree == "static_args_1_x2_true"
+```
+
+#### Invoke static method with given name and any number of arguments
+
+```java                      
+String staticArgThree = MethodUtils.invokeMethod(Person.class, "getStaticArgThree"
+                                                 new Class<?>[] { int.class, String.class, boolean.class },
+                                                 new Object[] { 1, "x2", true });
+// staticArgThree == "args_1_x2_true"
+```
+
+#### Invoke static method with given arguments
+
+```java                      
+Method method = Person.class.getDeclaredMethod("getStaticArgThree");
+String staticArgThree = MethodUtils.invokeMethod(method, 1, "x2", true);
+// staticArgThree == "args_1_x2_true"
+```
+
+#### Retrieve method return type
+
+```java                      
+Method method = Person.class.getDeclaredMethod("getArgZero");
+Class<?> cls = MethodUtils.getReturnType(method);
+// cls == String.class
+```
+
+In case it's possible that given `method` could be `null` then default value can be provided:
+
+```java
+Class<?> cls = MethodUtils.getReturnType(null, int.class);
+// cls == String.class
 ```
 
 </p>

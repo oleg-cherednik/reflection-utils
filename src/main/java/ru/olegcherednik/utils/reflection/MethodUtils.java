@@ -265,23 +265,6 @@ public final class MethodUtils {
     }
 
     /**
-     * Invoke static {@code method} with arguments' {@code values}.
-     *
-     * @param method not {@literal null} method
-     * @param values values of the arguments
-     * @param <T>    type of the method's return value
-     * @return return value of the method
-     * @throws NullPointerException     in case of any of required parameters is {@literal null}
-     * @throws ReflectionUtilsException in case of any checked exception is thrown
-     * @throws RuntimeException         in case if any other problem
-     */
-    public static <T> T invokeStaticMethod(Method method, Object... values) {
-        ValidationUtils.requireMethodNonNull(method);
-
-        return AccessibleObjectUtils.invokeFunction(method, m -> (T)m.invoke(null, values));
-    }
-
-    /**
      * Invoke static method with the given {@code methodName} and arguments with given {@code types}/{@code values}<br>
      * Method with this {@code methodName} could be as in the given class itself as in any it's parents. The first found method is taken.
      *
@@ -302,6 +285,23 @@ public final class MethodUtils {
         ValidationUtils.requireMethodNameNonNull(methodName);
 
         return invokeStaticMethod(getMethod(cls, methodName, types), values);
+    }
+
+    /**
+     * Invoke static {@code method} with arguments' {@code values}.
+     *
+     * @param method not {@literal null} method
+     * @param values values of the arguments
+     * @param <T>    type of the method's return value
+     * @return return value of the method
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     */
+    public static <T> T invokeStaticMethod(Method method, Object... values) {
+        ValidationUtils.requireMethodNonNull(method);
+
+        return AccessibleObjectUtils.invokeFunction(method, m -> (T)m.invoke(null, values));
     }
 
     /**

@@ -53,6 +53,42 @@ public final class FieldUtils {
     }
 
     /**
+     * Get value of the given static {@literal field}. {@link Field#getDeclaringClass()} is used to get field's class.
+     *
+     * @param field not {@literal null} field
+     * @param <T>   type of the field
+     * @return value of the static field
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     */
+    public static <T> T getStaticFieldValue(Field field) {
+        ValidationUtils.requireFieldNonNull(field);
+
+        return AccessibleObjectUtils.invokeFunction(field, f -> (T)f.get(field.getDeclaringClass()));
+    }
+
+    /**
+     * Get value of the static field with given {@code fieldName} for the given {@code cls}.<br>
+     * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
+     *
+     * @param cls       not {@literal null} class object
+     * @param fieldName not {@literal null} field name
+     * @param <T>       type of the field
+     * @return value of the static field
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
+     */
+    public static <T> T getStaticFieldValue(Class<?> cls, String fieldName) {
+        ValidationUtils.requireClsNonNull(cls);
+        ValidationUtils.requireFieldNameNonNull(fieldName);
+
+        return getStaticFieldValue(getField(cls, fieldName));
+    }
+
+    /**
      * Set given {@code value} of the non static {@code field} for the given {@code obj}.
      *
      * @param obj   not {@literal null} object instance
@@ -164,6 +200,42 @@ public final class FieldUtils {
     }
 
     /**
+     * Call given {@link Consumer} for the static field {@code field}.
+     *
+     * @param field not {@literal null} field
+     * @param task  not {@literal null} consumer is called for the field
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     */
+    public static void setStaticFieldValue(Field field, Consumer<Field> task) {
+        ValidationUtils.requireFieldNonNull(field);
+        ValidationUtils.requireTaskNonNull(task);
+
+        AccessibleObjectUtils.invokeConsumer(field, task);
+    }
+
+    /**
+     * Call given {@link Consumer} for the static field with given {@code fieldName} for the given {@code cls}.<br>
+     * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
+     *
+     * @param cls          not {@literal null} class object
+     * @param fieldName    not {@literal null} field name
+     * @param setValueTask not {@literal null} consumer is called for the field
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
+     */
+    public static void setStaticFieldValue(Class<?> cls, String fieldName, Consumer<Field> setValueTask) {
+        ValidationUtils.requireClsNonNull(cls);
+        ValidationUtils.requireFieldNameNonNull(fieldName);
+        ValidationUtils.requireTaskNonNull(setValueTask);
+
+        setStaticFieldValue(getField(cls, fieldName), setValueTask);
+    }
+
+    /**
      * Retrieve filed with given {@code fieldName} for the given {@code cls}. If field was not found in the given class, then parent class will be
      * used to find the field and etc.
      *
@@ -251,84 +323,6 @@ public final class FieldUtils {
     public static Class<?> getType(Field field, Class<?> def) {
         return field == null ? def : field.getType();
     }
-
-
-    public static final class Static {
-
-        /**
-         * Get value of the static field with given {@code fieldName} for the given {@code cls}.<br>
-         * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
-         *
-         * @param cls       not {@literal null} class object
-         * @param fieldName not {@literal null} field name
-         * @param <T>       type of the field
-         * @return value of the static field
-         * @throws NullPointerException     in case of any of required parameters is {@literal null}
-         * @throws ReflectionUtilsException in case of any checked exception is thrown
-         * @throws RuntimeException         in case if any other problem
-         * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
-         */
-        public static <T> T getStaticFieldValue(Class<?> cls, String fieldName) {
-            ValidationUtils.requireClsNonNull(cls);
-            ValidationUtils.requireFieldNameNonNull(fieldName);
-
-            return getStaticFieldValue(getField(cls, fieldName));
-        }
-
-        /**
-         * Get value of the given static {@literal field}. {@link Field#getDeclaringClass()} is used to get field's class.
-         *
-         * @param field not {@literal null} field
-         * @param <T>   type of the field
-         * @return value of the static field
-         * @throws NullPointerException     in case of any of required parameters is {@literal null}
-         * @throws ReflectionUtilsException in case of any checked exception is thrown
-         * @throws RuntimeException         in case if any other problem
-         */
-        public static <T> T getStaticFieldValue(Field field) {
-            ValidationUtils.requireFieldNonNull(field);
-
-            return AccessibleObjectUtils.invokeFunction(field, f -> (T)f.get(field.getDeclaringClass()));
-        }
-
-        /**
-         * Call given {@link Consumer} for the static field with given {@code fieldName} for the given {@code cls}.<br>
-         * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
-         *
-         * @param cls          not {@literal null} class object
-         * @param fieldName    not {@literal null} field name
-         * @param setValueTask not {@literal null} consumer is called for the field
-         * @throws NullPointerException     in case of any of required parameters is {@literal null}
-         * @throws ReflectionUtilsException in case of any checked exception is thrown
-         * @throws RuntimeException         in case if any other problem
-         * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
-         */
-        public static void setStaticFieldValue(Class<?> cls, String fieldName, Consumer<Field> setValueTask) {
-            ValidationUtils.requireClsNonNull(cls);
-            ValidationUtils.requireFieldNameNonNull(fieldName);
-            ValidationUtils.requireTaskNonNull(setValueTask);
-
-            setStaticFieldValue(getField(cls, fieldName), setValueTask);
-        }
-
-        /**
-         * Call given {@link Consumer} for the static field {@code field}.
-         *
-         * @param field not {@literal null} field
-         * @param task  not {@literal null} consumer is called for the field
-         * @throws NullPointerException     in case of any of required parameters is {@literal null}
-         * @throws ReflectionUtilsException in case of any checked exception is thrown
-         * @throws RuntimeException         in case if any other problem
-         */
-        public static void setStaticFieldValue(Field field, Consumer<Field> task) {
-            ValidationUtils.requireFieldNonNull(field);
-            ValidationUtils.requireTaskNonNull(task);
-
-            AccessibleObjectUtils.invokeConsumer(field, task);
-        }
-
-    }
-
 
     private FieldUtils() { }
 
