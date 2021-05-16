@@ -102,7 +102,10 @@ public class Person {
     }
 
 }
+
+Person person = new Person();
 ```
+
 </p>
 </details>
 
@@ -236,11 +239,8 @@ Person person = ConstructorUtils.invokeConstructor(constructor, "marvin", 91, tr
 <details><summary>details</summary>
 <p>
 
-Assume that instance of `Person` is declared:
-
-```java
-Person person = new Person();
-```
+In case of `method` with given name is not exist in the given class, then
+parent class will be used to find the `method` etc. 
 
 #### Invoke not static method with given name and no arguments
 
@@ -356,7 +356,7 @@ In case it's possible that given `method` could be `null` then default value can
 
 ```java
 Class<?> cls = MethodUtils.getReturnType(null, int.class);
-// cls == String.class
+// cls == int.class
 ```
 
 </p>
@@ -366,6 +366,116 @@ Class<?> cls = MethodUtils.getReturnType(null, int.class);
 
 <details><summary>details</summary>
 <p>
+
+In case of `filed` with given name is not exist in the given class, then parent
+class will be used to find the `field` etc. 
+
+#### Get value of the non static field
+
+```java
+Field field = person.getClass().getDeclaredField("name");
+String name = FieldUtils.getFieldValue(person, field);
+// name == "defaultName"
+```
+
+#### Get value of the non static field with given name
+```java
+String name = FieldUtils.getFieldValue(person, "name");
+// name == "defaultName"
+```
+
+#### Get value of the static field
+
+```java
+Field field = Person.class.getDeclaredField("AUTO");
+String auto = FieldUtils.getFieldValue(person, field);
+// auto == "ferrari"
+```
+
+#### Get value of the static field with given name
+```java
+String auto = FieldUtils.getFieldValue(Person.class, "AUTO");
+// auto == "ferrari"
+```
+
+#### Set given value to the non static field
+
+```java
+Field field = person.getClass().getDeclaredField("name");
+FieldUtils.setFieldValue(person, field, "anna");
+// person.name == "anna"
+```
+
+#### Set given value to the non static field with given name
+```java
+FieldUtils.getFieldValue(Person.class , "name", "anna");
+// person.name == "anna"
+```
+
+#### Call given consumer for the non static field 
+
+```java
+Field field = person.getClass().getDeclaredField("name");
+Consumer<Field> task = f -> f.set(person, "anna")
+FieldUtils.setFieldValue(person, task);
+// person.name == "anna" 
+```
+
+#### Call given consumer for the non static field with given name 
+
+```java
+Consumer<Field> task = f -> f.set(person, "anna")
+FieldUtils.setFieldValue(person, "name", task);
+// person.name == "anna" 
+```
+
+#### Set given value to the static field
+
+```java
+Field field = Prson.getClass().getDeclaredField("AUTO");
+FieldUtils.setStaticFieldValue(field, "mercedes");
+// Person.AUTO == "mercedes"
+```
+
+#### Set given value to the static field with given name
+
+```java
+FieldUtils.setStaticFieldValue(Person.class, "AUTO", "mercedes");
+// Person.AUTO == "mercedes"
+```
+
+#### Call given consumer for the static field 
+
+```java
+Field field = Person.class.getDeclaredField("AUTO");
+Consumer<Field> task = f -> f.set(person, "mercedes")
+FieldUtils.setStaticFieldValue(person, task);
+// Person.AUTO == "mercedes"           
+```
+
+#### Call given consumer for the static field with given name 
+
+```java
+Consumer<Field> task = f -> f.set(Person.class, "mercedes")
+FieldUtils.setStaticFieldValue(Person.class, "AUTO", task);
+// Person.AUTO == "mercedes"
+```
+
+#### Retrieve filed value type
+
+```java                      
+Field field = person.getClass().getDeclaredField("name");
+Class<?> cls = FieldUtils.getType(field);
+// cls == String.class
+```
+
+In case it's possible that given `field` could be `null` then default value can be provided:
+
+```java
+Class<?> cls = FieldUtils.getType(null, int.class);
+// cls == int.class
+```
+
 </p>
 </details>
 

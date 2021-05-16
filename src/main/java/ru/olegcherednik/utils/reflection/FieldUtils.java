@@ -89,7 +89,7 @@ public final class FieldUtils {
     }
 
     /**
-     * Set given {@code value} of the non static {@code field} for the given {@code obj}.
+     * Set given {@code value} to the non static {@code field} for the given {@code obj}.
      *
      * @param obj   not {@literal null} object instance
      * @param field not {@literal null} field
@@ -165,7 +165,7 @@ public final class FieldUtils {
     }
 
     /**
-     * Set given {@code value} for the given static {@code field}.
+     * Set given {@code value} to the given static {@code field}.
      *
      * @param field not {@literal null} field
      * @param value new value of the field
@@ -180,7 +180,7 @@ public final class FieldUtils {
     }
 
     /**
-     * Set given {@code value} for the static field with given {@code fieldName} for the given {@code cls}.<br>
+     * Set given {@code value} to the static field with given {@code fieldName} for the given {@code cls}.<br>
      * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
      *
      * @param cls       not {@literal null} class object
@@ -200,7 +200,7 @@ public final class FieldUtils {
     }
 
     /**
-     * Call given {@link Consumer} for the static field {@code field}.
+     * Call given {@link Consumer} to the static field {@code field}.
      *
      * @param field not {@literal null} field
      * @param task  not {@literal null} consumer is called for the field
@@ -216,7 +216,7 @@ public final class FieldUtils {
     }
 
     /**
-     * Call given {@link Consumer} for the static field with given {@code fieldName} for the given {@code cls}.<br>
+     * Call given {@link Consumer} to the static field with given {@code fieldName} for the given {@code cls}.<br>
      * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
      *
      * @param cls          not {@literal null} class object
