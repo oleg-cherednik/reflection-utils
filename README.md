@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/397f61e3dd1144ee83792f936c7de80c)](https://app.codacy.com/gh/oleg-cherednik/reflection-utils?utm_source=github.com&utm_medium=referral&utm_content=oleg-cherednik/reflection-utils&utm_campaign=Badge_Grade_Settings)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/ru.oleg-cherednik.utils.reflection/reflection-utils/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ru.oleg-cherednik.utils.reflection/reflection-utils)
 [![javadoc](https://javadoc.io/badge2/ru.oleg-cherednik.utils.reflection/reflection-utils/javadoc.svg)](https://javadoc.io/doc/ru.oleg-cherednik.utils.reflection/reflection-utils)
 [![java1.8](https://badgen.net/badge/java/1.8/blue)](https://badgen.net/)
