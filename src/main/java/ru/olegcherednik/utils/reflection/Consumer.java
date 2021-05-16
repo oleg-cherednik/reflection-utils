@@ -28,6 +28,7 @@ public interface Consumer<T> {
      * Performs this operation on the given argument.
      *
      * @param t the input argument
+     * @throws Exception in case of any problem
      */
     void accept(T t) throws Exception;
 

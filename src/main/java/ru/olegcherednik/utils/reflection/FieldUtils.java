@@ -112,7 +112,6 @@ public final class FieldUtils {
      * @throws NullPointerException     in case of any of required parameters is {@literal null}
      * @throws ReflectionUtilsException in case of any checked exception is thrown
      * @throws RuntimeException         in case if any other problem
-     * @throws IllegalAccessException   in case of value cannot be set to the field
      */
     public static void setFieldValue(Object obj, Field field, Object value) {
         ValidationUtils.requireObjNonNull(obj);
@@ -132,7 +131,6 @@ public final class FieldUtils {
      * @throws ReflectionUtilsException in case of any checked exception is thrown
      * @throws RuntimeException         in case if any other problem
      * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
-     * @throws IllegalAccessException   in case of value cannot be set to the field
      */
     public static void setFieldValue(Object obj, String fieldName, Object value) {
         ValidationUtils.requireObjNonNull(obj);
@@ -184,7 +182,6 @@ public final class FieldUtils {
      * @param value new value of the field
      * @throws NullPointerException   in case of any of required parameters is {@literal null}
      * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
-     * @throws IllegalAccessException in case of value cannot be set to the field
      */
     public static void setStaticFieldValue(Field field, Object value) {
         ValidationUtils.requireFieldNonNull(field);
@@ -203,7 +200,6 @@ public final class FieldUtils {
      * @throws ReflectionUtilsException in case of any checked exception is thrown
      * @throws RuntimeException         in case if any other problem
      * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
-     * @throws IllegalAccessException   in case of value cannot be set to the field
      */
     public static void setStaticFieldValue(Class<?> cls, String fieldName, Object value) {
         ValidationUtils.requireClsNonNull(cls);

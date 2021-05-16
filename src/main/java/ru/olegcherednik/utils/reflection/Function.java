@@ -28,6 +28,7 @@ public interface Function<T, R> {
      *
      * @param t the function argument
      * @return the function result
+     * @throws Exception in case of any problem
      */
     R apply(T t) throws Exception;
 
