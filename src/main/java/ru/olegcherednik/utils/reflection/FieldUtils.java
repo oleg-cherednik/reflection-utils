@@ -127,17 +127,15 @@ public final class FieldUtils {
     }
 
     /**
-     * Call given {@link Consumer} for the not static field {@code field} for the give {@code obj}.
+     * Call given {@link Consumer} for the not static field {@code field}.
      *
-     * @param obj   not {@literal null} object instance
      * @param field not {@literal null} field
      * @param task  not {@literal null} consumer is called for the field
      * @throws NullPointerException     in case of any of required parameters is {@literal null}
      * @throws ReflectionUtilsException in case of any checked exception is thrown
      * @throws RuntimeException         in case if any other problem
      */
-    public static void setFieldValue(Object obj, Field field, Consumer<Field> task) {
-        ValidationUtils.requireObjNonNull(obj);
+    public static void setFieldValue(Field field, Consumer<Field> task) {
         ValidationUtils.requireFieldNonNull(field);
         ValidationUtils.requireTaskNonNull(task);
 
@@ -148,20 +146,20 @@ public final class FieldUtils {
      * Call given {@link Consumer} for the not static field with given {@code fieldName} for the given {@code obj}.<br>
      * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
      *
-     * @param obj          not {@literal null} object instance
-     * @param fieldName    not {@literal null} field name
-     * @param setValueTask not {@literal null} consumer is called for the field
+     * @param obj       not {@literal null} object instance
+     * @param fieldName not {@literal null} field name
+     * @param task      not {@literal null} consumer is called for the field
      * @throws NullPointerException     in case of any of required parameters is {@literal null}
      * @throws ReflectionUtilsException in case of any checked exception is thrown
      * @throws RuntimeException         in case if any other problem
      * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
      */
-    public static void setFieldValue(Object obj, String fieldName, Consumer<Field> setValueTask) {
+    public static void setFieldValue(Object obj, String fieldName, Consumer<Field> task) {
         ValidationUtils.requireObjNonNull(obj);
         ValidationUtils.requireFieldNameNonNull(fieldName);
-        ValidationUtils.requireTaskNonNull(setValueTask);
+        ValidationUtils.requireTaskNonNull(task);
 
-        setFieldValue(obj, getField(obj.getClass(), fieldName), setValueTask);
+        setFieldValue(getField(obj.getClass(), fieldName), task);
     }
 
     /**
@@ -200,7 +198,7 @@ public final class FieldUtils {
     }
 
     /**
-     * Call given {@link Consumer} to the static field {@code field}.
+     * Call given {@link Consumer} for the static field {@code field}.
      *
      * @param field not {@literal null} field
      * @param task  not {@literal null} consumer is called for the field
@@ -216,7 +214,7 @@ public final class FieldUtils {
     }
 
     /**
-     * Call given {@link Consumer} to the static field with given {@code fieldName} for the given {@code cls}.<br>
+     * Call given {@link Consumer} for the static field with given {@code fieldName} for the given {@code cls}.<br>
      * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
      *
      * @param cls          not {@literal null} class object

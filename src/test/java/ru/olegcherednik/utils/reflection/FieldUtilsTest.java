@@ -96,7 +96,7 @@ public class FieldUtilsTest {
         assertThat(data.getName()).isNotEqualTo("moskow");
 
         Field field = data.getClass().getDeclaredField("name");
-        FieldUtils.setFieldValue(data, field, f -> f.set(data, "moskow"));
+        FieldUtils.setFieldValue(field, f -> f.set(data, "moskow"));
         assertThat(data.getName()).isEqualTo("moskow");
     }
 
@@ -143,21 +143,31 @@ public class FieldUtilsTest {
         assertThat((String)FieldUtils.getStaticFieldValue(Data.class, "AUTO")).isEqualTo("ferrari");
 
         Field field = Data.class.getDeclaredField("AUTO");
-        FieldUtils.setStaticFieldValue(field, f -> f.set(Data.class, "audi"));
+        FieldUtils.setStaticFieldValue(field, f -> f.set(null, "audi"));
         assertThat((String)FieldUtils.getStaticFieldValue(Data.class, "AUTO")).isEqualTo("audi");
 
-        FieldUtils.setStaticFieldValue(field, f -> f.set(Data.class, "ferrari"));
+        FieldUtils.setStaticFieldValue(field, f -> f.set(null, "ferrari"));
         assertThat((String)FieldUtils.getStaticFieldValue(Data.class, "AUTO")).isEqualTo("ferrari");
     }
 
     public void shouldSetStaticFieldValueWhenSetFieldValueByFieldNameConsumer() {
         assertThat((String)FieldUtils.getStaticFieldValue(Data.class, "AUTO")).isEqualTo("ferrari");
 
-        FieldUtils.setStaticFieldValue(Data.class, "AUTO", field -> field.set(Data.class, "audi"));
+        FieldUtils.setStaticFieldValue(Data.class, "AUTO", field -> field.set(null, "audi"));
         assertThat((String)FieldUtils.getStaticFieldValue(Data.class, "AUTO")).isEqualTo("audi");
 
-        FieldUtils.setStaticFieldValue(Data.class, "AUTO", field -> field.set(Data.class, "ferrari"));
+        FieldUtils.setStaticFieldValue(Data.class, "AUTO", field -> field.set(null, "ferrari"));
         assertThat((String)FieldUtils.getStaticFieldValue(Data.class, "AUTO")).isEqualTo("ferrari");
+    }
+
+    public void shouldSetStaticFieldValueWhenSetFieldValueByFieldConsumerInBaseClass() throws java.lang.NoSuchFieldException {
+        assertThat((String)FieldUtils.getStaticFieldValue(Data.class, "MONITOR")).isEqualTo("dell");
+
+        FieldUtils.setStaticFieldValue(Data.class, "MONITOR", f -> f.set(null, "acer"));
+        assertThat((String)FieldUtils.getStaticFieldValue(Data.class, "MONITOR")).isEqualTo("acer");
+
+        FieldUtils.setStaticFieldValue(Data.class, "MONITOR", f -> f.set(null, "dell"));
+        assertThat((String)FieldUtils.getStaticFieldValue(Data.class, "MONITOR")).isEqualTo("dell");
     }
 
     public void shouldSetIntFieldValueWhenSetFieldValue() {

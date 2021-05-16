@@ -417,7 +417,7 @@ FieldUtils.getFieldValue(Person.class , "name", "anna");
 ```java
 Field field = person.getClass().getDeclaredField("name");
 Consumer<Field> task = f -> f.set(person, "anna")
-FieldUtils.setFieldValue(person, task);
+FieldUtils.setFieldValue(field, task);
 // person.name == "anna" 
 ```
 
@@ -448,15 +448,15 @@ FieldUtils.setStaticFieldValue(Person.class, "AUTO", "mercedes");
 
 ```java
 Field field = Person.class.getDeclaredField("AUTO");
-Consumer<Field> task = f -> f.set(person, "mercedes")
-FieldUtils.setStaticFieldValue(person, task);
+Consumer<Field> task = f -> f.set(null, "mercedes")
+FieldUtils.setStaticFieldValue(field, task);
 // Person.AUTO == "mercedes"           
 ```
 
 #### Call given consumer for the static field with given name 
 
 ```java
-Consumer<Field> task = f -> f.set(Person.class, "mercedes")
+Consumer<Field> task = f -> f.set(null, "mercedes")
 FieldUtils.setStaticFieldValue(Person.class, "AUTO", task);
 // Person.AUTO == "mercedes"
 ```
