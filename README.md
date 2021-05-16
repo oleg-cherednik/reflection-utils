@@ -9,7 +9,7 @@
 [![Codacy Quality](https://app.codacy.com/project/badge/Grade/f4fe6d775eed4daa936620bb173052ae)](https://www.codacy.com/gh/oleg-cherednik/reflection-utils/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=oleg-cherednik/reflection-utils&amp;utm_campaign=Badge_Grade)    
 
 # reflection-utils
-> Set of utilities for JVM to make work with reflection much more easy
+> Set of utilities for JVM to make work with reflection much easier
 
 ## Features
 
@@ -116,20 +116,20 @@ Person person = new Person();
 
 #### Class object is available to use 
 
-##### Invoke a constructor with no arguments for given class
+##### Invoke a constructor with no arguments for a given class
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class);
 ```
 
-##### Invoke a constructor with exactly one argument for given class
+##### Invoke a constructor with exactly one argument for a given class
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class,
                                                    String.class, "anna");
 ```
 
-##### Invoke a constructor with exactly two arguments for given class
+##### Invoke a constructor with exactly two arguments for a given class
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class,
@@ -137,7 +137,7 @@ Person person = ConstructorUtils.invokeConstructor(Person.class,
                                                    int.class, 71);
 ```
 
-##### Invoke a constructor with exactly three arguments for given class
+##### Invoke a constructor with exactly three arguments for a given class
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class,
@@ -146,7 +146,7 @@ Person person = ConstructorUtils.invokeConstructor(Person.class,
                                                    boolean.class, true); 
 ```
 
-##### Invoke a constructor with many arguments for given class
+##### Invoke a constructor with many arguments for a given class
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(Person.class,
@@ -156,25 +156,25 @@ Person person = ConstructorUtils.invokeConstructor(Person.class,
 
 #### Class object is not available and use full class name as string
 
-Define variable with canonical class name for `Person`:
+Define variable with a canonical class name for `Person`:
 ```java
 String canonicalName = "ru.olegcherednik.utils.reflection.data.Person";
 // canonicalName == Person.class.getCanonicalName()
 ``` 
 
-##### Invoke a constructor with no arguments for class with given classname
+##### Invoke a constructor with no arguments for class with a given class name
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName);
 ```
-##### Invoke a constructor with exactly one argument for class with given classname
+##### Invoke a constructor with exactly one argument for class with a given class name
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName,
                                                    String.class, "anna");
 ```    
 
-##### Invoke a constructor with exactly two arguments for class with given classname
+##### Invoke a constructor with exactly two arguments for class with a given class name
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName,
@@ -182,7 +182,7 @@ Person person = ConstructorUtils.invokeConstructor(canonicalName,
                                                    int.class, 71);
 ```
 
-##### Invoke a constructor with exactly three arguments for class with given classname
+##### Invoke a constructor with exactly three arguments for class with a given class name
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName,
@@ -191,7 +191,7 @@ Person person = ConstructorUtils.invokeConstructor(canonicalName,
                                                    boolean.class, true); 
 ```
 
-##### Invoke a constructor with any number of arguments for class with given classname
+##### Invoke a constructor with any number of arguments for class with a given class name
 
 ```java
 Person person = ConstructorUtils.invokeConstructor(canonicalName,
@@ -239,17 +239,17 @@ Person person = ConstructorUtils.invokeConstructor(constructor, "marvin", 91, tr
 <details><summary>details</summary>
 <p>
 
-In case of `method` with given name is not exist in the given class, then
-parent class will be used to find the `method` etc. 
+In case of `method` with a given name is not exist in the given class, then
+the parent class will be used to find the `method` etc. 
 
-#### Invoke not static method with given name and no arguments
+#### Invoke not static method with a given name and no arguments
 
 ```java                                                                             
 String argZero = MethodUtils.invokeMethod(person, "getArgZero");
 // argZero == "args_0"
 ```
 
-#### Invoke not static method with given name and exactly 1 argument
+#### Invoke not static method with a given name and exactly 1 argument
 
 ```java                      
 String argOne = MethodUtils.invokeMethod(person, "getArgOne"
@@ -257,7 +257,7 @@ String argOne = MethodUtils.invokeMethod(person, "getArgOne"
 // argOne == "args_1"
 ```   
 
-#### Invoke not static method with given name and exactly 2 arguments
+#### Invoke not static method with a given name and exactly 2 arguments
 
 ```java                      
 String argTwo = MethodUtils.invokeMethod(person, "getArgTwo"
@@ -266,7 +266,7 @@ String argTwo = MethodUtils.invokeMethod(person, "getArgTwo"
 // argTwo == "args_1_x2"
 ```
 
-#### Invoke not static method with given name and exactly 3 arguments
+#### Invoke not static method with a given name and exactly 3 arguments
 
 ```java                      
 String argThree = MethodUtils.invokeMethod(person, "getArgThree"
@@ -276,7 +276,7 @@ String argThree = MethodUtils.invokeMethod(person, "getArgThree"
 // argThree == "args_1_x2_true"
 ```
 
-#### Invoke not static method with given name and any number of arguments
+#### Invoke not static method with a given name and any number of arguments
 
 ```java                      
 String argThree = MethodUtils.invokeMethod(person, "getArgThree"
@@ -293,14 +293,14 @@ String argThree = MethodUtils.invokeMethod(person, method, 1, "x2", true);
 // argThree == "args_1_x2_true"
 ```
 
-#### Invoke static method with given name and no arguments
+#### Invoke static method with a given name and no arguments
 
 ```java                                                                             
 String staticArgZero = MethodUtils.invokeMethod(Person.class, "getStaticArgZero");
 // staticArgZero == "static_args_0"
 ```
 
-#### Invoke static method with given name and exactly 1 argument
+#### Invoke static method with a given name and exactly 1 argument
 
 ```java                      
 String staticArgOne = MethodUtils.invokeMethod(Person.class, "getStaticArgOne"
@@ -308,7 +308,7 @@ String staticArgOne = MethodUtils.invokeMethod(Person.class, "getStaticArgOne"
 // staticArgOne == "static_args_1"
 ```   
 
-#### Invoke static method with given name and exactly 2 arguments
+#### Invoke static method with a given name and exactly 2 arguments
 
 ```java                      
 String staticArgTwo = MethodUtils.invokeMethod(Person.class, "getStaticArgTwo"
@@ -317,7 +317,7 @@ String staticArgTwo = MethodUtils.invokeMethod(Person.class, "getStaticArgTwo"
 // staticArgTwo == "static_args_1_x2"
 ```
 
-#### Invoke static method with given name and exactly 3 arguments
+#### Invoke static method with a given name and exactly 3 arguments
 
 ```java                      
 String staticArgThree = MethodUtils.invokeMethod(Person.class, "getStaticArgThree"
@@ -327,7 +327,7 @@ String staticArgThree = MethodUtils.invokeMethod(Person.class, "getStaticArgThre
 // staticArgThree == "static_args_1_x2_true"
 ```
 
-#### Invoke static method with given name and any number of arguments
+#### Invoke static method with a given name and any number of arguments
 
 ```java                      
 String staticArgThree = MethodUtils.invokeMethod(Person.class, "getStaticArgThree"
@@ -367,10 +367,10 @@ Class<?> cls = MethodUtils.getReturnType(null, int.class);
 <details><summary>details</summary>
 <p>
 
-In case of `filed` with given name is not exist in the given class, then parent
-class will be used to find the `field` etc. 
+In case of `filed` with a given name is not exist in the given class, then the
+parent class will be used to find the `field` etc. 
 
-#### Get value of the non static field
+#### Get the value of the non-static field
 
 ```java
 Field field = person.getClass().getDeclaredField("name");
@@ -378,13 +378,13 @@ String name = FieldUtils.getFieldValue(person, field);
 // name == "defaultName"
 ```
 
-#### Get value of the non static field with given name
+#### Get the value of the non-static field with a given name
 ```java
 String name = FieldUtils.getFieldValue(person, "name");
 // name == "defaultName"
 ```
 
-#### Get value of the static field
+#### Get the value of the static field
 
 ```java
 Field field = Person.class.getDeclaredField("AUTO");
@@ -392,13 +392,13 @@ String auto = FieldUtils.getFieldValue(person, field);
 // auto == "ferrari"
 ```
 
-#### Get value of the static field with given name
+#### Get the value of the static field with a given name
 ```java
 String auto = FieldUtils.getFieldValue(Person.class, "AUTO");
 // auto == "ferrari"
 ```
 
-#### Set given value to the non static field
+#### Set given value to the non-static field
 
 ```java
 Field field = person.getClass().getDeclaredField("name");
@@ -406,13 +406,13 @@ FieldUtils.setFieldValue(person, field, "anna");
 // person.name == "anna"
 ```
 
-#### Set given value to the non static field with given name
+#### Set given value to the non-static field with a given name
 ```java
 FieldUtils.getFieldValue(Person.class , "name", "anna");
 // person.name == "anna"
 ```
 
-#### Call given consumer for the non static field 
+#### Call given consumer for the non-static field 
 
 ```java
 Field field = person.getClass().getDeclaredField("name");
@@ -421,7 +421,7 @@ FieldUtils.setFieldValue(field, task);
 // person.name == "anna" 
 ```
 
-#### Call given consumer for the non static field with given name 
+#### Call given consumer for the non-static field with a given name 
 
 ```java
 Consumer<Field> task = f -> f.set(person, "anna")
@@ -437,7 +437,7 @@ FieldUtils.setStaticFieldValue(field, "mercedes");
 // Person.AUTO == "mercedes"
 ```
 
-#### Set given value to the static field with given name
+#### Set given value to the static field with a given name
 
 ```java
 FieldUtils.setStaticFieldValue(Person.class, "AUTO", "mercedes");
@@ -453,7 +453,7 @@ FieldUtils.setStaticFieldValue(field, task);
 // Person.AUTO == "mercedes"           
 ```
 
-#### Call given consumer for the static field with given name 
+#### Call given consumer for the static field with a given name 
 
 ```java
 Consumer<Field> task = f -> f.set(null, "mercedes")

@@ -15,7 +15,7 @@ import java.util.Optional;
 public final class FieldUtils {
 
     /**
-     * Get value of the given non static {@code field} for the given {@code obj}.
+     * Get value of the given non-static {@code field} for the given {@code obj}.
      *
      * @param obj   not {@literal null} object instance
      * @param field not {@literal null} field
@@ -33,7 +33,7 @@ public final class FieldUtils {
     }
 
     /**
-     * Get value of the field with given non static {@code fieldName} for the given {@code obj}.<br>
+     * Get value of the field with given non-static {@code fieldName} for the given {@code obj}.<br>
      * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
      *
      * @param obj       not {@literal null} object instance
@@ -89,7 +89,7 @@ public final class FieldUtils {
     }
 
     /**
-     * Set given {@code value} to the non static {@code field} for the given {@code obj}.
+     * Set given {@code value} to the non-static {@code field} for the given {@code obj}.
      *
      * @param obj   not {@literal null} object instance
      * @param field not {@literal null} field
@@ -107,7 +107,7 @@ public final class FieldUtils {
     }
 
     /**
-     * Set given {@code value} of the non static field with given {@code fieldName} for the given {@code obj}.<br>
+     * Set given {@code value} of the non-static field with given {@code fieldName} for the given {@code obj}.<br>
      * Field with this {@code fieldName} could be as in the given class itself as in any it's parents. The first found field is taken.
      *
      * @param obj       not {@literal null} object instance
