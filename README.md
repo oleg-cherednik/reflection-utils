@@ -16,8 +16,6 @@
 [![vulnerabilities](https://snyk.io//test/github/oleg-cherednik/reflection-utils/badge.svg?targetFile=build.gradle)](https://snyk.io//test/github/oleg-cherednik/reflection-utils?targetFile=build.gradle)
 [![codacy-quality](https://app.codacy.com/project/badge/Grade/f4fe6d775eed4daa936620bb173052ae?branch=dev)](https://app.codacy.com/gh/oleg-cherednik/reflection-utils/dashboard?branch=dev)
 
-
-[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/f4fe6d775eed4daa936620bb173052ae)](https://www.codacy.com/gh/oleg-cherednik/reflection-utils/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=oleg-cherednik/reflection-utils&amp;utm_campaign=Badge_Coverage)
 </p>
 </details>  
 
