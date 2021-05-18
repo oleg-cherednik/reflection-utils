@@ -63,7 +63,7 @@ test {
 modifyPom {
     project {
         name 'reflection-utils'
-        description 'Set of utilities for JVM to make work with reflection much more easy.'
+        description 'Set of utilities for JVM to make work with reflection much easier'
         url 'https://github.com/oleg-cherednik/reflection-utils'
         inceptionYear '2021'
 

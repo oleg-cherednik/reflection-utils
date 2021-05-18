@@ -1,11 +1,11 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/ru.oleg-cherednik.utils.reflection/reflection-utils/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ru.oleg-cherednik.utils.reflection/reflection-utils)
 [![javadoc](https://javadoc.io/badge2/ru.oleg-cherednik.utils.reflection/reflection-utils/javadoc.svg)](https://javadoc.io/doc/ru.oleg-cherednik.utils.reflection/reflection-utils)
-[![java1.8](https://badgen.net/badge/java/1.8/blue)](https://badgen.net/)
+[![java8](https://badgen.net/badge/java/8+/blue)](https://badgen.net/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt)
       
 ![travis-ci](https://travis-ci.com/oleg-cherednik/reflection-utils.svg?branch=master)
 ![circle-ci](https://circleci.com/gh/oleg-cherednik/reflection-utils/tree/master.svg?style=shield)
-![codecov](https://codecov.io/gh/oleg-cherednik/reflection-utils/branch/master/graph/badge.svg?token=OGJF0VP4G6)  
+[![codacy-quality](https://app.codacy.com/project/badge/Grade/f4fe6d775eed4daa936620bb173052ae?branch=master)](https://app.codacy.com/gh/oleg-cherednik/reflection-utils/dashboard?branch=master)
 
 <details><summary>develop</summary>
 <p>
@@ -13,8 +13,8 @@
 [![travis-ci](https://travis-ci.com/oleg-cherednik/reflection-utils.svg?branch=dev)](https://travis-ci.com/oleg-cherednik/reflection-utils)
 [![circle-ci](https://circleci.com/gh/oleg-cherednik/reflection-utils/tree/dev.svg?style=shield)](https://app.circleci.com/pipelines/github/oleg-cherednik/reflection-utils)
 [![codecov](https://codecov.io/gh/oleg-cherednik/reflection-utils/branch/dev/graph/badge.svg?token=OGJF0VP4G6)](https://codecov.io/gh/oleg-cherednik/reflection-utils)
-[![Known Vulnerabilities](https://snyk.io//test/github/oleg-cherednik/reflection-utils/badge.svg?targetFile=build.gradle)](https://snyk.io//test/github/oleg-cherednik/reflection-utils?targetFile=build.gradle)
-[![Codacy Quality](https://app.codacy.com/project/badge/Grade/f4fe6d775eed4daa936620bb173052ae)](https://www.codacy.com/gh/oleg-cherednik/reflection-utils/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=oleg-cherednik/reflection-utils&amp;utm_campaign=Badge_Grade)    
+[![vulnerabilities](https://snyk.io//test/github/oleg-cherednik/reflection-utils/badge.svg?targetFile=build.gradle)](https://snyk.io//test/github/oleg-cherednik/reflection-utils?targetFile=build.gradle)
+[![codacy-quality](https://app.codacy.com/project/badge/Grade/f4fe6d775eed4daa936620bb173052ae?branch=dev)](https://app.codacy.com/gh/oleg-cherednik/reflection-utils/dashboard?branch=dev)
 
 </p>
 </details>  
