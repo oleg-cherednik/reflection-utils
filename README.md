@@ -22,8 +22,6 @@
 # reflection-utils
 > Set of utilities for JVM to make work with reflection much easier
 
-## Features
-
 ## Gradle
 
 ```groovy
