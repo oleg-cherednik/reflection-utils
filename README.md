@@ -25,7 +25,7 @@
 ## Gradle
 
 ```groovy
-compile 'ru.oleg-cherednik.utils.reflection:reflection-utils:1.0'
+implementation 'ru.oleg-cherednik.utils.reflection:reflection-utils:1.0'
 ```
 
 ## Maven
