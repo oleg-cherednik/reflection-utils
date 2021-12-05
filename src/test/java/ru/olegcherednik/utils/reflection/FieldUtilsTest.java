@@ -330,32 +330,59 @@ public class FieldUtilsTest {
                 .isExactlyInstanceOf(NoSuchFieldException.class);
     }
 
-    public void shouldRetrieveTrueWhenGivenClassContainField() {
+    public void shouldCheckGivenClassHasFieldWhenCheckFieldExists() {
         assertThat(FieldUtils.isFieldExist(Data.class, "name")).isTrue();
-        assertThat(FieldUtils.isFieldExist(Data.class, "AUTO")).isTrue();
+        assertThat(FieldUtils.isFieldExist(Data.class, "AUTO")).isFalse();                  // static
         assertThat(FieldUtils.isFieldExist(Data.class.getName(), "name")).isTrue();
-        assertThat(FieldUtils.isFieldExist(Data.class.getName(), "AUTO")).isTrue();
-
-        assertThat(FieldUtils.isFieldExist(Data.class, "baseName")).isFalse();
-        assertThat(FieldUtils.isFieldExist(Data.class, "MONITOR")).isFalse();
-        assertThat(FieldUtils.isFieldExist(Data.class.getName(), "baseName")).isFalse();
-        assertThat(FieldUtils.isFieldExist(Data.class.getName(), "MONITOR")).isFalse();
+        assertThat(FieldUtils.isFieldExist(Data.class.getName(), "AUTO")).isFalse();        // static
+        assertThat(FieldUtils.isFieldExist(Data.class, "baseName")).isFalse();              // parent
+        assertThat(FieldUtils.isFieldExist(Data.class, "MONITOR")).isFalse();               // static, parent
+        assertThat(FieldUtils.isFieldExist(Data.class.getName(), "baseName")).isFalse();    // parent
+        assertThat(FieldUtils.isFieldExist(Data.class.getName(), "MONITOR")).isFalse();     // static, parent
     }
 
-    public void shouldRetrieveTrueWhenClassOrParentsContainField() {
-        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "name")).isTrue();
-        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "AUTO")).isTrue();
-        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "name")).isTrue();
-        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "AUTO")).isTrue();
+    public void shouldCheckGivenClassHasStaticFieldWhenCheckFieldExists() {
+        assertThat(FieldUtils.isStaticFieldExist(Data.class, "name")).isFalse();                // non static
+        assertThat(FieldUtils.isStaticFieldExist(Data.class, "AUTO")).isTrue();
+        assertThat(FieldUtils.isStaticFieldExist(Data.class.getName(), "name")).isFalse();      // non static
+        assertThat(FieldUtils.isStaticFieldExist(Data.class.getName(), "AUTO")).isTrue();
+        assertThat(FieldUtils.isStaticFieldExist(Data.class, "baseName")).isFalse();            // non static, parent
+        assertThat(FieldUtils.isStaticFieldExist(Data.class, "MONITOR")).isFalse();             // parent
+        assertThat(FieldUtils.isStaticFieldExist(Data.class.getName(), "baseName")).isFalse();  // non static, parent
+        assertThat(FieldUtils.isStaticFieldExist(Data.class.getName(), "MONITOR")).isFalse();   // parent
+    }
 
+    public void shouldCheckGivenClassOrParentsHasFieldWhenCheckFieldExists() {
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "name")).isTrue();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "AUTO")).isFalse();                // static
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "name")).isTrue();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "AUTO")).isFalse();      // static
         assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "baseName")).isTrue();
-        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "MONITOR")).isTrue();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "MONITOR")).isFalse();             // static
         assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "baseName")).isTrue();
-        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "MONITOR")).isTrue();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "MONITOR")).isFalse();   // static
+    }
+
+    public void shouldCheckGivenClassOrParentsHasStaticFieldWhenCheckFieldExists() {
+        assertThat(FieldUtils.isStaticFieldExistIncludeParents(Data.class, "name")).isFalse();                // non static
+        assertThat(FieldUtils.isStaticFieldExistIncludeParents(Data.class, "AUTO")).isTrue();
+        assertThat(FieldUtils.isStaticFieldExistIncludeParents(Data.class.getName(), "name")).isFalse();      // non static
+        assertThat(FieldUtils.isStaticFieldExistIncludeParents(Data.class.getName(), "AUTO")).isTrue();
+        assertThat(FieldUtils.isStaticFieldExistIncludeParents(Data.class, "baseName")).isFalse();            // non static
+        assertThat(FieldUtils.isStaticFieldExistIncludeParents(Data.class, "MONITOR")).isTrue();
+        assertThat(FieldUtils.isStaticFieldExistIncludeParents(Data.class.getName(), "baseName")).isFalse();  // non static
+        assertThat(FieldUtils.isStaticFieldExistIncludeParents(Data.class.getName(), "MONITOR")).isTrue();
     }
 
     public void shouldRetrieveFalseWhenClassOrParentsNotContainField() {
+        assertThat(FieldUtils.isFieldExist(Data.class, "unknown")).isFalse();
+        assertThat(FieldUtils.isFieldExist(Data.class.getName(), "unknown")).isFalse();
         assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "unknown")).isFalse();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "unknown")).isFalse();
+        assertThat(FieldUtils.isStaticFieldExist(Data.class, "unknown")).isFalse();
+        assertThat(FieldUtils.isStaticFieldExist(Data.class.getName(), "unknown")).isFalse();
+        assertThat(FieldUtils.isStaticFieldExistIncludeParents(Data.class, "unknown")).isFalse();
+        assertThat(FieldUtils.isStaticFieldExistIncludeParents(Data.class.getName(), "unknown")).isFalse();
     }
 
 

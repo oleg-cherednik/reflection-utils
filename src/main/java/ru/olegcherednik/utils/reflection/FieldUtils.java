@@ -22,6 +22,7 @@ import ru.olegcherednik.utils.reflection.exceptions.NoSuchFieldException;
 import ru.olegcherednik.utils.reflection.exceptions.ReflectionUtilsException;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Optional;
 
 /**
@@ -407,12 +408,12 @@ public final class FieldUtils {
     }
 
     /**
-     * Check if field with given {@code fieldName} exists for the given {@code cls}.<br>
+     * Check if not-static field with given {@code fieldName} exists for the given {@code cls}.<br>
      * Field with this {@code fieldName} could be as in the given class itself as in any it's parents.
      *
      * @param cls       not {@literal null} class object
      * @param fieldName not {@literal null} field name
-     * @return {@code true} in case of given field exists
+     * @return {@code true} in case of given non-sttic field exists
      * @throws NullPointerException     in case of any of required parameters is {@literal null}
      * @throws ReflectionUtilsException in case of any checked exception is thrown
      * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
@@ -422,15 +423,16 @@ public final class FieldUtils {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireFieldNameNonNull(fieldName);
 
-        return getFieldForClass(cls, fieldName) != null;
+        Field field = getFieldForClass(cls, fieldName);
+        return field != null && !Modifier.isStatic(field.getModifiers());
     }
 
     /**
-     * Check if field with given {@code fieldName} exists for the given {@code cls}.
+     * Check if static field with given {@code fieldName} exists for the given {@code cls}.
      *
      * @param cls       not {@literal null} class object
      * @param fieldName not {@literal null} field name
-     * @return {@code true} in case of given field exists
+     * @return {@code true} in case of given static field exists
      * @throws NullPointerException     in case of any of required parameters is {@literal null}
      * @throws ReflectionUtilsException in case of any checked exception is thrown
      * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
@@ -440,7 +442,86 @@ public final class FieldUtils {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireFieldNameNonNull(fieldName);
 
-        return getFieldForClassIncludeParents(cls, fieldName) != null;
+        Field field = getFieldForClassIncludeParents(cls, fieldName);
+        return field != null && !Modifier.isStatic(field.getModifiers());
+    }
+
+    /**
+     * Check if static field with given {@code fieldName} exists for the class with given {@code className}.<br>
+     * Field with this {@code fieldName} could be as in the given class itself as in any it's parents.
+     *
+     * @param className not {@literal null} class name
+     * @param fieldName not {@literal null} field name
+     * @return {@code true} in case of given static field exists
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
+     * @throws RuntimeException         in case if any other problem
+     */
+    public static boolean isStaticFieldExist(String className, String fieldName) {
+        ValidationUtils.requireClassNameNonNull(className);
+        ValidationUtils.requireFieldNameNonNull(fieldName);
+
+        return isStaticFieldExist(ClassUtils.getClass(className), fieldName);
+    }
+
+    /**
+     * Check if static field with given {@code fieldName} exists for the given {@code cls}.<br>
+     * Field with this {@code fieldName} could be as in the given class itself as in any it's parents.
+     *
+     * @param cls       not {@literal null} class object
+     * @param fieldName not {@literal null} field name
+     * @return {@code true} in case of given static field exists
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
+     * @throws RuntimeException         in case if any other problem
+     */
+    public static boolean isStaticFieldExist(Class<?> cls, String fieldName) {
+        ValidationUtils.requireClsNonNull(cls);
+        ValidationUtils.requireFieldNameNonNull(fieldName);
+
+        Field field = getFieldForClass(cls, fieldName);
+        return field != null && Modifier.isStatic(field.getModifiers());
+    }
+
+    /**
+     * Check if static field with given {@code fieldName} exists for the given {@code className}.<br>
+     * Field with this {@code fieldName} could be as in the given class itself as in any it's parents.
+     *
+     * @param className not {@literal null} class name
+     * @param fieldName not {@literal null} field name
+     * @return {@code true} in case of given static field exists
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
+     * @throws RuntimeException         in case if any other problem
+     */
+    public static boolean isStaticFieldExistIncludeParents(String className, String fieldName) {
+        ValidationUtils.requireClassNameNonNull(className);
+        ValidationUtils.requireFieldNameNonNull(fieldName);
+
+        return isStaticFieldExistIncludeParents(ClassUtils.getClass(className), fieldName);
+    }
+
+    /**
+     * Check if static field with given {@code fieldName} exists for the given {@code cls}.<br>
+     * Field with this {@code fieldName} could be as in the given class itself as in any it's parents.
+     *
+     * @param cls       not {@literal null} class object
+     * @param fieldName not {@literal null} field name
+     * @return {@code true} in case of given static field exists
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
+     * @throws RuntimeException         in case if any other problem
+     */
+    public static boolean isStaticFieldExistIncludeParents(Class<?> cls, String fieldName) {
+        ValidationUtils.requireClsNonNull(cls);
+        ValidationUtils.requireFieldNameNonNull(fieldName);
+
+        Field field = getFieldForClassIncludeParents(cls, fieldName);
+        return field != null && Modifier.isStatic(field.getModifiers());
     }
 
     private FieldUtils() { }
