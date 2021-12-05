@@ -355,15 +355,7 @@ public class FieldUtilsTest {
     }
 
     public void shouldRetrieveFalseWhenClassOrParentsNotContainField() {
-        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "name")).isTrue();
-        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "AUTO")).isTrue();
-        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "name")).isTrue();
-        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "AUTO")).isTrue();
-
-        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "baseName")).isTrue();
-        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "MONITOR")).isTrue();
-        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "baseName")).isTrue();
-        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "MONITOR")).isTrue();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "unknown")).isFalse();
     }
 
 
