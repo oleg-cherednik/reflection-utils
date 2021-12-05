@@ -485,6 +485,18 @@ Class<?> cls = FieldUtils.getType(null, int.class);
 // cls == int.class
 ```
 
+#### Check if given field exists or not
+
+The class contains a set of methods to check if given class exists or not. Methods do the
+same job, but accept different input parameters.
+ 
+```java
+String className = Data.class.getName();
+boolean existInClass = FieldUtils.isFieldExist(className, "name");  // true
+boolean existInParent = FieldUtils.isFieldExistIncludeParents(className, "baseName");  // true                      
+```
+
+There're same method but with `Class<?>` as input parameter.
 </p>
 </details>
 

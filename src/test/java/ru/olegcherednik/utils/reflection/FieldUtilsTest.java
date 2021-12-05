@@ -330,4 +330,41 @@ public class FieldUtilsTest {
                 .isExactlyInstanceOf(NoSuchFieldException.class);
     }
 
+    public void shouldRetrieveTrueWhenGivenClassContainField() {
+        assertThat(FieldUtils.isFieldExist(Data.class, "name")).isTrue();
+        assertThat(FieldUtils.isFieldExist(Data.class, "AUTO")).isTrue();
+        assertThat(FieldUtils.isFieldExist(Data.class.getName(), "name")).isTrue();
+        assertThat(FieldUtils.isFieldExist(Data.class.getName(), "AUTO")).isTrue();
+
+        assertThat(FieldUtils.isFieldExist(Data.class, "baseName")).isFalse();
+        assertThat(FieldUtils.isFieldExist(Data.class, "MONITOR")).isFalse();
+        assertThat(FieldUtils.isFieldExist(Data.class.getName(), "baseName")).isFalse();
+        assertThat(FieldUtils.isFieldExist(Data.class.getName(), "MONITOR")).isFalse();
+    }
+
+    public void shouldRetrieveTrueWhenClassOrParentsContainField() {
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "name")).isTrue();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "AUTO")).isTrue();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "name")).isTrue();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "AUTO")).isTrue();
+
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "baseName")).isTrue();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "MONITOR")).isTrue();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "baseName")).isTrue();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "MONITOR")).isTrue();
+    }
+
+    public void shouldRetrieveFalseWhenClassOrParentsNotContainField() {
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "name")).isTrue();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "AUTO")).isTrue();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "name")).isTrue();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "AUTO")).isTrue();
+
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "baseName")).isTrue();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class, "MONITOR")).isTrue();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "baseName")).isTrue();
+        assertThat(FieldUtils.isFieldExistIncludeParents(Data.class.getName(), "MONITOR")).isTrue();
+    }
+
+
 }

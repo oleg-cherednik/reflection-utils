@@ -60,8 +60,8 @@ public final class FieldUtils {
      * @return value of the field
      * @throws NullPointerException     in case of any of required parameters is {@literal null}
      * @throws ReflectionUtilsException in case of any checked exception is thrown
-     * @throws RuntimeException         in case if any other problem
      * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
+     * @throws RuntimeException         in case if any other problem
      */
     public static <T> T getFieldValue(Object obj, String fieldName) {
         ValidationUtils.requireObjNonNull(obj);
@@ -96,8 +96,8 @@ public final class FieldUtils {
      * @return value of the static field
      * @throws NullPointerException     in case of any of required parameters is {@literal null}
      * @throws ReflectionUtilsException in case of any checked exception is thrown
-     * @throws RuntimeException         in case if any other problem
      * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
+     * @throws RuntimeException         in case if any other problem
      */
     public static <T> T getStaticFieldValue(Class<?> cls, String fieldName) {
         ValidationUtils.requireClsNonNull(cls);
@@ -132,8 +132,8 @@ public final class FieldUtils {
      * @param value     new value of the field
      * @throws NullPointerException     in case of any of required parameters is {@literal null}
      * @throws ReflectionUtilsException in case of any checked exception is thrown
-     * @throws RuntimeException         in case if any other problem
      * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
+     * @throws RuntimeException         in case if any other problem
      */
     public static void setFieldValue(Object obj, String fieldName, Object value) {
         ValidationUtils.requireObjNonNull(obj);
@@ -167,8 +167,8 @@ public final class FieldUtils {
      * @param task      not {@literal null} consumer is called for the field
      * @throws NullPointerException     in case of any of required parameters is {@literal null}
      * @throws ReflectionUtilsException in case of any checked exception is thrown
-     * @throws RuntimeException         in case if any other problem
      * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
+     * @throws RuntimeException         in case if any other problem
      */
     public static void setFieldValue(Object obj, String fieldName, Consumer<Field> task) {
         ValidationUtils.requireObjNonNull(obj);
@@ -183,8 +183,8 @@ public final class FieldUtils {
      *
      * @param field not {@literal null} field
      * @param value new value of the field
-     * @throws NullPointerException   in case of any of required parameters is {@literal null}
-     * @throws RuntimeException       in case if any other problem; checked exception is wrapped with runtime exception as well
+     * @throws NullPointerException in case of any of required parameters is {@literal null}
+     * @throws RuntimeException     in case if any other problem; checked exception is wrapped with runtime exception as well
      */
     public static void setStaticFieldValue(Field field, Object value) {
         ValidationUtils.requireFieldNonNull(field);
@@ -201,8 +201,8 @@ public final class FieldUtils {
      * @param value     new value of the field
      * @throws NullPointerException     in case of any of required parameters is {@literal null}
      * @throws ReflectionUtilsException in case of any checked exception is thrown
-     * @throws RuntimeException         in case if any other problem
      * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
+     * @throws RuntimeException         in case if any other problem
      */
     public static void setStaticFieldValue(Class<?> cls, String fieldName, Object value) {
         ValidationUtils.requireClsNonNull(cls);
@@ -221,10 +221,7 @@ public final class FieldUtils {
      * @throws RuntimeException         in case if any other problem
      */
     public static void setStaticFieldValue(Field field, Consumer<Field> task) {
-        ValidationUtils.requireFieldNonNull(field);
-        ValidationUtils.requireTaskNonNull(task);
-
-        AccessibleObjectUtils.invokeConsumer(field, task);
+        setFieldValue(field, task);
     }
 
     /**
@@ -236,8 +233,8 @@ public final class FieldUtils {
      * @param setValueTask not {@literal null} consumer is called for the field
      * @throws NullPointerException     in case of any of required parameters is {@literal null}
      * @throws ReflectionUtilsException in case of any checked exception is thrown
-     * @throws RuntimeException         in case if any other problem
      * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
+     * @throws RuntimeException         in case if any other problem
      */
     public static void setStaticFieldValue(Class<?> cls, String fieldName, Consumer<Field> setValueTask) {
         ValidationUtils.requireClsNonNull(cls);
@@ -248,18 +245,33 @@ public final class FieldUtils {
     }
 
     /**
-     * Retrieve filed with given {@code fieldName} for the given {@code cls}. If field was not found in the given class, then parent class will be
-     * used to find the field and etc.
+     * Retrieve filed with given {@code fieldName} for the given {@code cls}. If field was not found in the given class,
+     * then parent class will be used to find the field and etc.
      *
      * @param cls       not {@literal null} class object
      * @param fieldName not {@literal null} field name
      * @return not {@literal null} filed
      * @throws NullPointerException     in case of any of required parameters is {@literal null}
      * @throws ReflectionUtilsException in case of any checked exception is thrown
-     * @throws RuntimeException         in case if any other problem
      * @throws NoSuchFieldException     in case of filed was not found
+     * @throws RuntimeException         in case if any other problem
      */
     private static Field getField(Class<?> cls, String fieldName) {
+        return Optional.ofNullable(getFieldForClassIncludeParents(cls, fieldName)).orElseThrow(() -> new NoSuchFieldException(cls, fieldName));
+    }
+
+    /**
+     * Retrieve filed with given {@code fieldName} for the given {@code cls}. If field was not found in the given class,
+     * then parent class will be used to find the field and etc.
+     *
+     * @param cls       not {@literal null} class object
+     * @param fieldName not {@literal null} field name
+     * @return found {@link Field} object or {@literal null}
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     */
+    private static Field getFieldForClassIncludeParents(Class<?> cls, String fieldName) {
         ValidationUtils.requireClsNonNull(cls);
         ValidationUtils.requireFieldNameNonNull(fieldName);
 
@@ -267,14 +279,34 @@ public final class FieldUtils {
         Class<?> clazz = cls;
 
         while (field == null && clazz != null) {
-            try {
-                field = clazz.getDeclaredField(fieldName);
-            } catch (java.lang.NoSuchFieldException ignored) {
+            field = getFieldForClass(clazz, fieldName);
+
+            if (field == null)
                 clazz = clazz.getSuperclass();
-            }
         }
 
-        return Optional.ofNullable(field).orElseThrow(() -> new NoSuchFieldException(cls, fieldName));
+        return field;
+    }
+
+    /**
+     * Retrieve filed with given {@code fieldName} for the given {@code cls}.
+     *
+     * @param cls       not {@literal null} class object
+     * @param fieldName not {@literal null} field name
+     * @return found {@link Field} object or {@literal null}
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws RuntimeException         in case if any other problem
+     */
+    private static Field getFieldForClass(Class<?> cls, String fieldName) {
+        ValidationUtils.requireClsNonNull(cls);
+        ValidationUtils.requireFieldNameNonNull(fieldName);
+
+        try {
+            return cls.getDeclaredField(fieldName);
+        } catch (java.lang.NoSuchFieldException ignored) {
+            return null;
+        }
     }
 
     /**
@@ -286,9 +318,10 @@ public final class FieldUtils {
      * @param value new value of the field
      * @throws NullPointerException     in case of any of required parameters is {@literal null}
      * @throws ReflectionUtilsException in case of any checked exception is thrown
-     * @throws RuntimeException         in case if any other problem
      * @throws IllegalAccessException   in case of value cannot be set to the field
+     * @throws RuntimeException         in case if any other problem
      */
+    @SuppressWarnings("java:S3011")
     private static void setFieldValueImpl(Field field, Object obj, Object value) throws IllegalAccessException {
         ValidationUtils.requireFieldNonNull(field);
 
@@ -334,6 +367,80 @@ public final class FieldUtils {
      */
     public static Class<?> getType(Field field, Class<?> def) {
         return field == null ? def : field.getType();
+    }
+
+    /**
+     * Check if field with given {@code fieldName} exists for the class with given {@code className}.
+     *
+     * @param className not {@literal null} class name
+     * @param fieldName not {@literal null} field name
+     * @return {@code true} in case of given field exists
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
+     * @throws RuntimeException         in case if any other problem
+     */
+    public static boolean isFieldExist(String className, String fieldName) {
+        ValidationUtils.requireClassNameNonNull(className);
+        ValidationUtils.requireFieldNameNonNull(fieldName);
+
+        return isFieldExist(ClassUtils.getClass(className), fieldName);
+    }
+
+    /**
+     * Check if field with given {@code fieldName} exists for the class with given {@code className}.<br>
+     * Field with this {@code fieldName} could be as in the given class itself as in any it's parents.
+     *
+     * @param className not {@literal null} class name
+     * @param fieldName not {@literal null} field name
+     * @return {@code true} in case of given field exists
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
+     * @throws RuntimeException         in case if any other problem
+     */
+    public static boolean isFieldExistIncludeParents(String className, String fieldName) {
+        ValidationUtils.requireClassNameNonNull(className);
+        ValidationUtils.requireFieldNameNonNull(fieldName);
+
+        return isFieldExistIncludeParents(ClassUtils.getClass(className), fieldName);
+    }
+
+    /**
+     * Check if field with given {@code fieldName} exists for the given {@code cls}.<br>
+     * Field with this {@code fieldName} could be as in the given class itself as in any it's parents.
+     *
+     * @param cls       not {@literal null} class object
+     * @param fieldName not {@literal null} field name
+     * @return {@code true} in case of given field exists
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
+     * @throws RuntimeException         in case if any other problem
+     */
+    public static boolean isFieldExist(Class<?> cls, String fieldName) {
+        ValidationUtils.requireClsNonNull(cls);
+        ValidationUtils.requireFieldNameNonNull(fieldName);
+
+        return getFieldForClass(cls, fieldName) != null;
+    }
+
+    /**
+     * Check if field with given {@code fieldName} exists for the given {@code cls}.
+     *
+     * @param cls       not {@literal null} class object
+     * @param fieldName not {@literal null} field name
+     * @return {@code true} in case of given field exists
+     * @throws NullPointerException     in case of any of required parameters is {@literal null}
+     * @throws ReflectionUtilsException in case of any checked exception is thrown
+     * @throws NoSuchFieldException     in case of filed with {@code fieldName} was not found
+     * @throws RuntimeException         in case if any other problem
+     */
+    public static boolean isFieldExistIncludeParents(Class<?> cls, String fieldName) {
+        ValidationUtils.requireClsNonNull(cls);
+        ValidationUtils.requireFieldNameNonNull(fieldName);
+
+        return getFieldForClassIncludeParents(cls, fieldName) != null;
     }
 
     private FieldUtils() { }

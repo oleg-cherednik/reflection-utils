@@ -160,7 +160,7 @@ public final class ConstructorUtils {
     public static <T> T invokeConstructor(String className) {
         ValidationUtils.requireClassNameNonNull(className);
 
-        return invokeConstructor(getClass(className));
+        return invokeConstructor(ClassUtils.getClass(className));
     }
 
     /**
@@ -181,7 +181,7 @@ public final class ConstructorUtils {
         ValidationUtils.requireClassNameNonNull(className);
         ValidationUtils.requireTypeNonNull(type);
 
-        return invokeConstructor(getClass(className), type, value);
+        return invokeConstructor(ClassUtils.getClass(className), type, value);
     }
 
     /**
@@ -206,7 +206,7 @@ public final class ConstructorUtils {
         ValidationUtils.requireClassNameNonNull(className);
         ValidationUtils.requireTypeNonNull(type1, type2);
 
-        return invokeConstructor(getClass(className), type1, value1, type2, value2);
+        return invokeConstructor(ClassUtils.getClass(className), type1, value1, type2, value2);
     }
 
     /**
@@ -234,7 +234,7 @@ public final class ConstructorUtils {
         ValidationUtils.requireClassNameNonNull(className);
         ValidationUtils.requireTypeNonNull(type1, type2, type3);
 
-        return invokeConstructor(getClass(className), type1, value1, type2, value2, type3, value3);
+        return invokeConstructor(ClassUtils.getClass(className), type1, value1, type2, value2, type3, value3);
     }
 
     /**
@@ -257,7 +257,7 @@ public final class ConstructorUtils {
         ValidationUtils.requireLengthMatch(types, values);
         ValidationUtils.requireTypeNonNull(types);
 
-        return invokeConstructor(getClass(className), types, values);
+        return invokeConstructor(ClassUtils.getClass(className), types, values);
     }
 
     /**
@@ -297,27 +297,6 @@ public final class ConstructorUtils {
             return cls.getDeclaredConstructor(types);
         } catch (NoSuchMethodException e) {
             throw new NoSuchConstructorException(cls, types);
-        }
-    }
-
-    /**
-     * Retrieve {@link Class} instance with given {@code className}.
-     *
-     * @param className not {@literal null} class name
-     * @param <T>       type of the class that contains the constructor
-     * @return not {@literal null} class
-     * @throws NullPointerException     in case of any of required parameters is {@literal null}
-     * @throws ReflectionUtilsException in case of any checked exception is thrown
-     * @throws RuntimeException         in case if any other problem
-     * @throws ClassNotFoundException   in case of class was not found
-     */
-    private static <T> Class<T> getClass(String className) {
-        ValidationUtils.requireClassNameNonNull(className);
-
-        try {
-            return (Class<T>)Class.forName(className);
-        } catch (java.lang.ClassNotFoundException e) {
-            throw new ClassNotFoundException(className);
         }
     }
 
